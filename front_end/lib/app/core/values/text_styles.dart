@@ -200,6 +200,13 @@ abstract class TextStyles {
     color: AppColors.colorFF424242,
   );
 
+  static const TextStyle smallBlackS14 = TextStyle(
+    fontFamily: "SVN",
+    fontWeight: FontW.small,
+    fontSize: 14,
+    color: AppColors.colorFF424242,
+  );
+
   static const TextStyle regularRedS14 = TextStyle(
     fontFamily: "SVN",
     fontWeight: FontW.regular,

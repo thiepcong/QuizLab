@@ -45,6 +45,18 @@ class _$MainRouter extends RootStackRouter {
         ),
       );
     },
+    EditQuestionViewRoute.name: (routeData) {
+      final args = routeData.argsAs<EditQuestionViewRouteArgs>();
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: EditQuestionView(
+          key: args.key,
+          cubit: args.cubit,
+          item: args.item,
+          index: args.index,
+        ),
+      );
+    },
   };
 
   @override
@@ -70,6 +82,10 @@ class _$MainRouter extends RootStackRouter {
         RouteConfig(
           CreateQuestionViewRoute.name,
           path: 'create_question',
+        ),
+        RouteConfig(
+          EditQuestionViewRoute.name,
+          path: 'edit_question',
         ),
       ];
 }
@@ -142,5 +158,49 @@ class CreateQuestionViewRouteArgs {
   @override
   String toString() {
     return 'CreateQuestionViewRouteArgs{key: $key, cubit: $cubit}';
+  }
+}
+
+/// generated route for
+/// [EditQuestionView]
+class EditQuestionViewRoute extends PageRouteInfo<EditQuestionViewRouteArgs> {
+  EditQuestionViewRoute({
+    Key? key,
+    required CreateQuizCubit cubit,
+    required Question item,
+    required int index,
+  }) : super(
+          EditQuestionViewRoute.name,
+          path: 'edit_question',
+          args: EditQuestionViewRouteArgs(
+            key: key,
+            cubit: cubit,
+            item: item,
+            index: index,
+          ),
+        );
+
+  static const String name = 'EditQuestionViewRoute';
+}
+
+class EditQuestionViewRouteArgs {
+  const EditQuestionViewRouteArgs({
+    this.key,
+    required this.cubit,
+    required this.item,
+    required this.index,
+  });
+
+  final Key? key;
+
+  final CreateQuizCubit cubit;
+
+  final Question item;
+
+  final int index;
+
+  @override
+  String toString() {
+    return 'EditQuestionViewRouteArgs{key: $key, cubit: $cubit, item: $item, index: $index}';
   }
 }

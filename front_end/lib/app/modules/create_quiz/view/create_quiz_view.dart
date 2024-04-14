@@ -12,6 +12,7 @@ import '../../../core/widgets/appBar/custom_app_bar.dart';
 import '../../../core/widgets/button/custom_button.dart';
 import '../cubit/create_quiz_cubit.dart';
 import '../cubit/create_quiz_state.dart';
+import '../widgets/quizz_item.dart';
 
 class CreateQuizView extends StatelessWidget {
   const CreateQuizView({super.key});
@@ -34,10 +35,11 @@ class CreateQuizView extends StatelessWidget {
         final cubit = context.read<CreateQuizCubit>();
         return Scaffold(
           appBar: CustomAppBar(
+            isBack: true,
             label: 'Tạo một bài quiz mới',
             actions: [
               TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {},
                 child: const Row(
                   children: [
                     Icon(Icons.save),
@@ -51,57 +53,93 @@ class CreateQuizView extends StatelessWidget {
             ],
           ),
           backgroundColor: AppColors.colorFFC5C5C5,
-          body: SingleChildScrollView(
-            child: Container(
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              decoration: const BoxDecoration(
-                color: AppColors.colorFFFFFFFF,
-                borderRadius: BorderRadius.all(Radius.circular(18)),
-                boxShadow: [
-                  BoxShadow(),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Tạo một bài quiz mới",
-                    style: TextStyles.boldBlackS20,
-                  ),
-                  const Text(
-                    "Thêm một câu hỏi mới",
-                    style: TextStyles.mediumBlackkS14,
-                  ),
-                  CustomButton(
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    onTap: () => context
-                        .pushRoute(CreateQuestionViewRoute(cubit: cubit)),
-                    icon: Icons.done,
-                    label: 'Nhiều lựa chọn',
-                  ),
-                  const Text(
-                    "Nhập câu hỏi",
-                    style: TextStyles.mediumBlackkS14,
-                  ),
-                  CustomButton(
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    onTap: () async {
-                      var picked = await FilePicker.platform.pickFiles(
-                        allowedExtensions: ['xlsx'],
-                        type: FileType.custom,
-                      );
+          body: Container(
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            decoration: const BoxDecoration(
+              color: AppColors.colorFFFFFFFF,
+              borderRadius: BorderRadius.all(Radius.circular(18)),
+              boxShadow: [
+                BoxShadow(),
+              ],
+            ),
+            child: SingleChildScrollView(
+              child: state.questions.isNotEmpty
+                  ? Column(
+                      children: [
+                        ...state.questions
+                            .asMap()
+                            .entries
+                            .map(
+                              (e) => QuizzItem(
+                                item: e.value,
+                                onDelete: () => cubit.deleteQuestion(e.value),
+                                onEdit: () => context.pushRoute(
+                                  EditQuestionViewRoute(
+                                    cubit: cubit,
+                                    item: e.value,
+                                    index: e.key,
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        TextButton(
+                          onPressed: () => context
+                              .pushRoute(CreateQuestionViewRoute(cubit: cubit)),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.add),
+                              Text(
+                                "Thêm câu hỏi",
+                                style: TextStyles.regularBlackS14,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Tạo một bài quiz mới",
+                          style: TextStyles.boldBlackS20,
+                        ),
+                        const Text(
+                          "Thêm một câu hỏi mới",
+                          style: TextStyles.mediumBlackkS14,
+                        ),
+                        CustomButton(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          onTap: () => context
+                              .pushRoute(CreateQuestionViewRoute(cubit: cubit)),
+                          icon: Icons.done,
+                          label: 'Nhiều lựa chọn',
+                        ),
+                        const Text(
+                          "Nhập câu hỏi",
+                          style: TextStyles.mediumBlackkS14,
+                        ),
+                        CustomButton(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          onTap: () async {
+                            var picked = await FilePicker.platform.pickFiles(
+                              allowedExtensions: ['xlsx'],
+                              type: FileType.custom,
+                            );
 
-                      if (picked != null) {
-                        log(picked.files.first.bytes.toString());
-                      }
-                    },
-                    icon: Icons.slideshow,
-                    label: 'Bảng tính',
-                  ),
-                ],
-              ),
+                            if (picked != null) {
+                              log(picked.files.first.bytes.toString());
+                            }
+                          },
+                          icon: Icons.slideshow,
+                          label: 'Bảng tính',
+                        ),
+                      ],
+                    ),
             ),
           ),
         );

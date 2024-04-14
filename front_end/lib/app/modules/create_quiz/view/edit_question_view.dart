@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/app/core/values/show_message_internal.dart';
 
+import '../../../core/models/question.dart';
 import '../../../core/values/app_colors.dart';
 import '../../../core/values/text_styles.dart';
 import '../../../core/widgets/appBar/custom_app_bar.dart';
@@ -11,22 +12,39 @@ import '../cubit/create_quiz_cubit.dart';
 import '../cubit/create_quiz_state.dart';
 import '../widgets/answer_text_field.dart';
 
-class CreateQuestionView extends StatefulWidget {
-  const CreateQuestionView({super.key, required this.cubit});
+class EditQuestionView extends StatefulWidget {
+  const EditQuestionView({
+    super.key,
+    required this.cubit,
+    required this.item,
+    required this.index,
+  });
 
   final CreateQuizCubit cubit;
+  final Question item;
+  final int index;
 
   @override
-  State<CreateQuestionView> createState() => _CreateQuestionViewState();
+  State<EditQuestionView> createState() => _EditQuestionViewState();
 }
 
-class _CreateQuestionViewState extends State<CreateQuestionView> {
+class _EditQuestionViewState extends State<EditQuestionView> {
   final _questionController = TextEditingController();
   final _answerAController = TextEditingController();
   final _answerBController = TextEditingController();
   final _answerCController = TextEditingController();
   final _answerDController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    _questionController.text = widget.item.content;
+    _answerAController.text = widget.item.answers[0].content;
+    _answerBController.text = widget.item.answers[1].content;
+    _answerCController.text = widget.item.answers[2].content;
+    _answerDController.text = widget.item.answers[3].content;
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -42,9 +60,9 @@ class _CreateQuestionViewState extends State<CreateQuestionView> {
   Widget build(BuildContext context) {
     return Title(
       color: AppColors.colorFFFFFFFF,
-      title: 'Tạo Câu hỏi',
+      title: 'Sửa Câu hỏi',
       child: BlocProvider.value(
-        value: widget.cubit,
+        value: widget.cubit..initEdit(widget.item),
         child: _buildPage(context),
       ),
     );
@@ -65,7 +83,7 @@ class _CreateQuestionViewState extends State<CreateQuestionView> {
           return Scaffold(
             appBar: CustomAppBar(
               isBack: true,
-              label: 'Tạo câu hỏi',
+              label: 'Sửa câu hỏi',
               actions: [
                 TextButton(
                   onPressed: () {
@@ -75,7 +93,8 @@ class _CreateQuestionViewState extends State<CreateQuestionView> {
                             context, "Vui lòng chọn ít nhất một đáp án đúng");
                         return;
                       }
-                      cubit.saveQuestion(
+                      cubit.editQuestion(
+                        widget.index,
                         _questionController.text,
                         _answerAController.text,
                         _answerBController.text,
