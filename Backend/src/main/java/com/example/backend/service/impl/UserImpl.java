@@ -22,7 +22,7 @@ public class UserImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Override
-    public String addUser(UserDTO userDTO) {
+    public User addUser(UserDTO userDTO) {
 
         User user = new User(
                 userDTO.getId(),
@@ -31,7 +31,7 @@ public class UserImpl implements UserService {
                 this.passwordEncoder.encode(userDTO.getPassword())
         );
         userRepo.save(user);
-        return user.getName();
+        return user;
     }
 
     @Override

@@ -4,6 +4,7 @@ package com.example.backend.userController;
 
 import com.example.backend.dto.LoginDTO;
 import com.example.backend.dto.UserDTO;
+import com.example.backend.entity.User;
 import com.example.backend.response.LoginResponse;
 import com.example.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(path = "/save")
-    public String saveUser(@RequestBody UserDTO userDTO) {
-        String name =userService.addUser(userDTO);
-        return name;
+    public User saveUser(@RequestBody UserDTO userDTO) {
+        User user =userService.addUser(userDTO);
+        return user;
     }
 
     @PostMapping(path = "/login")
