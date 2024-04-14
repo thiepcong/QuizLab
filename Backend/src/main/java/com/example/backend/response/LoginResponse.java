@@ -1,12 +1,16 @@
 package com.example.backend.response;
 
+import com.example.backend.entity.User;
+
 public class LoginResponse {
     private String message;
     private Boolean status;
+    private User user;
 
-    public LoginResponse(String message, Boolean status) {
+    public LoginResponse(String message, Boolean status, User user) {
         this.message = message;
         this.status = status;
+        this.user = user;
     }
 
     public String getMessage() {
@@ -25,11 +29,20 @@ public class LoginResponse {
         this.status = status;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
-        return "LoginMessage{" +
+        return "LoginResponse{" +
                 "message='" + message + '\'' +
                 ", status=" + status +
+                ", user=" + user +
                 '}';
     }
 }
