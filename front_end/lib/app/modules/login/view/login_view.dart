@@ -147,6 +147,18 @@ class _LoginViewState extends State<LoginView> {
                             },
                             child: const Text('Login'),
                           ),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("Chưa có tài khoản?"),
+                              TextButton(
+                                onPressed: () => context.router
+                                    .replace(const RegisterViewRoute()),
+                                child: const Text("Đăng ký"),
+                              )
+                            ],
+                          ),
                         ],
                       ),
                     ),
