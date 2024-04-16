@@ -10,7 +10,7 @@ public class Question {
 
     @Id
     @Column(name = "id", length = 10)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "content", length = 255)
@@ -20,9 +20,16 @@ public class Question {
     @JoinColumn(name = "question_id")
     private List<Answer> answers;
 
-    @ManyToOne
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToMany(mappedBy = "questions",  cascade = { CascadeType.MERGE })
+    private List<Quiz> quizzes;
+
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Result> results;
+
 
     public Question() {
     }
@@ -39,21 +46,11 @@ public class Question {
         this.user = user;
     }
 
-    public QuestionDTO toDTO() {
-        QuestionDTO questionDTO = new QuestionDTO();
-        questionDTO.setQuestionId(id);
-        questionDTO.setUserId(user.getId());
-        questionDTO.setContent(content);
-        questionDTO.setAnswers(answers);
-        return questionDTO;
-    }
-
-
-    public int getId() {
+    public int getQuestionId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setQuestionId(int id) {
         this.id = id;
     }
 
@@ -79,6 +76,18 @@ public class Question {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public List<Quiz> getQuizzes() {
+        return quizzes;
+    }
+
+    public void setQuizzes(List<Quiz> quizzes) {
+        this.quizzes = quizzes;
     }
 
     @Override

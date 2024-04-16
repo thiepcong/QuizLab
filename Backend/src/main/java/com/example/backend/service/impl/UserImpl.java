@@ -28,7 +28,8 @@ public class UserImpl implements UserService {
                 userDTO.getId(),
                 userDTO.getName(),
                 userDTO.getUsername(),
-                this.passwordEncoder.encode(userDTO.getPassword())
+                this.passwordEncoder.encode(userDTO.getPassword()),
+                userDTO.getRole()
         );
         userRepo.save(user);
         return user;
@@ -56,5 +57,10 @@ public class UserImpl implements UserService {
         } else {
             return new LoginResponse("Username not exits", false, null);
         }
+    }
+
+    @Override
+    public Optional<User> findById(int userId) {
+        return userRepo.findById(userId);
     }
 }
