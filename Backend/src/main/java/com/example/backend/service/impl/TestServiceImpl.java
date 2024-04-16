@@ -2,6 +2,7 @@ package com.example.backend.service.impl;
 
 import com.example.backend.dto.QuizDTO;
 import com.example.backend.dto.TestDTO;
+import com.example.backend.entity.Quiz;
 import com.example.backend.entity.Test;
 import com.example.backend.repo.QuizRepo;
 import com.example.backend.repo.TestRepo;
@@ -9,10 +10,9 @@ import com.example.backend.service.TestService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class TestServiceImpl implements TestService {
@@ -63,16 +63,18 @@ public class TestServiceImpl implements TestService {
                 .collect(Collectors.toList());
     }
 
-    @Override
+/*    @Override
     public List<TestDTO> getAllTestsByUserId(int userId) {
-        List<Test> tests = quizRepo.findAllById(Collections.singleton(userId))
-                .stream()
-                .flatMap(quiz -> quiz.getTests().stream())
-                .collect(Collectors.toList());
+        List<Test> rest = new ArrayList<>();
+        List<Test> testList = quizRepo.findAllByUserId(userId).stream().map(quiz -> {
+
+            rest = Stream.of(testRepository.findByQuizId(quiz.getId()),).flatMap(Collection::stream).collect(Collectors.toList());
+        });
+        List<Test> tests = testRepository.find(userId);
         return tests.stream()
                 .map(test -> modelMapper.map(test, TestDTO.class))
                 .collect(Collectors.toList());
-    }
+    }*/
 
     @Override
     public TestDTO updateTest(int testId, TestDTO testDTO) {

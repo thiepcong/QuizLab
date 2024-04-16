@@ -20,26 +20,11 @@ public class QuizDTO {
     private int time;
     private int userId;
     private List<QuestionDTO> questions;
-    private List<TestDTO> tests;
-
     // Constructors, getters, and setters
 
     // Default constructor
     public QuizDTO() {
     }
-
-    // Parameterized constructor
-
-    public QuizDTO(int id, String subject, String title, int time, int userId, List<QuestionDTO> questions, List<TestDTO> tests) {
-        this.id = id;
-        this.subject = subject;
-        this.title = title;
-        this.time = time;
-        this.userId = userId;
-        this.questions = questions;
-        this.tests = tests;
-    }
-
 
     // Getters and setters
     public List<QuestionDTO> addQuestionsFromExcel(String filePath) {
@@ -130,11 +115,4 @@ public class QuizDTO {
         this.questions = questions;
     }
 
-    public List<TestDTO> getTests() {
-        return tests;
-    }
-
-    public void setTests(List<TestDTO> tests) {
-        this.tests = tests;
-    }
 }

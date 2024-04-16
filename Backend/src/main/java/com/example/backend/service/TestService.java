@@ -11,7 +11,7 @@ public interface TestService {
     List<TestDTO> getAllTests();
     TestDTO updateTest(int testId, TestDTO testDTO);
     void deleteTest(int testId);
-    List<TestDTO> getAllTestsByUserId(int userId);
+    /*List<TestDTO> getAllTestsByUserId(int userId);*/
     TestDTO createTestFromExcel(int quizId, TestDTO testDTO, String filePath);
     TestDTO getTestByQuizCode(String quizCode);
 }

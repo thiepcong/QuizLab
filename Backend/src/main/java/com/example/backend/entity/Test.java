@@ -9,12 +9,13 @@ import java.util.List;
 @Table(name = "test")
 public class Test {
     @Id
+    @Column(name = "id", length = 10)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     // Other attributes
     private String title;
-    private Date timeCreaed;
+    private Date timeCreated;
     private String quizCode;
     private String note;
 
@@ -35,7 +36,7 @@ public class Test {
     public Test(int id, String title, Date timeCreaed, String quizCode, String note, Quiz quiz, List<Candidate> candidates) {
         this.id = id;
         this.title = title;
-        this.timeCreaed = timeCreaed;
+        this.timeCreated = timeCreaed;
         this.quizCode = quizCode;
         this.note = note;
         this.quiz = quiz;
@@ -59,11 +60,11 @@ public class Test {
     }
 
     public Date getTimeCreaed() {
-        return timeCreaed;
+        return timeCreated;
     }
 
     public void setTimeCreaed(Date timeCreaed) {
-        this.timeCreaed = timeCreaed;
+        this.timeCreated = timeCreaed;
     }
 
     public String getQuizCode() {
