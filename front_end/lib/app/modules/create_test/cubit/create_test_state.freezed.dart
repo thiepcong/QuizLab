@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'home_state.dart';
+part of 'create_test_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,29 +15,36 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$HomeState {
+mixin _$CreateTestState {
   bool get isLoading => throw _privateConstructorUsedError;
-  List<Quiz> get quizes => throw _privateConstructorUsedError;
+  bool get createDone => throw _privateConstructorUsedError;
+  String? get codeQuiz => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   Error? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $HomeStateCopyWith<HomeState> get copyWith =>
+  $CreateTestStateCopyWith<CreateTestState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $HomeStateCopyWith<$Res> {
-  factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
-      _$HomeStateCopyWithImpl<$Res, HomeState>;
+abstract class $CreateTestStateCopyWith<$Res> {
+  factory $CreateTestStateCopyWith(
+          CreateTestState value, $Res Function(CreateTestState) then) =
+      _$CreateTestStateCopyWithImpl<$Res, CreateTestState>;
   @useResult
-  $Res call({bool isLoading, List<Quiz> quizes, String? message, Error? error});
+  $Res call(
+      {bool isLoading,
+      bool createDone,
+      String? codeQuiz,
+      String? message,
+      Error? error});
 }
 
 /// @nodoc
-class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
-    implements $HomeStateCopyWith<$Res> {
-  _$HomeStateCopyWithImpl(this._value, this._then);
+class _$CreateTestStateCopyWithImpl<$Res, $Val extends CreateTestState>
+    implements $CreateTestStateCopyWith<$Res> {
+  _$CreateTestStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -48,7 +55,8 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @override
   $Res call({
     Object? isLoading = null,
-    Object? quizes = null,
+    Object? createDone = null,
+    Object? codeQuiz = freezed,
     Object? message = freezed,
     Object? error = freezed,
   }) {
@@ -57,10 +65,14 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      quizes: null == quizes
-          ? _value.quizes
-          : quizes // ignore: cast_nullable_to_non_nullable
-              as List<Quiz>,
+      createDone: null == createDone
+          ? _value.createDone
+          : createDone // ignore: cast_nullable_to_non_nullable
+              as bool,
+      codeQuiz: freezed == codeQuiz
+          ? _value.codeQuiz
+          : codeQuiz // ignore: cast_nullable_to_non_nullable
+              as String?,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -74,41 +86,51 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
 }
 
 /// @nodoc
-abstract class _$$HomeStateImplCopyWith<$Res>
-    implements $HomeStateCopyWith<$Res> {
-  factory _$$HomeStateImplCopyWith(
-          _$HomeStateImpl value, $Res Function(_$HomeStateImpl) then) =
-      __$$HomeStateImplCopyWithImpl<$Res>;
+abstract class _$$CreateTestStateImplCopyWith<$Res>
+    implements $CreateTestStateCopyWith<$Res> {
+  factory _$$CreateTestStateImplCopyWith(_$CreateTestStateImpl value,
+          $Res Function(_$CreateTestStateImpl) then) =
+      __$$CreateTestStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, List<Quiz> quizes, String? message, Error? error});
+  $Res call(
+      {bool isLoading,
+      bool createDone,
+      String? codeQuiz,
+      String? message,
+      Error? error});
 }
 
 /// @nodoc
-class __$$HomeStateImplCopyWithImpl<$Res>
-    extends _$HomeStateCopyWithImpl<$Res, _$HomeStateImpl>
-    implements _$$HomeStateImplCopyWith<$Res> {
-  __$$HomeStateImplCopyWithImpl(
-      _$HomeStateImpl _value, $Res Function(_$HomeStateImpl) _then)
+class __$$CreateTestStateImplCopyWithImpl<$Res>
+    extends _$CreateTestStateCopyWithImpl<$Res, _$CreateTestStateImpl>
+    implements _$$CreateTestStateImplCopyWith<$Res> {
+  __$$CreateTestStateImplCopyWithImpl(
+      _$CreateTestStateImpl _value, $Res Function(_$CreateTestStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? isLoading = null,
-    Object? quizes = null,
+    Object? createDone = null,
+    Object? codeQuiz = freezed,
     Object? message = freezed,
     Object? error = freezed,
   }) {
-    return _then(_$HomeStateImpl(
+    return _then(_$CreateTestStateImpl(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      quizes: null == quizes
-          ? _value._quizes
-          : quizes // ignore: cast_nullable_to_non_nullable
-              as List<Quiz>,
+      createDone: null == createDone
+          ? _value.createDone
+          : createDone // ignore: cast_nullable_to_non_nullable
+              as bool,
+      codeQuiz: freezed == codeQuiz
+          ? _value.codeQuiz
+          : codeQuiz // ignore: cast_nullable_to_non_nullable
+              as String?,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -123,27 +145,23 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeStateImpl extends _HomeState {
-  const _$HomeStateImpl(
+class _$CreateTestStateImpl extends _CreateTestState {
+  const _$CreateTestStateImpl(
       {this.isLoading = false,
-      final List<Quiz> quizes = const [],
+      this.createDone = false,
+      this.codeQuiz,
       this.message,
       this.error})
-      : _quizes = quizes,
-        super._();
+      : super._();
 
   @override
   @JsonKey()
   final bool isLoading;
-  final List<Quiz> _quizes;
   @override
   @JsonKey()
-  List<Quiz> get quizes {
-    if (_quizes is EqualUnmodifiableListView) return _quizes;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_quizes);
-  }
-
+  final bool createDone;
+  @override
+  final String? codeQuiz;
   @override
   final String? message;
   @override
@@ -151,50 +169,57 @@ class _$HomeStateImpl extends _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(isLoading: $isLoading, quizes: $quizes, message: $message, error: $error)';
+    return 'CreateTestState(isLoading: $isLoading, createDone: $createDone, codeQuiz: $codeQuiz, message: $message, error: $error)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$HomeStateImpl &&
+            other is _$CreateTestStateImpl &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            const DeepCollectionEquality().equals(other._quizes, _quizes) &&
+            (identical(other.createDone, createDone) ||
+                other.createDone == createDone) &&
+            (identical(other.codeQuiz, codeQuiz) ||
+                other.codeQuiz == codeQuiz) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading,
-      const DeepCollectionEquality().hash(_quizes), message, error);
+  int get hashCode =>
+      Object.hash(runtimeType, isLoading, createDone, codeQuiz, message, error);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>
-      __$$HomeStateImplCopyWithImpl<_$HomeStateImpl>(this, _$identity);
+  _$$CreateTestStateImplCopyWith<_$CreateTestStateImpl> get copyWith =>
+      __$$CreateTestStateImplCopyWithImpl<_$CreateTestStateImpl>(
+          this, _$identity);
 }
 
-abstract class _HomeState extends HomeState {
-  const factory _HomeState(
+abstract class _CreateTestState extends CreateTestState {
+  const factory _CreateTestState(
       {final bool isLoading,
-      final List<Quiz> quizes,
+      final bool createDone,
+      final String? codeQuiz,
       final String? message,
-      final Error? error}) = _$HomeStateImpl;
-  const _HomeState._() : super._();
+      final Error? error}) = _$CreateTestStateImpl;
+  const _CreateTestState._() : super._();
 
   @override
   bool get isLoading;
   @override
-  List<Quiz> get quizes;
+  bool get createDone;
+  @override
+  String? get codeQuiz;
   @override
   String? get message;
   @override
   Error? get error;
   @override
   @JsonKey(ignore: true)
-  _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>
+  _$$CreateTestStateImplCopyWith<_$CreateTestStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

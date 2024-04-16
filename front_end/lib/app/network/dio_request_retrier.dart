@@ -28,7 +28,7 @@ class DioRequestRetrier {
   Future<Map<String, String>> getCustomHeaders() async {
     // final String accessToken =
     //     await _preferenceManager.getString(PreferenceManager.keyToken);
-    final String accessToken = '';
+    const String accessToken = '';
     var customHeaders = {'content-type': 'application/json'};
     if (accessToken.trim().isNotEmpty) {
       customHeaders.addAll({

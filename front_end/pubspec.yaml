@@ -25,6 +25,8 @@ dependencies:
   json_serializable: 6.7.1
   shared_preferences: 2.2.2
   file_picker: 8.0.0+1
+  excel: 4.0.3
+  uuid: 4.4.0
 
 dev_dependencies:
   flutter_test:
@@ -37,4 +39,7 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  assets:
+    - assets/images/
 
