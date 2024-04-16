@@ -57,6 +57,12 @@ class _$MainRouter extends RootStackRouter {
         ),
       );
     },
+    RegisterViewRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const RegisterView(),
+      );
+    },
   };
 
   @override
@@ -86,6 +92,10 @@ class _$MainRouter extends RootStackRouter {
         RouteConfig(
           EditQuestionViewRoute.name,
           path: 'edit_question',
+        ),
+        RouteConfig(
+          RegisterViewRoute.name,
+          path: 'register',
         ),
       ];
 }
@@ -203,4 +213,16 @@ class EditQuestionViewRouteArgs {
   String toString() {
     return 'EditQuestionViewRouteArgs{key: $key, cubit: $cubit, item: $item, index: $index}';
   }
+}
+
+/// generated route for
+/// [RegisterView]
+class RegisterViewRoute extends PageRouteInfo<void> {
+  const RegisterViewRoute()
+      : super(
+          RegisterViewRoute.name,
+          path: 'register',
+        );
+
+  static const String name = 'RegisterViewRoute';
 }

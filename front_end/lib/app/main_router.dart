@@ -8,6 +8,7 @@ import 'modules/create_quiz/view/create_quiz_view.dart';
 import 'modules/create_quiz/view/edit_question_view.dart';
 import 'modules/home/view/home_view.dart';
 import 'modules/login/view/login_view.dart';
+import 'modules/login/view/register_view.dart';
 part 'main_router.gr.dart';
 
 @MaterialAutoRouter(
@@ -17,6 +18,7 @@ part 'main_router.gr.dart';
     MaterialRoute(page: CreateQuizView, path: Routes.createQuiz),
     MaterialRoute(page: CreateQuestionView, path: Routes.createQuestion),
     MaterialRoute(page: EditQuestionView, path: Routes.editQuestion),
+    MaterialRoute(page: RegisterView, path: Routes.register),
   ],
 )
 class MainRouter extends _$MainRouter {

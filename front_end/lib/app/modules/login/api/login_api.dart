@@ -1,9 +1,9 @@
 import '../../../core/base/base_remote_source.dart';
-import '../../../core/models/login_response.dart';
+import '../../../core/models/user.dart';
 import '../../../core/values/api_url_constant.dart';
 
 class LoginApi extends BaseRemoteSource {
-  Future<LoginResponse> login({
+  Future<User> login({
     required String usename,
     required String password,
   }) async {
@@ -13,7 +13,25 @@ class LoginApi extends BaseRemoteSource {
     });
     try {
       return callApiWithErrorParser(request)
-          .then((value) => LoginResponse.fromJson(value.data));
+          .then((value) => User.fromJson(value.data["user"]));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<User> register({
+    required String name,
+    required String usename,
+    required String password,
+  }) async {
+    final request = dioClient.post(ApiUrlConstants.register, data: {
+      "username": usename,
+      "password": password,
+      "name": name,
+    });
+    try {
+      return callApiWithErrorParser(request)
+          .then((value) => User.fromJson(value.data));
     } catch (e) {
       rethrow;
     }

@@ -132,7 +132,7 @@ class CreateQuizView extends StatelessWidget {
                             );
 
                             if (picked != null) {
-                              log(picked.files.first.bytes.toString());
+                              log(picked.files.first.name.toString());
                             }
                           },
                           icon: Icons.slideshow,

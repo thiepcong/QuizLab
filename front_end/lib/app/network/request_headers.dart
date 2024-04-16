@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../core/values/secure_key_constant.dart';
 
 class RequestHeaderInterceptor extends InterceptorsWrapper {
   @override
@@ -13,14 +12,20 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
 
   Future<Map<String, String>> getCustomHeaders() async {
     final pre = await SharedPreferences.getInstance();
-    final accessToken = pre.getString(SecureKeyConstants.accessToken);
+    final userId = pre.getInt("userId");
+    final filePath = pre.getString("filePath");
     var customHeaders = {
       'content-type': 'application/json',
       'Accept': "application/json"
     };
-    if (accessToken != null && accessToken.isNotEmpty) {
+    if (userId != null) {
       customHeaders.addAll({
-        'Authorization': "Bearer $accessToken",
+        'userId': "$userId",
+      });
+    }
+    if (filePath != null) {
+      customHeaders.addAll({
+        'filePath': filePath,
       });
     }
 
