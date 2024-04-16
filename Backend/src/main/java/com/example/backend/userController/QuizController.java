@@ -1,6 +1,9 @@
 package com.example.backend.userController;
 
+import com.example.backend.dto.QuestionDTO;
 import com.example.backend.dto.QuizDTO;
+import com.example.backend.entity.Answer;
+import com.example.backend.entity.Quiz;
 import com.example.backend.service.QuizService;
 import com.example.backend.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -9,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -99,7 +103,8 @@ public class QuizController {
         }
 
         quizDTO.setId(quizId);
-        QuizDTO updatedQuizDTO = quizService.updateQuiz(quizId, quizDTO);
+        quizDTO.setUserId(userId);
+        QuizDTO updatedQuizDTO = quizService.updateQuiz(quizDTO);
 
         return ResponseEntity.ok(updatedQuizDTO);
     }

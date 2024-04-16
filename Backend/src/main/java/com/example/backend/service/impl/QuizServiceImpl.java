@@ -1,13 +1,16 @@
 package com.example.backend.service.impl;
 
+import com.example.backend.dto.QuestionDTO;
 import com.example.backend.dto.QuizDTO;
+import com.example.backend.entity.Answer;
+import com.example.backend.entity.Question;
 import com.example.backend.entity.Quiz;
+import com.example.backend.repo.QuestionRepo;
 import com.example.backend.repo.QuizRepo;
 import com.example.backend.service.QuizService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,15 +18,20 @@ import java.util.stream.Collectors;
 @Service
 public class QuizServiceImpl implements QuizService {
     private final QuizRepo quizRepo;
+    private final QuestionRepo questionRepo;
     private final ModelMapper modelMapper;
 
-    public QuizServiceImpl(QuizRepo quizRepo, ModelMapper modelMapper) {
+    public QuizServiceImpl(QuizRepo quizRepo, QuestionRepo questionRepo, ModelMapper modelMapper) {
         this.quizRepo = quizRepo;
+        this.questionRepo = questionRepo;
         this.modelMapper = modelMapper;
     }
 
     @Override
     public QuizDTO createQuiz(QuizDTO quizDTO) {
+        for(QuestionDTO questionDTO : quizDTO.getQuestions()){
+            questionDTO.setUserId(quizDTO.getUserId());
+        }
         Quiz quiz = modelMapper.map(quizDTO, Quiz.class);
         Quiz createdQuiz = quizRepo.save(quiz);
         return modelMapper.map(createdQuiz, QuizDTO.class);
@@ -56,19 +64,28 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public QuizDTO updateQuiz(int quizId, QuizDTO quizDTO) {
-        Optional<Quiz> quizOptional = quizRepo.findById(quizId);
+    public QuizDTO updateQuiz(QuizDTO quizDTO) {
+        Optional<Quiz> quizOptional = quizRepo.findById(quizDTO.getId());
         if (quizOptional.isPresent()) {
             Quiz quiz = quizOptional.get();
             quiz.setTitle(quizDTO.getTitle());
             quiz.setSubject(quizDTO.getSubject());
             quiz.setTime(quizDTO.getTime());
+            quiz.setQuestions(quizDTO.getQuestions().stream()
+                    .map(questionDTO -> {
+                        Question question = modelMapper.map(questionDTO, Question.class);
+                        question.setUserId(quizDTO.getUserId());
+                        return question;
+                    })
+                    .collect(Collectors.toList()));
             // Update other attributes as needed
             Quiz updatedQuiz = quizRepo.save(quiz);
             return modelMapper.map(updatedQuiz, QuizDTO.class);
         }
         return null;
     }
+
+
 
     @Override
     public int deleteQuiz(int quizId) {

@@ -9,7 +9,7 @@ public interface QuizService {
     QuizDTO getQuizById(int quizId);
     List<QuizDTO> getAllQuizzes();
     List<QuizDTO> getAllQuizzesByUserId(int userId);
-    QuizDTO updateQuiz(int quizId, QuizDTO quizDTO);
+    QuizDTO updateQuiz(QuizDTO quizDTO);
     int deleteQuiz(int quizId);
     QuizDTO createQuizFromExcel(QuizDTO quizDTO, String filePath);
 }
