@@ -22,9 +22,12 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(path = "/save")
-    public RegisterResponse saveUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> saveUser(@RequestBody UserDTO userDTO) {
         RegisterResponse registerResponse =userService.addUser(userDTO);
-        return registerResponse;
+        if (registerResponse.getStatus()) {
+            return ResponseEntity.ok(registerResponse);
+        }
+        return ResponseEntity.badRequest().body(registerResponse);
     }
 
     @PostMapping(path = "/login")

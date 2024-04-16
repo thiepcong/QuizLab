@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepo userRepo;
@@ -44,7 +44,7 @@ public class UserImpl implements UserService {
 
     @Override
     public LoginResponse loginUser(LoginDTO loginDTO) {
-        String msg ="";
+
         User user1 = userRepo.findUserByUsername(loginDTO.getUsername());
         if(user1 != null) {
             String password = loginDTO.getPassword();
@@ -54,15 +54,15 @@ public class UserImpl implements UserService {
                 Optional<User> user = userRepo.findUserByUsernameAndPassword(
                         loginDTO.getUsername(), encodedPassword);
                 if(user.isPresent()) {
-                    return new LoginResponse("Login Success", true, user1.getId());
+                    return new LoginResponse("Login Success", true, user1);
                 } else {
-                    return new LoginResponse("Login Failed", false, 0);
+                    return new LoginResponse("Login Failed", false, null);
                 }
             } else {
-                return new LoginResponse("Password not match", false, 0);
+                return new LoginResponse("Password not match", false, null);
             }
         } else {
-            return new LoginResponse("Username not exits", false, 0);
+            return new LoginResponse("Username not exits", false, null);
         }
     }
 

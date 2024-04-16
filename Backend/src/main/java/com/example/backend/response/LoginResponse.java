@@ -1,16 +1,17 @@
 package com.example.backend.response;
 
+
 import com.example.backend.entity.User;
 
 public class LoginResponse {
     private String message;
     private Boolean status;
-    private int userId;
+    private User user;
 
-    public LoginResponse(String message, Boolean status, int userId) {
+    public LoginResponse(String message, Boolean status, User user) {
         this.message = message;
         this.status = status;
-        this.userId = userId;
+        this.user = user;
     }
 
     public String getMessage() {
@@ -29,12 +30,12 @@ public class LoginResponse {
         this.status = status;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class LoginResponse {
         return "LoginResponse{" +
                 "message='" + message + '\'' +
                 ", status=" + status +
-                ", userId=" + userId +
+                ", user=" + user +
                 '}';
     }
 }
