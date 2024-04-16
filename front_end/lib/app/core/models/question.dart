@@ -1,6 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'answer.dart';
 
 class Question {
@@ -9,36 +6,21 @@ class Question {
 
   Question({required this.content, required this.answers});
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'content': content,
-      'answers': answers.map((x) => x.toMap()).toList(),
+      'answers': answers.map((x) => x.toJson()).toList(),
     };
   }
 
-  factory Question.fromMap(Map<String, dynamic> map) {
+  factory Question.fromJson(Map<String, dynamic> map) {
     return Question(
       content: map['content'] as String,
       answers: List<Answer>.from(
         (map['answers'] as List).map<Answer>(
-          (x) => Answer.fromMap(x as Map<String, dynamic>),
+          (x) => Answer.fromJson(x as Map<String, dynamic>),
         ),
       ),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Question.fromJson(String source) =>
-      Question.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  Question copyWith({
-    String? content,
-    List<Answer>? answers,
-  }) {
-    return Question(
-      content: content ?? this.content,
-      answers: answers ?? this.answers,
     );
   }
 }

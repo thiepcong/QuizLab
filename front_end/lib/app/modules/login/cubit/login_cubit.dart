@@ -16,7 +16,7 @@ class LoginCubit extends Cubit<LoginState> {
       final res =
           await _loginRepository.login(usename: username, password: password);
       final pre = await SharedPreferences.getInstance();
-      pre.setInt("id", res.id);
+      await pre.setInt("userId", res.id);
       emit(state.copyWith(
         authDone: true,
         isLoading: false,
@@ -45,7 +45,7 @@ class LoginCubit extends Cubit<LoginState> {
         password: password,
       );
       final pre = await SharedPreferences.getInstance();
-      pre.setInt("id", res.id);
+      await pre.setInt("userId", res.id);
       emit(state.copyWith(
         authDone: true,
         isLoading: false,

@@ -12,14 +12,20 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
 
   Future<Map<String, String>> getCustomHeaders() async {
     final pre = await SharedPreferences.getInstance();
-    final accessToken = pre.getInt("id");
+    final userId = pre.getInt("userId");
+    final filePath = pre.getString("filePath");
     var customHeaders = {
       'content-type': 'application/json',
       'Accept': "application/json"
     };
-    if (accessToken != null) {
+    if (userId != null) {
       customHeaders.addAll({
-        'Authorization': "Bearer $accessToken",
+        'userId': "$userId",
+      });
+    }
+    if (filePath != null) {
+      customHeaders.addAll({
+        'filePath': filePath,
       });
     }
 
