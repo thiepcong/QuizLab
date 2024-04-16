@@ -40,11 +40,13 @@ class Quiz {
           (x) => Question.fromJson(x as Map<String, dynamic>),
         ),
       ),
-      tests: List<Test>.from(
-        (map['tests'] as List).map<Test>(
-          (x) => Test.fromJson(x as Map<String, dynamic>),
-        ),
-      ),
+      tests: map['tests'] != null
+          ? List<Test>.from(
+              (map['tests'] as List).map<Test>(
+                (x) => Test.fromJson(x as Map<String, dynamic>),
+              ),
+            )
+          : [],
     );
   }
 

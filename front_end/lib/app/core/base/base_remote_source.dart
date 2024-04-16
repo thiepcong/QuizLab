@@ -14,9 +14,7 @@ abstract class BaseRemoteSource {
     try {
       Response<T> response = await api;
 
-      if (response.statusCode != HttpStatus.ok ||
-          (response.data as Map<String, dynamic>)['statusCode'] !=
-              HttpStatus.ok) {}
+      if (response.statusCode != HttpStatus.ok) {}
 
       return response;
     } on DioException catch (dioError) {
