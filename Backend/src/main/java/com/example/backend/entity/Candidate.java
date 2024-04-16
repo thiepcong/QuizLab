@@ -16,7 +16,7 @@ public class Candidate {
     private int score;
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Result> results;
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch= FetchType.LAZY)
     @JoinColumn(name = "test_id")
     private Test test;
 

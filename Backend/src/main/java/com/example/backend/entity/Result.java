@@ -12,11 +12,11 @@ public class Result {
     private int id;
 
     private boolean selected;
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
 

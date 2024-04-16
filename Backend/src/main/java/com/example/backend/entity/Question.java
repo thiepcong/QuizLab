@@ -2,6 +2,8 @@ package com.example.backend.entity;
 
 import com.example.backend.dto.QuestionDTO;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
+
 import java.util.List;
 
 @Entity
@@ -20,11 +22,11 @@ public class Question {
     @JoinColumn(name = "question_id")
     private List<Answer> answers;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch= FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(mappedBy = "questions",  cascade = { CascadeType.MERGE })
+    @ManyToMany(mappedBy = "questions",  cascade = { CascadeType.PERSIST,CascadeType.MERGE })
     private List<Quiz> quizzes;
 
     @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

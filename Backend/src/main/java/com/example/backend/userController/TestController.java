@@ -1,5 +1,6 @@
 package com.example.backend.userController;
 
+import com.example.backend.dto.QuizDTO;
 import com.example.backend.dto.TestDTO;
 import com.example.backend.service.TestService;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -19,9 +20,26 @@ public class TestController {
     }
 
     @PostMapping
-    public ResponseEntity<TestDTO> createTest(@RequestBody TestDTO testDTO) {
-        TestDTO createdTestDTO = testService.createTest(testDTO);
+    public ResponseEntity<TestDTO> createTest(@RequestHeader int quizId, @RequestBody TestDTO testDTO) {
+        TestDTO createdTestDTO = testService.createTest(quizId, testDTO);
         return new ResponseEntity<>(createdTestDTO, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/create-from-excel")
+    public ResponseEntity<TestDTO> createTestFromExcel(
+            @RequestHeader("userId") int userId,
+            @RequestHeader("filePath") String filePath,
+            @RequestHeader int quizId,
+            @RequestBody TestDTO testDTO) {
+
+        try {
+            TestDTO createdTest = testService.createTestFromExcel(quizId, testDTO, filePath);
+            return ResponseEntity.ok(createdTest);
+        } catch (Exception e) {
+            System.out.println(e);
+            // Handle any exceptions that occur during the creation of the quiz
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/{testId}")
@@ -33,6 +51,15 @@ public class TestController {
         }
 
         return ResponseEntity.ok(testDTO);
+    }
+    @GetMapping("/code/{quizCode}")
+    public ResponseEntity<TestDTO> getTestByQuizCode(@PathVariable String quizCode) {
+        TestDTO testDTO = testService.getTestByQuizCode(quizCode);
+        if (testDTO != null) {
+            return ResponseEntity.ok(testDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @GetMapping

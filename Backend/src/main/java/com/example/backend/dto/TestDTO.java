@@ -1,7 +1,19 @@
 package com.example.backend.dto;
 
+import com.example.backend.entity.Answer;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class TestDTO {
     private int id;
@@ -16,6 +28,7 @@ public class TestDTO {
     // ...
 
     public TestDTO() {
+        this.quizCode = generateRandomString(6);
     }
 
     public TestDTO(int id, String title, Date timeCreated, String quizCode, String note, QuizDTO quiz, List<CandidateDTO> candidates) {
@@ -27,6 +40,42 @@ public class TestDTO {
         this.quiz = quiz;
         this.candidates = candidates;
     }
+
+    public List<CandidateDTO> addCandidatsFromExcel(String filePath) {
+        List<CandidateDTO> candidateDTOList = new ArrayList<>();
+
+        try (Workbook workbook = new XSSFWorkbook(new FileInputStream(new File(filePath)))) {
+            Sheet sheet = workbook.getSheetAt(0); // Assuming the candidates are in the first sheet
+
+            for (Row row : sheet) {
+                String name = row.getCell(0).getStringCellValue();
+
+                CandidateDTO candidateDTO = new CandidateDTO();
+                candidateDTO.setName(name);
+                candidateDTO.setTestId(this.id);
+                candidateDTOList.add(candidateDTO);
+            }
+
+        } catch (IOException e) {
+            // Handle the exception appropriately
+        }
+        return candidateDTOList;
+    }
+
+    public static String generateRandomString(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder sb = new StringBuilder(length);
+        Random random = new Random();
+
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            char randomChar = characters.charAt(index);
+            sb.append(randomChar);
+        }
+
+        return sb.toString();
+    }
+
 
     public int getId() {
         return id;
