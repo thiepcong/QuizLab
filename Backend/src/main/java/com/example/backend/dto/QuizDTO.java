@@ -54,6 +54,7 @@ public class QuizDTO {
 
                 QuestionDTO questionDTO = new QuestionDTO();
                 questionDTO.setContent(questionContent);
+                questionDTO.setUserId(this.getUserId());
                 List<Answer> answers = new ArrayList<>();
 
                 // Read the answers and correct answers from the respective columns

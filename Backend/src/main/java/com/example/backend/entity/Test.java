@@ -18,7 +18,7 @@ public class Test {
     private String quizCode;
     private String note;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 

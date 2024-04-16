@@ -1,5 +1,6 @@
 package com.example.backend.service.impl;
 
+import com.example.backend.dto.QuizDTO;
 import com.example.backend.dto.TestDTO;
 import com.example.backend.entity.Test;
 import com.example.backend.repo.QuizRepo;
@@ -26,10 +27,26 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public TestDTO createTest(TestDTO testDTO) {
+    public TestDTO createTest(int quizId, TestDTO testDTO) {
+        testDTO.setQuiz(modelMapper.map(quizRepo.findById(quizId).get(), QuizDTO.class));
         Test test = modelMapper.map(testDTO, Test.class);
         Test createdTest = testRepository.save(test);
         return modelMapper.map(createdTest, TestDTO.class);
+    }
+
+    @Override
+    public TestDTO createTestFromExcel(int quizId, TestDTO testDTO, String filePath) {
+        testDTO.setQuiz(modelMapper.map(quizRepo.findById(quizId).get(), QuizDTO.class));
+        testDTO.setCandidates(testDTO.addCandidatsFromExcel(filePath));
+        Test test = modelMapper.map(testDTO, Test.class);
+        Test createdTest = testRepository.save(test);
+        return modelMapper.map(createdTest, TestDTO.class);
+    }
+
+    @Override
+    public TestDTO getTestByQuizCode(String quizCode) {
+        Test test = testRepository.findByQuizCode(quizCode);
+        return modelMapper.map(test, TestDTO.class);
     }
 
     @Override
@@ -56,8 +73,6 @@ public class TestServiceImpl implements TestService {
                 .map(test -> modelMapper.map(test, TestDTO.class))
                 .collect(Collectors.toList());
     }
-
-
 
     @Override
     public TestDTO updateTest(int testId, TestDTO testDTO) {

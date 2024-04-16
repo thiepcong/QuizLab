@@ -10,4 +10,5 @@ import java.util.List;
 @EnableJpaRepositories
 @Repository
 public interface TestRepo extends JpaRepository<Test, Integer> {
+    Test findByQuizCode(String quizCode);
 }

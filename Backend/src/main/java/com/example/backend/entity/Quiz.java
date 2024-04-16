@@ -16,7 +16,7 @@ public class Quiz {
     private String title;
     private String subject;
     private int time;
-    @ManyToMany(cascade = { CascadeType.MERGE })
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
             name = "quiz_question",
             joinColumns = @JoinColumn(name = "quiz_id"),
@@ -27,7 +27,7 @@ public class Quiz {
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Test> tests;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

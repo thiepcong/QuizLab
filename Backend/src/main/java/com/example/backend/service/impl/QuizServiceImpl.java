@@ -82,7 +82,6 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public QuizDTO createQuizFromExcel(QuizDTO quizDTO, String filePath) {
         quizDTO.setQuestions(quizDTO.addQuestionsFromExcel(filePath));;
-        System.out.println(quizDTO.getQuestions().size());
         Quiz quiz = modelMapper.map(quizDTO, Quiz.class);
         Quiz createdQuiz = quizRepo.save(quiz);
         return modelMapper.map(createdQuiz, QuizDTO.class);
