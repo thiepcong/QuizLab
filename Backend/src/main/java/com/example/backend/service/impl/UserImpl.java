@@ -54,15 +54,15 @@ public class UserImpl implements UserService {
                 Optional<User> user = userRepo.findUserByUsernameAndPassword(
                         loginDTO.getUsername(), encodedPassword);
                 if(user.isPresent()) {
-                    return new LoginResponse("Login Success", true, user1);
+                    return new LoginResponse("Login Success", true, user1.getId());
                 } else {
-                    return new LoginResponse("Login Failed", false, null);
+                    return new LoginResponse("Login Failed", false, 0);
                 }
             } else {
-                return new LoginResponse("Password not match", false, null);
+                return new LoginResponse("Password not match", false, 0);
             }
         } else {
-            return new LoginResponse("Username not exits", false, null);
+            return new LoginResponse("Username not exits", false, 0);
         }
     }
 

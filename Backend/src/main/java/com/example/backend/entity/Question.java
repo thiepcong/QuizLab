@@ -22,10 +22,8 @@ public class Question {
     @JoinColumn(name = "question_id")
     private List<Answer> answers;
 
-    @ManyToOne(cascade = CascadeType.MERGE,fetch= FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
+    @Column(name = "user_id")
+    private int userId;
     @ManyToMany(mappedBy = "questions",  cascade = { CascadeType.PERSIST,CascadeType.MERGE })
     private List<Quiz> quizzes;
 
@@ -36,17 +34,7 @@ public class Question {
     public Question() {
     }
 
-    public Question(String content, List<Answer> answers) {
-        this.content = content;
-        this.answers = answers;
-    }
 
-    public Question(int id, String content, List<Answer> answers, User user) {
-        this.id = id;
-        this.content = content;
-        this.answers = answers;
-        this.user = user;
-    }
 
     public int getQuestionId() {
         return id;
@@ -72,12 +60,20 @@ public class Question {
         this.answers = answers;
     }
 
-    public User getUser() {
-        return user;
+    public int getId() {
+        return id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public List<Answer> getAnswers() {

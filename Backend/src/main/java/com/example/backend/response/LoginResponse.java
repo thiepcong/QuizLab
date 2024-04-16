@@ -5,12 +5,12 @@ import com.example.backend.entity.User;
 public class LoginResponse {
     private String message;
     private Boolean status;
-    private User user;
+    private int userId;
 
-    public LoginResponse(String message, Boolean status, User user) {
+    public LoginResponse(String message, Boolean status, int userId) {
         this.message = message;
         this.status = status;
-        this.user = user;
+        this.userId = userId;
     }
 
     public String getMessage() {
@@ -29,12 +29,12 @@ public class LoginResponse {
         this.status = status;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class LoginResponse {
         return "LoginResponse{" +
                 "message='" + message + '\'' +
                 ", status=" + status +
-                ", user=" + user +
+                ", userId=" + userId +
                 '}';
     }
 }

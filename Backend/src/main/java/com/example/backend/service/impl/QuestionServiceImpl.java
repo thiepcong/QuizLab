@@ -49,7 +49,7 @@ public class QuestionServiceImpl implements QuestionService {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new IllegalArgumentException("User not found with ID: " + userId));
         Question question = modelMapper.map(questionDTO, Question.class);
-        question.setUser(user);
+        question.setUserId(userId);
         question = questionRepository.save(question);
         return modelMapper.map(question, QuestionDTO.class);
     }

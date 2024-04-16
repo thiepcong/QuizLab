@@ -25,9 +25,6 @@ public class User {
     @Column(name = "role", length = 255)
     private String role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Question> questions;
-
     public User() {
     }
 
@@ -75,14 +72,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
     }
 
     public String getRole() {

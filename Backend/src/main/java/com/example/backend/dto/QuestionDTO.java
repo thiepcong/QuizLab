@@ -11,8 +11,6 @@ public class QuestionDTO {
     private int questionId;
     private int userId;
     private String content;
-
-
     private List<Answer> answers;
 
     // Constructors, getters, and setters
