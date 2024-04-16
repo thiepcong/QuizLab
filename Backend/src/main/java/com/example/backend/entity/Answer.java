@@ -2,13 +2,15 @@ package com.example.backend.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "answer")
 public class Answer {
 
     @Id
     @Column(name = "id", length = 10)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "content", length = 255)

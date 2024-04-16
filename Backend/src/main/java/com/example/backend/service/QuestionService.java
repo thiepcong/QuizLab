@@ -10,10 +10,11 @@ import com.example.backend.entity.Answer;
 
 public interface QuestionService {
     List<Question> getAllQuestions();
-    Question getQuestionById(int id);
-    Question createQuestion(QuestionDTO questionDTO);
-    Question updateQuestion(QuestionDTO questionDTO);
+    QuestionDTO getQuestionById(int id);
+    QuestionDTO createQuestion(QuestionDTO questionDTO);
+    QuestionDTO updateQuestion(QuestionDTO questionDTO);
     void deleteQuestion(int id);
     Optional<Answer> getAnswerById(int id);
     Answer updateAnswer(Answer answer);
+    List<QuestionDTO> getAllQuestionsByUserId(int userId);
 }
