@@ -6,6 +6,7 @@ import com.example.backend.dto.UserDTO;
 import com.example.backend.entity.User;
 import com.example.backend.repo.UserRepo;
 import com.example.backend.response.LoginResponse;
+import com.example.backend.response.RegisterResponse;
 import com.example.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,17 +23,23 @@ public class UserImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Override
-    public User addUser(UserDTO userDTO) {
+    public RegisterResponse addUser(UserDTO userDTO) {
 
-        User user = new User(
-                userDTO.getId(),
-                userDTO.getName(),
-                userDTO.getUsername(),
-                this.passwordEncoder.encode(userDTO.getPassword()),
-                userDTO.getRole()
-        );
-        userRepo.save(user);
-        return user;
+        User user = userRepo.findUserByUsername(userDTO.getUsername());
+        if(user == null) {
+            User user1 = new User(
+                    userDTO.getId(),
+                    userDTO.getName(),
+                    userDTO.getUsername(),
+                    this.passwordEncoder.encode(userDTO.getPassword()),
+                    userDTO.getRole()
+            );
+            userRepo.save(user1);
+            return new RegisterResponse("Dang ki thanh cong", true, user1);
+        }
+
+        return new RegisterResponse("Dang ki khong thanh cong", false, null);
+
     }
 
     @Override

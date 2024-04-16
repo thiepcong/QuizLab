@@ -6,6 +6,7 @@ import com.example.backend.dto.LoginDTO;
 import com.example.backend.dto.UserDTO;
 import com.example.backend.entity.User;
 import com.example.backend.response.LoginResponse;
+import com.example.backend.response.RegisterResponse;
 import com.example.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(path = "/save")
-    public User saveUser(@RequestBody UserDTO userDTO) {
-        User user =userService.addUser(userDTO);
-        return user;
+    public RegisterResponse saveUser(@RequestBody UserDTO userDTO) {
+        RegisterResponse registerResponse =userService.addUser(userDTO);
+        return registerResponse;
     }
 
     @PostMapping(path = "/login")
