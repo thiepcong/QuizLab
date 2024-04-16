@@ -31,7 +31,7 @@ class LoginApi extends BaseRemoteSource {
     });
     try {
       return callApiWithErrorParser(request)
-          .then((value) => User.fromJson(value.data));
+          .then((value) => User.fromJson(value.data["user"]));
     } catch (e) {
       rethrow;
     }

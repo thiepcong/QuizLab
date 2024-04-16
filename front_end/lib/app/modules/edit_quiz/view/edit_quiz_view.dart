@@ -6,28 +6,39 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:front_end/app/core/values/show_message_internal.dart';
 import 'package:front_end/app/main_router.dart';
 
+import '../../../core/models/quiz.dart';
 import '../../../core/values/app_colors.dart';
 import '../../../core/values/text_styles.dart';
 import '../../../core/widgets/appBar/custom_app_bar.dart';
 import '../../../core/widgets/button/custom_button.dart';
-import '../cubit/create_quiz_cubit.dart';
-import '../cubit/create_quiz_state.dart';
-import '../repository/create_quiz_repository.dart';
+import '../cubit/edit_quiz_cubit.dart';
+import '../cubit/edit_quiz_state.dart';
+import '../repository/edit_quiz_repository.dart';
 import '../widgets/quizz_item.dart';
 import '../widgets/title_text_field.dart';
 
-class CreateQuizView extends StatefulWidget {
-  const CreateQuizView({super.key});
+class EditQuizView extends StatefulWidget {
+  const EditQuizView({super.key, required this.item});
+
+  final Quiz item;
 
   @override
-  State<CreateQuizView> createState() => _CreateQuizViewState();
+  State<EditQuizView> createState() => _EditQuizViewState();
 }
 
-class _CreateQuizViewState extends State<CreateQuizView> {
+class _EditQuizViewState extends State<EditQuizView> {
   final _subjectController = TextEditingController();
   final _titleController = TextEditingController();
   final _timeController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    _subjectController.text = widget.item.subject;
+    _titleController.text = widget.item.title;
+    _timeController.text = widget.item.time.toString();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -41,9 +52,10 @@ class _CreateQuizViewState extends State<CreateQuizView> {
   Widget build(BuildContext context) {
     return Title(
       color: AppColors.colorFFFFFFFF,
-      title: 'Tạo Quizz',
+      title: 'Sửa Quizz',
       child: BlocProvider(
-        create: (_) => CreateQuizCubit(context.read<CreateQuizRepository>()),
+        create: (_) => EditQuizCubit(context.read<EditQuizRepository>())
+          ..init(widget.item),
         child: _buildPage(context),
       ),
     );
@@ -52,7 +64,7 @@ class _CreateQuizViewState extends State<CreateQuizView> {
   Widget _buildPage(BuildContext context) {
     return MultiBlocListener(
       listeners: [
-        BlocListener<CreateQuizCubit, CreateQuizState>(
+        BlocListener<EditQuizCubit, EditQuizState>(
           listenWhen: (previous, current) =>
               previous.message != current.message,
           listener: (context, state) {
@@ -61,7 +73,7 @@ class _CreateQuizViewState extends State<CreateQuizView> {
             }
           },
         ),
-        BlocListener<CreateQuizCubit, CreateQuizState>(
+        BlocListener<EditQuizCubit, EditQuizState>(
           listenWhen: (previous, current) =>
               previous.saveQuizDone != current.saveQuizDone,
           listener: (context, state) {
@@ -74,18 +86,18 @@ class _CreateQuizViewState extends State<CreateQuizView> {
           },
         ),
       ],
-      child: BlocBuilder<CreateQuizCubit, CreateQuizState>(
+      child: BlocBuilder<EditQuizCubit, EditQuizState>(
         builder: (context, state) {
-          final cubit = context.read<CreateQuizCubit>();
+          final cubit = context.read<EditQuizCubit>();
           return Scaffold(
             appBar: CustomAppBar(
               isBack: true,
-              label: 'Tạo một bài quiz mới',
+              label: 'Sửa bài quiz',
               actions: [
                 TextButton(
                   onPressed: () {
                     if (_formKey.currentState?.validate() ?? false) {
-                      cubit.createQuiz(
+                      cubit.editQuiz(
                         _subjectController.text,
                         _timeController.text,
                         int.parse(_timeController.text),
@@ -152,30 +164,6 @@ class _CreateQuizViewState extends State<CreateQuizView> {
                             ],
                           ),
                         ),
-                        if (state.isImportFile)
-                          Row(
-                            children: [
-                              const Text(
-                                  "Bạn muốn xuất bản luôn hay tiếp tục chỉnh sửa?"),
-                              TextButton(
-                                onPressed: () {
-                                  if (_formKey.currentState?.validate() ??
-                                      false) {
-                                    cubit.createQuizFromExcel(
-                                        _subjectController.text,
-                                        _titleController.text,
-                                        int.parse(_timeController.text));
-                                  }
-                                },
-                                child: const Text("Xuất bản ngay"),
-                              ),
-                              TextButton(
-                                onPressed: () => context.pushRoute(
-                                    CreateQuestionViewRoute(cubit: cubit)),
-                                child: const Text("Thêm"),
-                              )
-                            ],
-                          ),
                         state.questions.isNotEmpty
                             ? Column(
                                 children: [
@@ -188,7 +176,7 @@ class _CreateQuizViewState extends State<CreateQuizView> {
                                           onDelete: () =>
                                               cubit.deleteQuestion(e.value),
                                           onEdit: () => context.pushRoute(
-                                            EditQuestionViewRoute(
+                                            EditEditQuestionViewRoute(
                                               cubit: cubit,
                                               item: e.value,
                                               index: e.key,
@@ -197,25 +185,22 @@ class _CreateQuizViewState extends State<CreateQuizView> {
                                         ),
                                       )
                                       .toList(),
-                                  state.isImportFile
-                                      ? const SizedBox.shrink()
-                                      : TextButton(
-                                          onPressed: () => context.pushRoute(
-                                              CreateQuestionViewRoute(
-                                                  cubit: cubit)),
-                                          child: const Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(Icons.add),
-                                              Text(
-                                                "Thêm câu hỏi",
-                                                style:
-                                                    TextStyles.regularBlackS14,
-                                              ),
-                                            ],
-                                          ),
+                                  TextButton(
+                                    onPressed: () => context.pushRoute(
+                                        EditCreateQuestionViewRoute(
+                                            cubit: cubit)),
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.add),
+                                        Text(
+                                          "Thêm câu hỏi",
+                                          style: TextStyles.regularBlackS14,
                                         ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               )
                             : Column(
@@ -229,7 +214,8 @@ class _CreateQuizViewState extends State<CreateQuizView> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.3,
                                     onTap: () => context.pushRoute(
-                                        CreateQuestionViewRoute(cubit: cubit)),
+                                        EditCreateQuestionViewRoute(
+                                            cubit: cubit)),
                                     icon: Icons.done,
                                     label: 'Nhiều lựa chọn',
                                   ),
