@@ -1,12 +1,16 @@
 package com.example.questionservice.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 
 @Table(name = "quiz_question")
+@Entity
 public class QuizQuestion {
 
+    @Id
+    @Column(name = "id", length = 10)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @Column(name = "quiz_id", length = 10)
     private int quizId;
 
