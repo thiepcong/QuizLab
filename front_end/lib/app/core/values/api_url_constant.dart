@@ -17,5 +17,5 @@ class ApiUrlConstants {
 
   static String deleteQuiz(int id) => '$baseUrl/api/quizzes/$id';
 
-  static String createTest = '$baseUrl/tests';
+  static String createTest = '$baseUrl/api/tests';
 }
