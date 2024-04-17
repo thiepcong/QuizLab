@@ -1,7 +1,5 @@
 package com.example.backend.dto;
 
-import com.example.backend.entity.Answer;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -12,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -29,6 +28,7 @@ public class TestDTO {
 
     public TestDTO() {
         this.quizCode = generateRandomString(6);
+        this.timeCreated = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
     }
 
     public TestDTO(int id, String title, Date timeCreated, String quizCode, String note, QuizDTO quiz, List<CandidateDTO> candidates) {

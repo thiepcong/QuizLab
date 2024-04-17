@@ -11,6 +11,14 @@ abstract class Routes {
   static const createQuestion = _Paths.createQuestion;
 
   static const editQuestion = _Paths.editQuestion;
+
+  static const editQuiz = _Paths.editQuiz;
+
+  static const editCreateQuestion = _Paths.editCreateQuestion;
+
+  static const editEditQuestion = _Paths.editEditQuestion;
+
+  static const createTest = _Paths.createTest;
 }
 
 abstract class _Paths {
@@ -25,4 +33,12 @@ abstract class _Paths {
   static const createQuestion = 'create_question';
 
   static const editQuestion = 'edit_question';
+
+  static const editQuiz = 'edit_quiz';
+
+  static const editCreateQuestion = 'edit_create_question';
+
+  static const editEditQuestion = 'edit_edit_question';
+
+  static const createTest = 'create_test';
 }

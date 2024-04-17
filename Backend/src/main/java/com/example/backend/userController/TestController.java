@@ -69,11 +69,11 @@ public class TestController {
         return ResponseEntity.ok(tests);
     }
 
-    @GetMapping("/users/{userId}")
+/*    @GetMapping("/users/{userId}")
     public ResponseEntity<List<TestDTO>> getAllTestsByUserId(@PathVariable int userId) {
         List<TestDTO> tests = testService.getAllTestsByUserId(userId);
         return ResponseEntity.ok(tests);
-    }
+    }*/
 
     @PutMapping("/{testId}")
     public ResponseEntity<TestDTO> updateTest(@PathVariable int testId,

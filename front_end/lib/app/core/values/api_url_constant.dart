@@ -8,4 +8,14 @@ class ApiUrlConstants {
   static String login = '$baseUrl/api/user/login';
 
   static String createQuizFromExcel = '$baseUrl/api/quizzes/create-from-excel';
+
+  static String createQuiz = '$baseUrl/api/quizzes/add';
+
+  static String editQuiz(int id) => '$baseUrl/api/quizzes/$id';
+
+  static String getAllQuizByUser = '$baseUrl/api/quizzes/users';
+
+  static String deleteQuiz(int id) => '$baseUrl/api/quizzes/$id';
+
+  static String createTest = '$baseUrl/api/tests';
 }

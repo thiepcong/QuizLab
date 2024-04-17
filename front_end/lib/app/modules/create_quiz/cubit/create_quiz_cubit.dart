@@ -1,10 +1,109 @@
+import 'dart:developer';
+import 'dart:typed_data';
+
+import 'package:excel/excel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/models/answer.dart';
 import '../../../core/models/question.dart';
+import '../repository/create_quiz_repository.dart';
 import 'create_quiz_state.dart';
 
 class CreateQuizCubit extends Cubit<CreateQuizState> {
-  CreateQuizCubit() : super(const CreateQuizState());
+  CreateQuizCubit(this._repo) : super(const CreateQuizState());
+
+  final CreateQuizRepository _repo;
+
+  void createQuiz(String subject, String title, int time) async {
+    try {
+      if (state.isImportFile) {
+        createQuizFromExcel(subject, title, time);
+        return;
+      }
+      emit(state.copyWith(
+        message: null,
+        isLoading: true,
+        saveQuizDone: false,
+      ));
+      await _repo.createQuiz(
+        subject: subject,
+        title: title,
+        time: time,
+        questions: state.questions,
+      );
+      emit(state.copyWith(saveQuizDone: true, isLoading: false));
+    } catch (e) {
+      emit(state.copyWith(message: "Đã có lỗi xảy ra", isLoading: false));
+    }
+  }
+
+  void createQuizFromExcel(String subject, String title, int time) async {
+    try {
+      emit(state.copyWith(
+        message: null,
+        isLoading: true,
+        saveQuizDone: false,
+      ));
+      if (state.filePath == null) {
+        emit(state.copyWith(message: "Vui lòng thử lại"));
+        return;
+      }
+      final pre = await SharedPreferences.getInstance();
+      await pre.setString("filePath", state.filePath!);
+      await _repo.createQuizFromExcel(
+        subject: subject,
+        title: title,
+        time: time,
+      );
+      await pre.remove("filePath");
+      emit(state.copyWith(saveQuizDone: true, isLoading: false));
+    } catch (e) {
+      final pre = await SharedPreferences.getInstance();
+      await pre.remove("filePath");
+      emit(state.copyWith(message: "Đã có lỗi xảy ra", isLoading: false));
+      rethrow;
+    }
+  }
+
+  void chooseFileExcel(Uint8List? bytes, String fileName) {
+    if (bytes == null) return;
+    try {
+      emit(state.copyWith(message: null, isImportFile: false, isLoading: true));
+      var excel = Excel.decodeBytes(bytes);
+      List<Question> li = [];
+      for (final table in excel.tables.keys) {
+        log(table);
+        for (final row in excel.tables[table]!.rows) {
+          // for (final cell in row) {
+          //   log(cell?.value.toString() ?? '');
+          // }
+          li.add(Question(content: row[0]!.value.toString(), answers: [
+            Answer(
+                content: row[1]!.value.toString(),
+                status: bool.parse(row[5]!.value.toString())),
+            Answer(
+                content: row[2]!.value.toString(),
+                status: bool.parse(row[6]!.value.toString())),
+            Answer(
+                content: row[3]!.value.toString(),
+                status: bool.parse(row[7]!.value.toString())),
+            Answer(
+                content: row[4]!.value.toString(),
+                status: bool.parse(row[8]!.value.toString())),
+          ]));
+        }
+      }
+      emit(state.copyWith(
+        questions: li,
+        isImportFile: true,
+        isLoading: false,
+        filePath: "C:/Users/Admin/Downloads/$fileName",
+      ));
+    } catch (e) {
+      emit(state.copyWith(message: "Vui lòng thử lại", isLoading: false));
+      rethrow;
+    }
+  }
 
   void setRightAnswer(bool? e, String choice) {
     List<String> li = List.from(state.rightAnswer);
@@ -40,13 +139,14 @@ class CreateQuizCubit extends Cubit<CreateQuizState> {
       questions: res,
       rightAnswer: [],
       saveQuestionDone: true,
+      isImportFile: false,
     ));
   }
 
   void deleteQuestion(Question item) {
     List<Question> res = List.from(state.questions);
     res.remove(item);
-    emit(state.copyWith(questions: res));
+    emit(state.copyWith(questions: res, isImportFile: false));
   }
 
   void initEdit(Question item) {
@@ -83,6 +183,7 @@ class CreateQuizCubit extends Cubit<CreateQuizState> {
       questions: res,
       rightAnswer: [],
       saveQuestionDone: true,
+      isImportFile: false,
     ));
   }
 }

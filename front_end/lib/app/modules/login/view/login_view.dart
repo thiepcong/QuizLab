@@ -71,107 +71,119 @@ class _LoginViewState extends State<LoginView> {
               label: 'QUIZIZZ',
               isLeading: false,
             ),
-            body: Stack(
-              children: [
-                Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    width: 400,
-                    height: 500,
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            "Đăng nhập",
-                            style: TextStyles.boldBlackS28,
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: TextFormField(
-                              controller: _usernameController,
-                              decoration: const InputDecoration(
-                                labelText: 'Tên người dùng',
-                                border: OutlineInputBorder(),
+            body: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/bg.jpg"),
+                  opacity: 0.2,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Stack(
+                children: [
+                  Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12)),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      width: 400,
+                      height: 500,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              "Đăng nhập",
+                              style: TextStyles.boldBlackS28,
+                            ),
+                            SizedBox(
+                              width: double.infinity,
+                              child: TextFormField(
+                                controller: _usernameController,
+                                decoration: const InputDecoration(
+                                  labelText: 'Tên người dùng',
+                                  border: OutlineInputBorder(),
+                                ),
+                                onFieldSubmitted: (e) {
+                                  if (_formKey.currentState!.validate()) {
+                                    cubit.login(_usernameController.text,
+                                        _passwordController.text);
+                                  }
+                                },
+                                validator: (value) {
+                                  if (value == null || value.trim().isEmpty) {
+                                    return 'Vui lòng nhập tên người dùng!';
+                                  }
+                                  return null;
+                                },
                               ),
-                              onFieldSubmitted: (e) {
+                            ),
+                            const SizedBox(height: 16),
+                            SizedBox(
+                              width: double.infinity,
+                              child: TextFormField(
+                                controller: _passwordController,
+                                obscureText: true,
+                                decoration: const InputDecoration(
+                                  labelText: 'Mật khẩu',
+                                  border: OutlineInputBorder(),
+                                ),
+                                onFieldSubmitted: (e) {
+                                  if (_formKey.currentState!.validate()) {
+                                    cubit.login(_usernameController.text,
+                                        _passwordController.text);
+                                  }
+                                },
+                                validator: (value) {
+                                  if (value == null || value.trim().isEmpty) {
+                                    return 'Vui lòng nhập mật khẩu!';
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   cubit.login(_usernameController.text,
                                       _passwordController.text);
                                 }
                               },
-                              validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return 'Vui lòng nhập tên người dùng!';
-                                }
-                                return null;
-                              },
+                              child: const Text('Login'),
                             ),
-                          ),
-                          const SizedBox(height: 16),
-                          SizedBox(
-                            width: double.infinity,
-                            child: TextFormField(
-                              controller: _passwordController,
-                              obscureText: true,
-                              decoration: const InputDecoration(
-                                labelText: 'Mật khẩu',
-                                border: OutlineInputBorder(),
-                              ),
-                              onFieldSubmitted: (e) {
-                                if (_formKey.currentState!.validate()) {
-                                  cubit.login(_usernameController.text,
-                                      _passwordController.text);
-                                }
-                              },
-                              validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return 'Vui lòng nhập mật khẩu!';
-                                }
-                                return null;
-                              },
+                            const SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Chưa có tài khoản?"),
+                                TextButton(
+                                  onPressed: () => context.router
+                                      .replace(const RegisterViewRoute()),
+                                  child: const Text("Đăng ký"),
+                                )
+                              ],
                             ),
-                          ),
-                          const SizedBox(height: 16),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                cubit.login(_usernameController.text,
-                                    _passwordController.text);
-                              }
-                            },
-                            child: const Text('Login'),
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text("Chưa có tài khoản?"),
-                              TextButton(
-                                onPressed: () => context.router
-                                    .replace(const RegisterViewRoute()),
-                                child: const Text("Đăng ký"),
-                              )
-                            ],
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                state.isLoading
-                    ? Container(
-                        color: AppColors.colorFF000000.withOpacity(0.5),
-                        alignment: Alignment.center,
-                        child: const CircularProgressIndicator(),
-                      )
-                    : const SizedBox.shrink()
-              ],
+                  state.isLoading
+                      ? Container(
+                          color: AppColors.colorFF000000.withOpacity(0.5),
+                          alignment: Alignment.center,
+                          child: const CircularProgressIndicator(),
+                        )
+                      : const SizedBox.shrink()
+                ],
+              ),
             ),
           );
         },

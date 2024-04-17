@@ -1,6 +1,6 @@
 class Test {
   final int id;
-  final int title;
+  final String title;
   final DateTime timeCreated;
   final String quizCode;
   final String? note;
@@ -26,7 +26,7 @@ class Test {
   factory Test.fromJson(Map<String, dynamic> map) {
     return Test(
       id: map['id'] as int,
-      title: map['title'] as int,
+      title: map['title'] as String,
       timeCreated: DateTime.parse(map['timeCreated'] as String),
       quizCode: map['quizCode'] as String,
       note: map['note'] != null ? map['note'] as String : null,
@@ -35,7 +35,7 @@ class Test {
 
   Test copyWith({
     int? id,
-    int? title,
+    String? title,
     DateTime? timeCreated,
     String? quizCode,
     String? note,

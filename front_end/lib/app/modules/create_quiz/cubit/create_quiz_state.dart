@@ -10,7 +10,10 @@ class CreateQuizState with _$CreateQuizState {
 
   const factory CreateQuizState({
     @Default(false) bool isLoading,
+    @Default(false) bool isImportFile,
     @Default(false) bool saveQuestionDone,
+    @Default(false) bool saveQuizDone,
+    String? filePath,
     @Default([]) List<String> rightAnswer,
     @Default([]) List<Question> questions,
     String? message,

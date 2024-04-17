@@ -9,6 +9,7 @@ import java.util.List;
 @Table(name = "quiz")
 public class Quiz {
     @Id
+    @Column(name = "id", length = 10)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -24,9 +25,6 @@ public class Quiz {
     )
     private List<Question> questions;
 
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Test> tests;
-
     @ManyToOne(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -36,16 +34,6 @@ public class Quiz {
     // ...
 
     public Quiz() {
-    }
-
-    public Quiz(int id, String title, String subject, int time, List<Question> questions, List<Test> tests, User user) {
-        this.id = id;
-        this.title = title;
-        this.subject = subject;
-        this.time = time;
-        this.questions = questions;
-        this.tests = tests;
-        this.user = user;
     }
 
     public int getId() {
@@ -86,14 +74,6 @@ public class Quiz {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
-    }
-
-    public List<Test> getTests() {
-        return tests;
-    }
-
-    public void setTests(List<Test> tests) {
-        this.tests = tests;
     }
 
     public User getUser() {

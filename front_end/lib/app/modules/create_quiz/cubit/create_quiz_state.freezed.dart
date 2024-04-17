@@ -17,7 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CreateQuizState {
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isImportFile => throw _privateConstructorUsedError;
   bool get saveQuestionDone => throw _privateConstructorUsedError;
+  bool get saveQuizDone => throw _privateConstructorUsedError;
+  String? get filePath => throw _privateConstructorUsedError;
   List<String> get rightAnswer => throw _privateConstructorUsedError;
   List<Question> get questions => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
@@ -36,7 +39,10 @@ abstract class $CreateQuizStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool isLoading,
+      bool isImportFile,
       bool saveQuestionDone,
+      bool saveQuizDone,
+      String? filePath,
       List<String> rightAnswer,
       List<Question> questions,
       String? message,
@@ -57,7 +63,10 @@ class _$CreateQuizStateCopyWithImpl<$Res, $Val extends CreateQuizState>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? isImportFile = null,
     Object? saveQuestionDone = null,
+    Object? saveQuizDone = null,
+    Object? filePath = freezed,
     Object? rightAnswer = null,
     Object? questions = null,
     Object? message = freezed,
@@ -68,10 +77,22 @@ class _$CreateQuizStateCopyWithImpl<$Res, $Val extends CreateQuizState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isImportFile: null == isImportFile
+          ? _value.isImportFile
+          : isImportFile // ignore: cast_nullable_to_non_nullable
+              as bool,
       saveQuestionDone: null == saveQuestionDone
           ? _value.saveQuestionDone
           : saveQuestionDone // ignore: cast_nullable_to_non_nullable
               as bool,
+      saveQuizDone: null == saveQuizDone
+          ? _value.saveQuizDone
+          : saveQuizDone // ignore: cast_nullable_to_non_nullable
+              as bool,
+      filePath: freezed == filePath
+          ? _value.filePath
+          : filePath // ignore: cast_nullable_to_non_nullable
+              as String?,
       rightAnswer: null == rightAnswer
           ? _value.rightAnswer
           : rightAnswer // ignore: cast_nullable_to_non_nullable
@@ -102,7 +123,10 @@ abstract class _$$CreateQuizStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {bool isLoading,
+      bool isImportFile,
       bool saveQuestionDone,
+      bool saveQuizDone,
+      String? filePath,
       List<String> rightAnswer,
       List<Question> questions,
       String? message,
@@ -121,7 +145,10 @@ class __$$CreateQuizStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? isImportFile = null,
     Object? saveQuestionDone = null,
+    Object? saveQuizDone = null,
+    Object? filePath = freezed,
     Object? rightAnswer = null,
     Object? questions = null,
     Object? message = freezed,
@@ -132,10 +159,22 @@ class __$$CreateQuizStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      isImportFile: null == isImportFile
+          ? _value.isImportFile
+          : isImportFile // ignore: cast_nullable_to_non_nullable
+              as bool,
       saveQuestionDone: null == saveQuestionDone
           ? _value.saveQuestionDone
           : saveQuestionDone // ignore: cast_nullable_to_non_nullable
               as bool,
+      saveQuizDone: null == saveQuizDone
+          ? _value.saveQuizDone
+          : saveQuizDone // ignore: cast_nullable_to_non_nullable
+              as bool,
+      filePath: freezed == filePath
+          ? _value.filePath
+          : filePath // ignore: cast_nullable_to_non_nullable
+              as String?,
       rightAnswer: null == rightAnswer
           ? _value._rightAnswer
           : rightAnswer // ignore: cast_nullable_to_non_nullable
@@ -161,7 +200,10 @@ class __$$CreateQuizStateImplCopyWithImpl<$Res>
 class _$CreateQuizStateImpl extends _CreateQuizState {
   const _$CreateQuizStateImpl(
       {this.isLoading = false,
+      this.isImportFile = false,
       this.saveQuestionDone = false,
+      this.saveQuizDone = false,
+      this.filePath,
       final List<String> rightAnswer = const [],
       final List<Question> questions = const [],
       this.message,
@@ -175,7 +217,15 @@ class _$CreateQuizStateImpl extends _CreateQuizState {
   final bool isLoading;
   @override
   @JsonKey()
+  final bool isImportFile;
+  @override
+  @JsonKey()
   final bool saveQuestionDone;
+  @override
+  @JsonKey()
+  final bool saveQuizDone;
+  @override
+  final String? filePath;
   final List<String> _rightAnswer;
   @override
   @JsonKey()
@@ -201,7 +251,7 @@ class _$CreateQuizStateImpl extends _CreateQuizState {
 
   @override
   String toString() {
-    return 'CreateQuizState(isLoading: $isLoading, saveQuestionDone: $saveQuestionDone, rightAnswer: $rightAnswer, questions: $questions, message: $message, error: $error)';
+    return 'CreateQuizState(isLoading: $isLoading, isImportFile: $isImportFile, saveQuestionDone: $saveQuestionDone, saveQuizDone: $saveQuizDone, filePath: $filePath, rightAnswer: $rightAnswer, questions: $questions, message: $message, error: $error)';
   }
 
   @override
@@ -211,8 +261,14 @@ class _$CreateQuizStateImpl extends _CreateQuizState {
             other is _$CreateQuizStateImpl &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.isImportFile, isImportFile) ||
+                other.isImportFile == isImportFile) &&
             (identical(other.saveQuestionDone, saveQuestionDone) ||
                 other.saveQuestionDone == saveQuestionDone) &&
+            (identical(other.saveQuizDone, saveQuizDone) ||
+                other.saveQuizDone == saveQuizDone) &&
+            (identical(other.filePath, filePath) ||
+                other.filePath == filePath) &&
             const DeepCollectionEquality()
                 .equals(other._rightAnswer, _rightAnswer) &&
             const DeepCollectionEquality()
@@ -225,7 +281,10 @@ class _$CreateQuizStateImpl extends _CreateQuizState {
   int get hashCode => Object.hash(
       runtimeType,
       isLoading,
+      isImportFile,
       saveQuestionDone,
+      saveQuizDone,
+      filePath,
       const DeepCollectionEquality().hash(_rightAnswer),
       const DeepCollectionEquality().hash(_questions),
       message,
@@ -242,7 +301,10 @@ class _$CreateQuizStateImpl extends _CreateQuizState {
 abstract class _CreateQuizState extends CreateQuizState {
   const factory _CreateQuizState(
       {final bool isLoading,
+      final bool isImportFile,
       final bool saveQuestionDone,
+      final bool saveQuizDone,
+      final String? filePath,
       final List<String> rightAnswer,
       final List<Question> questions,
       final String? message,
@@ -252,7 +314,13 @@ abstract class _CreateQuizState extends CreateQuizState {
   @override
   bool get isLoading;
   @override
+  bool get isImportFile;
+  @override
   bool get saveQuestionDone;
+  @override
+  bool get saveQuizDone;
+  @override
+  String? get filePath;
   @override
   List<String> get rightAnswer;
   @override

@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/values/app_theme.dart';
 import 'main_router.dart';
+import 'modules/create_quiz/api/create_quiz_api.dart';
+import 'modules/create_quiz/repository/create_quiz_repository.dart';
+import 'modules/create_test/api/create_test_api.dart';
+import 'modules/create_test/repository/create_test_repository.dart';
+import 'modules/edit_quiz/api/edit_quiz_api.dart';
+import 'modules/edit_quiz/repository/edit_quiz_repository.dart';
+import 'modules/home/api/home_api.dart';
+import 'modules/home/repository/home_repository.dart';
 import 'modules/login/api/login_api.dart';
 import 'modules/login/repository/login_repository.dart';
 
@@ -32,6 +40,18 @@ class _RouteAppState extends State<RouteApp> {
         RepositoryProvider<LoginRepository>(
           create: (context) => LoginRepository(LoginApi()),
         ),
+        RepositoryProvider<HomeRepository>(
+          create: (context) => HomeRepository(HomeApi()),
+        ),
+        RepositoryProvider<CreateQuizRepository>(
+          create: (context) => CreateQuizRepository(CreateQuizApi()),
+        ),
+        RepositoryProvider<EditQuizRepository>(
+          create: (context) => EditQuizRepository(EditQuizApi()),
+        ),
+        RepositoryProvider<CreateTestRepository>(
+          create: (context) => CreateTestRepository(CreateTestApi()),
+        ),
       ],
       child: MaterialApp.router(
         routeInformationParser: _appRouter.defaultRouteParser(),
@@ -41,8 +61,7 @@ class _RouteAppState extends State<RouteApp> {
           ],
         ),
         theme: appTheme,
-        localizationsDelegates: const [
-        ],
+        localizationsDelegates: const [],
         debugShowCheckedModeBanner: false,
       ),
     );
