@@ -14,6 +14,7 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
     final pre = await SharedPreferences.getInstance();
     final userId = pre.getInt("userId");
     final filePath = pre.getString("filePath");
+    final quizId = pre.getInt("quizId");
     var customHeaders = {
       'content-type': 'application/json',
       'Accept': "application/json"
@@ -26,6 +27,11 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
     if (filePath != null) {
       customHeaders.addAll({
         'filePath': filePath,
+      });
+    }
+    if (quizId != null) {
+      customHeaders.addAll({
+        'quizId': quizId.toString(),
       });
     }
 
