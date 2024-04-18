@@ -121,6 +121,7 @@ class _EditQuizViewState extends State<EditQuizView> {
               children: [
                 Container(
                   width: double.infinity,
+                  height: double.infinity,
                   margin:
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                   padding:
@@ -131,6 +132,11 @@ class _EditQuizViewState extends State<EditQuizView> {
                     boxShadow: [
                       BoxShadow(),
                     ],
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/bg.jpg"),
+                      opacity: 0.2,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   child: SingleChildScrollView(
                     child: Column(

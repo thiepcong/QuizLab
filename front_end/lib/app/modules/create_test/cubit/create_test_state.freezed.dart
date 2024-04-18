@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CreateTestState {
   bool get isLoading => throw _privateConstructorUsedError;
   bool get createDone => throw _privateConstructorUsedError;
+  List<Candidate> get candidates => throw _privateConstructorUsedError;
+  String? get filePath => throw _privateConstructorUsedError;
   String? get codeQuiz => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   Error? get error => throw _privateConstructorUsedError;
@@ -36,6 +38,8 @@ abstract class $CreateTestStateCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       bool createDone,
+      List<Candidate> candidates,
+      String? filePath,
       String? codeQuiz,
       String? message,
       Error? error});
@@ -56,6 +60,8 @@ class _$CreateTestStateCopyWithImpl<$Res, $Val extends CreateTestState>
   $Res call({
     Object? isLoading = null,
     Object? createDone = null,
+    Object? candidates = null,
+    Object? filePath = freezed,
     Object? codeQuiz = freezed,
     Object? message = freezed,
     Object? error = freezed,
@@ -69,6 +75,14 @@ class _$CreateTestStateCopyWithImpl<$Res, $Val extends CreateTestState>
           ? _value.createDone
           : createDone // ignore: cast_nullable_to_non_nullable
               as bool,
+      candidates: null == candidates
+          ? _value.candidates
+          : candidates // ignore: cast_nullable_to_non_nullable
+              as List<Candidate>,
+      filePath: freezed == filePath
+          ? _value.filePath
+          : filePath // ignore: cast_nullable_to_non_nullable
+              as String?,
       codeQuiz: freezed == codeQuiz
           ? _value.codeQuiz
           : codeQuiz // ignore: cast_nullable_to_non_nullable
@@ -96,6 +110,8 @@ abstract class _$$CreateTestStateImplCopyWith<$Res>
   $Res call(
       {bool isLoading,
       bool createDone,
+      List<Candidate> candidates,
+      String? filePath,
       String? codeQuiz,
       String? message,
       Error? error});
@@ -114,6 +130,8 @@ class __$$CreateTestStateImplCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? createDone = null,
+    Object? candidates = null,
+    Object? filePath = freezed,
     Object? codeQuiz = freezed,
     Object? message = freezed,
     Object? error = freezed,
@@ -127,6 +145,14 @@ class __$$CreateTestStateImplCopyWithImpl<$Res>
           ? _value.createDone
           : createDone // ignore: cast_nullable_to_non_nullable
               as bool,
+      candidates: null == candidates
+          ? _value._candidates
+          : candidates // ignore: cast_nullable_to_non_nullable
+              as List<Candidate>,
+      filePath: freezed == filePath
+          ? _value.filePath
+          : filePath // ignore: cast_nullable_to_non_nullable
+              as String?,
       codeQuiz: freezed == codeQuiz
           ? _value.codeQuiz
           : codeQuiz // ignore: cast_nullable_to_non_nullable
@@ -149,10 +175,13 @@ class _$CreateTestStateImpl extends _CreateTestState {
   const _$CreateTestStateImpl(
       {this.isLoading = false,
       this.createDone = false,
+      final List<Candidate> candidates = const [],
+      this.filePath,
       this.codeQuiz,
       this.message,
       this.error})
-      : super._();
+      : _candidates = candidates,
+        super._();
 
   @override
   @JsonKey()
@@ -160,6 +189,17 @@ class _$CreateTestStateImpl extends _CreateTestState {
   @override
   @JsonKey()
   final bool createDone;
+  final List<Candidate> _candidates;
+  @override
+  @JsonKey()
+  List<Candidate> get candidates {
+    if (_candidates is EqualUnmodifiableListView) return _candidates;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_candidates);
+  }
+
+  @override
+  final String? filePath;
   @override
   final String? codeQuiz;
   @override
@@ -169,7 +209,7 @@ class _$CreateTestStateImpl extends _CreateTestState {
 
   @override
   String toString() {
-    return 'CreateTestState(isLoading: $isLoading, createDone: $createDone, codeQuiz: $codeQuiz, message: $message, error: $error)';
+    return 'CreateTestState(isLoading: $isLoading, createDone: $createDone, candidates: $candidates, filePath: $filePath, codeQuiz: $codeQuiz, message: $message, error: $error)';
   }
 
   @override
@@ -181,6 +221,10 @@ class _$CreateTestStateImpl extends _CreateTestState {
                 other.isLoading == isLoading) &&
             (identical(other.createDone, createDone) ||
                 other.createDone == createDone) &&
+            const DeepCollectionEquality()
+                .equals(other._candidates, _candidates) &&
+            (identical(other.filePath, filePath) ||
+                other.filePath == filePath) &&
             (identical(other.codeQuiz, codeQuiz) ||
                 other.codeQuiz == codeQuiz) &&
             (identical(other.message, message) || other.message == message) &&
@@ -188,8 +232,15 @@ class _$CreateTestStateImpl extends _CreateTestState {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, isLoading, createDone, codeQuiz, message, error);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      createDone,
+      const DeepCollectionEquality().hash(_candidates),
+      filePath,
+      codeQuiz,
+      message,
+      error);
 
   @JsonKey(ignore: true)
   @override
@@ -203,6 +254,8 @@ abstract class _CreateTestState extends CreateTestState {
   const factory _CreateTestState(
       {final bool isLoading,
       final bool createDone,
+      final List<Candidate> candidates,
+      final String? filePath,
       final String? codeQuiz,
       final String? message,
       final Error? error}) = _$CreateTestStateImpl;
@@ -212,6 +265,10 @@ abstract class _CreateTestState extends CreateTestState {
   bool get isLoading;
   @override
   bool get createDone;
+  @override
+  List<Candidate> get candidates;
+  @override
+  String? get filePath;
   @override
   String? get codeQuiz;
   @override
