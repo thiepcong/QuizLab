@@ -76,114 +76,147 @@ class _RegisterViewState extends State<RegisterView> {
               label: 'QUIZIZZ',
               isLeading: false,
             ),
-            body: Stack(
-              children: [
-                Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      borderRadius: const BorderRadius.all(Radius.circular(12)),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    width: 400,
-                    height: 500,
-                    child: Form(
-                      key: _formKey,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "Đăng ký",
-                              style: TextStyles.boldBlackS28,
-                            ),
-                            SizedBox(
-                              width: double.infinity,
-                              child: TextFormField(
-                                controller: _nameController,
-                                decoration: const InputDecoration(
-                                  labelText: 'Tên',
-                                  border: OutlineInputBorder(),
-                                ),
-                                onFieldSubmitted: (e) {
-                                  if (_formKey.currentState!.validate()) {
-                                    cubit.register(
-                                        _nameController.text,
-                                        _usernameController.text,
-                                        _passwordController.text);
-                                  }
-                                },
-                                validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return 'Vui lòng nhập tên của bạn!';
-                                  }
-                                  return null;
-                                },
+            body: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/bg.jpg"),
+                  opacity: 0.2,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Stack(
+                children: [
+                  Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12)),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      width: 400,
+                      height: 500,
+                      child: Form(
+                        key: _formKey,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "Đăng ký",
+                                style: TextStyles.boldBlackS28,
                               ),
-                            ),
-                            const SizedBox(height: 16),
-                            SizedBox(
-                              width: double.infinity,
-                              child: TextFormField(
-                                controller: _usernameController,
-                                decoration: const InputDecoration(
-                                  labelText: 'Tên người dùng',
-                                  border: OutlineInputBorder(),
+                              SizedBox(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: _nameController,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Tên',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  onFieldSubmitted: (e) {
+                                    if (_formKey.currentState!.validate()) {
+                                      cubit.register(
+                                          _nameController.text,
+                                          _usernameController.text,
+                                          _passwordController.text);
+                                    }
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'Vui lòng nhập tên của bạn!';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                onFieldSubmitted: (e) {
-                                  if (_formKey.currentState!.validate()) {
-                                    cubit.register(
-                                        _nameController.text,
-                                        _usernameController.text,
-                                        _passwordController.text);
-                                  }
-                                },
-                                validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return 'Vui lòng nhập tên người dùng!';
-                                  }
-                                  return null;
-                                },
                               ),
-                            ),
-                            const SizedBox(height: 16),
-                            SizedBox(
-                              width: double.infinity,
-                              child: TextFormField(
-                                controller: _passwordController,
-                                obscureText: true,
-                                decoration: const InputDecoration(
-                                  labelText: 'Mật khẩu',
-                                  border: OutlineInputBorder(),
+                              const SizedBox(height: 16),
+                              SizedBox(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: _usernameController,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Tên người dùng',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  onFieldSubmitted: (e) {
+                                    if (_formKey.currentState!.validate()) {
+                                      cubit.register(
+                                          _nameController.text,
+                                          _usernameController.text,
+                                          _passwordController.text);
+                                    }
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'Vui lòng nhập tên người dùng!';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                onFieldSubmitted: (e) {
-                                  if (_formKey.currentState!.validate()) {
-                                    cubit.register(
-                                        _nameController.text,
-                                        _usernameController.text,
-                                        _passwordController.text);
-                                  }
-                                },
-                                validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return 'Vui lòng nhập lại mật khẩu!';
-                                  }
+                              ),
+                              const SizedBox(height: 16),
+                              SizedBox(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: _passwordController,
+                                  obscureText: true,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Mật khẩu',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  onFieldSubmitted: (e) {
+                                    if (_formKey.currentState!.validate()) {
+                                      cubit.register(
+                                          _nameController.text,
+                                          _usernameController.text,
+                                          _passwordController.text);
+                                    }
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'Vui lòng nhập lại mật khẩu!';
+                                    }
 
-                                  return null;
-                                },
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            SizedBox(
-                              width: double.infinity,
-                              child: TextFormField(
-                                controller: _passwordAgainController,
-                                obscureText: true,
-                                decoration: const InputDecoration(
-                                  labelText: 'Nhập lại mật khẩu',
-                                  border: OutlineInputBorder(),
+                                    return null;
+                                  },
                                 ),
-                                onFieldSubmitted: (e) {
+                              ),
+                              const SizedBox(height: 16),
+                              SizedBox(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: _passwordAgainController,
+                                  obscureText: true,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Nhập lại mật khẩu',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  onFieldSubmitted: (e) {
+                                    if (_formKey.currentState!.validate()) {
+                                      cubit.register(
+                                          _nameController.text,
+                                          _usernameController.text,
+                                          _passwordController.text);
+                                    }
+                                  },
+                                  validator: (value) {
+                                    if (value == null || value.trim().isEmpty) {
+                                      return 'Vui lòng nhập mật khẩu!';
+                                    }
+                                    if (value !=
+                                        _passwordAgainController.text) {
+                                      return 'Mật khẩu không trùng khớp';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              ElevatedButton(
+                                onPressed: () {
                                   if (_formKey.currentState!.validate()) {
                                     cubit.register(
                                         _nameController.text,
@@ -191,55 +224,35 @@ class _RegisterViewState extends State<RegisterView> {
                                         _passwordController.text);
                                   }
                                 },
-                                validator: (value) {
-                                  if (value == null || value.trim().isEmpty) {
-                                    return 'Vui lòng nhập mật khẩu!';
-                                  }
-                                  if (value != _passwordAgainController.text) {
-                                    return 'Mật khẩu không trùng khớp';
-                                  }
-                                  return null;
-                                },
+                                child: const Text('Register'),
                               ),
-                            ),
-                            const SizedBox(height: 16),
-                            ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  cubit.register(
-                                      _nameController.text,
-                                      _usernameController.text,
-                                      _passwordController.text);
-                                }
-                              },
-                              child: const Text('Register'),
-                            ),
-                            const SizedBox(height: 16),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text("Đã có tài khoản?"),
-                                TextButton(
-                                  onPressed: () => context.router
-                                      .replace(const LoginViewRoute()),
-                                  child: const Text("Đăng nhập"),
-                                )
-                              ],
-                            ),
-                          ],
+                              const SizedBox(height: 16),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text("Đã có tài khoản?"),
+                                  TextButton(
+                                    onPressed: () => context.router
+                                        .replace(const LoginViewRoute()),
+                                    child: const Text("Đăng nhập"),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                state.isLoading
-                    ? Container(
-                        color: AppColors.colorFF000000.withOpacity(0.5),
-                        alignment: Alignment.center,
-                        child: const CircularProgressIndicator(),
-                      )
-                    : const SizedBox.shrink()
-              ],
+                  state.isLoading
+                      ? Container(
+                          color: AppColors.colorFF000000.withOpacity(0.5),
+                          alignment: Alignment.center,
+                          child: const CircularProgressIndicator(),
+                        )
+                      : const SizedBox.shrink()
+                ],
+              ),
             ),
           );
         },

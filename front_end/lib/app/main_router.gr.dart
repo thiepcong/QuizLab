@@ -106,6 +106,28 @@ class _$MainRouter extends RootStackRouter {
         ),
       );
     },
+    PlayTestViewRoute.name: (routeData) {
+      final args = routeData.argsAs<PlayTestViewRouteArgs>(
+          orElse: () => const PlayTestViewRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: PlayTestView(
+          key: args.key,
+          test: args.test,
+        ),
+      );
+    },
+    PlayTestPageRoute.name: (routeData) {
+      final args = routeData.argsAs<PlayTestPageRouteArgs>(
+          orElse: () => const PlayTestPageRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: PlayTestPage(
+          key: args.key,
+          test: args.test,
+        ),
+      );
+    },
   };
 
   @override
@@ -155,6 +177,14 @@ class _$MainRouter extends RootStackRouter {
         RouteConfig(
           CreateTestViewRoute.name,
           path: 'create_test',
+        ),
+        RouteConfig(
+          PlayTestViewRoute.name,
+          path: 'play_test',
+        ),
+        RouteConfig(
+          PlayTestPageRoute.name,
+          path: 'play_test_page',
         ),
       ];
 }
@@ -431,5 +461,73 @@ class CreateTestViewRouteArgs {
   @override
   String toString() {
     return 'CreateTestViewRouteArgs{key: $key, item: $item}';
+  }
+}
+
+/// generated route for
+/// [PlayTestView]
+class PlayTestViewRoute extends PageRouteInfo<PlayTestViewRouteArgs> {
+  PlayTestViewRoute({
+    Key? key,
+    Test? test,
+  }) : super(
+          PlayTestViewRoute.name,
+          path: 'play_test',
+          args: PlayTestViewRouteArgs(
+            key: key,
+            test: test,
+          ),
+        );
+
+  static const String name = 'PlayTestViewRoute';
+}
+
+class PlayTestViewRouteArgs {
+  const PlayTestViewRouteArgs({
+    this.key,
+    this.test,
+  });
+
+  final Key? key;
+
+  final Test? test;
+
+  @override
+  String toString() {
+    return 'PlayTestViewRouteArgs{key: $key, test: $test}';
+  }
+}
+
+/// generated route for
+/// [PlayTestPage]
+class PlayTestPageRoute extends PageRouteInfo<PlayTestPageRouteArgs> {
+  PlayTestPageRoute({
+    Key? key,
+    Test? test,
+  }) : super(
+          PlayTestPageRoute.name,
+          path: 'play_test_page',
+          args: PlayTestPageRouteArgs(
+            key: key,
+            test: test,
+          ),
+        );
+
+  static const String name = 'PlayTestPageRoute';
+}
+
+class PlayTestPageRouteArgs {
+  const PlayTestPageRouteArgs({
+    this.key,
+    this.test,
+  });
+
+  final Key? key;
+
+  final Test? test;
+
+  @override
+  String toString() {
+    return 'PlayTestPageRouteArgs{key: $key, test: $test}';
   }
 }

@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../core/models/quiz.dart';
+import '../../../core/models/test.dart';
 
 part 'home_state.freezed.dart';
 
@@ -10,6 +11,7 @@ class HomeState with _$HomeState {
 
   const factory HomeState({
     @Default(false) bool isLoading,
+    Test? testFromCode,
     @Default([]) List<Quiz> quizes,
     String? message,
     Error? error,

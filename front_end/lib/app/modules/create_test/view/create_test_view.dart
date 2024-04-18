@@ -11,6 +11,7 @@ import '../cubit/create_test_cubit.dart';
 import '../cubit/create_test_state.dart';
 import '../repository/create_test_repository.dart';
 import '../widgets/create_test_text_field.dart';
+import '../widgets/no_candidate_widget.dart';
 
 class CreateTestView extends StatefulWidget {
   const CreateTestView({super.key, this.item});
@@ -91,6 +92,7 @@ class _CreateTestViewState extends State<CreateTestView> {
                   Container(
                     width: double.infinity,
                     margin: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.symmetric(vertical: 24),
                     decoration: state.createDone
                         ? null
                         : BoxDecoration(
@@ -141,37 +143,113 @@ class _CreateTestViewState extends State<CreateTestView> {
                           )
                         : Form(
                             key: _formKey,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CreateTestTextField(
-                                  controller: _titleController,
-                                  labelText: "Nhập tiêu đề bài kiểm tra",
-                                ),
-                                CreateTestTextField(
-                                  controller: _noteController,
-                                  labelText: "Ghi chú",
-                                ),
-                                PrimaryButton(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  onTap: () {
-                                    if (_formKey.currentState?.validate() ??
-                                        false) {
-                                      cubit.createTest(
-                                        widget.item?.id ?? 1,
-                                        _titleController.text,
-                                        _noteController.text,
-                                      );
-                                    }
-                                  },
-                                  title: "Tạo bài kiểm tra mới",
-                                  backgroundColor: AppColors.colorFF8854c0,
-                                  textColor: AppColors.colorFFFFFFFF,
-                                  borderColor: AppColors.colorFF8854c0,
-                                  textSize: 28,
-                                ),
-                              ],
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CreateTestTextField(
+                                    controller: _titleController,
+                                    labelText: "Nhập tiêu đề bài kiểm tra",
+                                  ),
+                                  CreateTestTextField(
+                                    controller: _noteController,
+                                    labelText: "Ghi chú",
+                                  ),
+                                  PrimaryButton(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    onTap: () {
+                                      if (state.candidates.isEmpty) {
+                                        ShowMessageInternal.showOverlay(context,
+                                            "Vui lòng thêm ít nhất một người");
+                                        return;
+                                      }
+                                      if (_formKey.currentState?.validate() ??
+                                          false) {
+                                        cubit.createTest(
+                                          widget.item?.id ?? 1,
+                                          _titleController.text,
+                                          _noteController.text,
+                                        );
+                                      }
+                                    },
+                                    title: "Tạo bài kiểm tra mới",
+                                    backgroundColor: AppColors.colorFF8854c0,
+                                    textColor: AppColors.colorFFFFFFFF,
+                                    borderColor: AppColors.colorFF8854c0,
+                                    textSize: 28,
+                                  ),
+                                  const SizedBox(height: 24),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.7,
+                                    padding: const EdgeInsets.all(24),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.colorFFFFFFFF
+                                          .withOpacity(0.6),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(12)),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        const Text(
+                                          "Danh sách người tham gia",
+                                          style: TextStyles.mediumBlackS20,
+                                        ),
+                                        state.candidates.isEmpty
+                                            ? NoCandidateWidget(
+                                                onPickedFile: (picked) => cubit
+                                                    .chooseCandidateFromExcel(
+                                                  picked.files.first.bytes,
+                                                  picked.files.first.name,
+                                                ),
+                                                onAddCandidate: (e) =>
+                                                    cubit.addCandidate(e),
+                                              )
+                                            : const SizedBox.shrink(),
+                                        ...state.candidates
+                                            .map((e) => Container(
+                                                  alignment: Alignment.center,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.3,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      const SizedBox(width: 40),
+                                                      Text(e.name),
+                                                      IconButton(
+                                                        onPressed: () => cubit
+                                                            .deleteCandidate(e),
+                                                        icon: const Icon(
+                                                            Icons.delete),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ))
+                                            .toList(),
+                                        state.candidates.isNotEmpty
+                                            ? TextButton(
+                                                onPressed: () =>
+                                                    showDialogAddCandidate(
+                                                  context,
+                                                  onAddCandidate: (e) =>
+                                                      cubit.addCandidate(e),
+                                                ),
+                                                child: const Text("Thêm"),
+                                              )
+                                            : const SizedBox.shrink(),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                   ),

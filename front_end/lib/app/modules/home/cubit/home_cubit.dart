@@ -77,4 +77,19 @@ class HomeCubit extends Cubit<HomeState> {
       rethrow;
     }
   }
+
+  void getTestFromCode(String code) async {
+    try {
+      emit(state.copyWith(isLoading: true, message: null, testFromCode: null));
+      final res = await _repo.getTestFromCode(code: code);
+      emit(state.copyWith(
+        isLoading: false,
+        message: "Đã thành công",
+        testFromCode: res,
+      ));
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, message: "Đã có lỗi xảy ra"));
+      rethrow;
+    }
+  }
 }

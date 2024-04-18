@@ -96,79 +96,92 @@ class _CreateQuestionViewState extends State<CreateQuestionView> {
                 ),
               ],
             ),
-            backgroundColor: AppColors.colorFFC5C5C5,
+            // backgroundColor: AppColors.colorFFC5C5C5,
             body: Container(
               width: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              height: double.infinity,
               decoration: const BoxDecoration(
-                color: AppColors.colorFF461a42,
-                borderRadius: BorderRadius.all(Radius.circular(18)),
-                boxShadow: [
-                  BoxShadow(),
-                ],
+                image: DecorationImage(
+                  image: AssetImage("assets/images/bg.jpg"),
+                  opacity: 0.2,
+                  fit: BoxFit.cover,
+                ),
               ),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: AppColors.colorFFFFFFFF),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
-                        ),
-                        child: TextFormField(
-                          controller: _questionController,
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(2000),
-                          ],
-                          validator: (val) =>
-                              val!.trim().isEmpty ? "Trường bắt buộc" : null,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          minLines: 9,
-                          style: TextStyles.regularWhiteS20,
-                          cursorColor: AppColors.colorFFFFFFFF,
-                          textAlign: TextAlign.center,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          AnswerTextField(
-                            controller: _answerAController,
-                            color: AppColors.colorFF2d70ae,
-                            isCheck: state.rightAnswer.contains('A'),
-                            onChanged: (e) => cubit.setRightAnswer(e, 'A'),
-                          ),
-                          AnswerTextField(
-                            controller: _answerBController,
-                            color: AppColors.colorFF2d9da6,
-                            isCheck: state.rightAnswer.contains('B'),
-                            onChanged: (e) => cubit.setRightAnswer(e, 'B'),
-                          ),
-                          AnswerTextField(
-                            controller: _answerCController,
-                            color: AppColors.colorFFefa929,
-                            isCheck: state.rightAnswer.contains('C'),
-                            onChanged: (e) => cubit.setRightAnswer(e, 'C'),
-                          ),
-                          AnswerTextField(
-                            controller: _answerDController,
-                            color: AppColors.colorFFd5546d,
-                            isCheck: state.rightAnswer.contains('D'),
-                            onChanged: (e) => cubit.setRightAnswer(e, 'D'),
-                          ),
-                        ],
-                      ),
-                    )
+              child: Container(
+                width: double.infinity,
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                decoration: const BoxDecoration(
+                  color: AppColors.colorFF461a42,
+                  borderRadius: BorderRadius.all(Radius.circular(18)),
+                  boxShadow: [
+                    BoxShadow(),
                   ],
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColors.colorFFFFFFFF),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(4)),
+                          ),
+                          child: TextFormField(
+                            controller: _questionController,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(2000),
+                            ],
+                            validator: (val) =>
+                                val!.trim().isEmpty ? "Trường bắt buộc" : null,
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+                            minLines: 9,
+                            style: TextStyles.regularWhiteS20,
+                            cursorColor: AppColors.colorFFFFFFFF,
+                            textAlign: TextAlign.center,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            AnswerTextField(
+                              controller: _answerAController,
+                              color: AppColors.colorFF2d70ae,
+                              isCheck: state.rightAnswer.contains('A'),
+                              onChanged: (e) => cubit.setRightAnswer(e, 'A'),
+                            ),
+                            AnswerTextField(
+                              controller: _answerBController,
+                              color: AppColors.colorFF2d9da6,
+                              isCheck: state.rightAnswer.contains('B'),
+                              onChanged: (e) => cubit.setRightAnswer(e, 'B'),
+                            ),
+                            AnswerTextField(
+                              controller: _answerCController,
+                              color: AppColors.colorFFefa929,
+                              isCheck: state.rightAnswer.contains('C'),
+                              onChanged: (e) => cubit.setRightAnswer(e, 'C'),
+                            ),
+                            AnswerTextField(
+                              controller: _answerDController,
+                              color: AppColors.colorFFd5546d,
+                              isCheck: state.rightAnswer.contains('D'),
+                              onChanged: (e) => cubit.setRightAnswer(e, 'D'),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

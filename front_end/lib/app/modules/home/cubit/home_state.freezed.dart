@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$HomeState {
   bool get isLoading => throw _privateConstructorUsedError;
+  Test? get testFromCode => throw _privateConstructorUsedError;
   List<Quiz> get quizes => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   Error? get error => throw _privateConstructorUsedError;
@@ -31,7 +32,12 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({bool isLoading, List<Quiz> quizes, String? message, Error? error});
+  $Res call(
+      {bool isLoading,
+      Test? testFromCode,
+      List<Quiz> quizes,
+      String? message,
+      Error? error});
 }
 
 /// @nodoc
@@ -48,6 +54,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? testFromCode = freezed,
     Object? quizes = null,
     Object? message = freezed,
     Object? error = freezed,
@@ -57,6 +64,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      testFromCode: freezed == testFromCode
+          ? _value.testFromCode
+          : testFromCode // ignore: cast_nullable_to_non_nullable
+              as Test?,
       quizes: null == quizes
           ? _value.quizes
           : quizes // ignore: cast_nullable_to_non_nullable
@@ -81,7 +92,12 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, List<Quiz> quizes, String? message, Error? error});
+  $Res call(
+      {bool isLoading,
+      Test? testFromCode,
+      List<Quiz> quizes,
+      String? message,
+      Error? error});
 }
 
 /// @nodoc
@@ -96,6 +112,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? testFromCode = freezed,
     Object? quizes = null,
     Object? message = freezed,
     Object? error = freezed,
@@ -105,6 +122,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      testFromCode: freezed == testFromCode
+          ? _value.testFromCode
+          : testFromCode // ignore: cast_nullable_to_non_nullable
+              as Test?,
       quizes: null == quizes
           ? _value._quizes
           : quizes // ignore: cast_nullable_to_non_nullable
@@ -126,6 +147,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 class _$HomeStateImpl extends _HomeState {
   const _$HomeStateImpl(
       {this.isLoading = false,
+      this.testFromCode,
       final List<Quiz> quizes = const [],
       this.message,
       this.error})
@@ -135,6 +157,8 @@ class _$HomeStateImpl extends _HomeState {
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  final Test? testFromCode;
   final List<Quiz> _quizes;
   @override
   @JsonKey()
@@ -151,7 +175,7 @@ class _$HomeStateImpl extends _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(isLoading: $isLoading, quizes: $quizes, message: $message, error: $error)';
+    return 'HomeState(isLoading: $isLoading, testFromCode: $testFromCode, quizes: $quizes, message: $message, error: $error)';
   }
 
   @override
@@ -161,13 +185,15 @@ class _$HomeStateImpl extends _HomeState {
             other is _$HomeStateImpl &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.testFromCode, testFromCode) ||
+                other.testFromCode == testFromCode) &&
             const DeepCollectionEquality().equals(other._quizes, _quizes) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading,
+  int get hashCode => Object.hash(runtimeType, isLoading, testFromCode,
       const DeepCollectionEquality().hash(_quizes), message, error);
 
   @JsonKey(ignore: true)
@@ -180,6 +206,7 @@ class _$HomeStateImpl extends _HomeState {
 abstract class _HomeState extends HomeState {
   const factory _HomeState(
       {final bool isLoading,
+      final Test? testFromCode,
       final List<Quiz> quizes,
       final String? message,
       final Error? error}) = _$HomeStateImpl;
@@ -187,6 +214,8 @@ abstract class _HomeState extends HomeState {
 
   @override
   bool get isLoading;
+  @override
+  Test? get testFromCode;
   @override
   List<Quiz> get quizes;
   @override

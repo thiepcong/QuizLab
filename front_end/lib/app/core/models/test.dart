@@ -1,9 +1,14 @@
+import 'candidate.dart';
+import 'quiz.dart';
+
 class Test {
   final int id;
   final String title;
   final DateTime timeCreated;
   final String quizCode;
   final String? note;
+  final Quiz quiz;
+  final List<Candidate> candidates;
 
   Test({
     required this.id,
@@ -11,6 +16,8 @@ class Test {
     required this.timeCreated,
     required this.quizCode,
     this.note,
+    required this.quiz,
+    required this.candidates,
   });
 
   Map<String, dynamic> toJson() {
@@ -30,22 +37,12 @@ class Test {
       timeCreated: DateTime.parse(map['timeCreated'] as String),
       quizCode: map['quizCode'] as String,
       note: map['note'] != null ? map['note'] as String : null,
-    );
-  }
-
-  Test copyWith({
-    int? id,
-    String? title,
-    DateTime? timeCreated,
-    String? quizCode,
-    String? note,
-  }) {
-    return Test(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      timeCreated: timeCreated ?? this.timeCreated,
-      quizCode: quizCode ?? this.quizCode,
-      note: note ?? this.note,
+      quiz: Quiz.fromJson(map['quiz']),
+      candidates: map['candidates'] != null
+          ? (map['candidates'] as List)
+              .map((e) => Candidate.fromJson(e))
+              .toList()
+          : [],
     );
   }
 }
