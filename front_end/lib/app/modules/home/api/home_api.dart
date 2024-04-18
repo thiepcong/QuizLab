@@ -1,5 +1,6 @@
 import '../../../core/base/base_remote_source.dart';
 import '../../../core/models/quiz.dart';
+import '../../../core/models/test.dart';
 import '../../../core/values/api_url_constant.dart';
 
 class HomeApi extends BaseRemoteSource {
@@ -17,6 +18,16 @@ class HomeApi extends BaseRemoteSource {
     final request = dioClient.delete(ApiUrlConstants.deleteQuiz(quizId));
     try {
       return callApiWithErrorParser(request).then((value) => true);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Test> getTestFromCode({required String code}) async {
+    final request = dioClient.get(ApiUrlConstants.getTestFromQuizCode(code));
+    try {
+      return callApiWithErrorParser(request)
+          .then((value) => Test.fromJson(value.data));
     } catch (e) {
       rethrow;
     }
