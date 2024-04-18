@@ -7,8 +7,10 @@ import com.example.questionservice.entity.Answer;
 import java.util.List;
 
 public class QuestionDTO {
-    private int questionId;
+    private int id;
     private int userId;
+
+    private int quizId;
     private String content;
     private List<Answer> answers;
 
@@ -18,12 +20,12 @@ public class QuestionDTO {
     public QuestionDTO() {
     }
 
-    public int getQuestionId() {
-        return questionId;
+    public int getId() {
+        return id;
     }
 
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getUserId() {
@@ -48,5 +50,13 @@ public class QuestionDTO {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(int quizId) {
+        this.quizId = quizId;
     }
 }

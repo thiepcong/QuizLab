@@ -77,4 +77,12 @@ public class QuestionServiceImpl implements QuestionService {
                 .map(question -> modelMapper.map(question, QuestionDTO.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<QuestionDTO> getAllQuestionsByQuizId(int quizId) {
+        List<Question> questions = questionRepository.findAllByQuizId(quizId);
+        return questions.stream()
+                .map(question -> modelMapper.map(question, QuestionDTO.class))
+                .collect(Collectors.toList());
+    }
 }

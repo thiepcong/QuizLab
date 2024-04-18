@@ -4,12 +4,15 @@ package com.example.userservice.controller;
 
 import com.example.userservice.dto.LoginDTO;
 import com.example.userservice.dto.UserDTO;
+import com.example.userservice.entity.User;
 import com.example.userservice.response.LoginResponse;
 import com.example.userservice.response.RegisterResponse;
 import com.example.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -33,6 +36,12 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
         LoginResponse loginResponse = userService.loginUser(loginDTO);
         return ResponseEntity.ok(loginResponse);
+    }
+
+    @GetMapping(path = "/role")
+    public String roleUser(@RequestHeader("userId") int userId) {
+        Optional<User> user = userService.findById(userId);
+        return user.get().getRole();
     }
 
 

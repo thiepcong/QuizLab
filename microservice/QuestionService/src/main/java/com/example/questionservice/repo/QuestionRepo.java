@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface QuestionRepo extends JpaRepository<Question, Integer> {
     List<Question> findAllByUserId(int userId);
+    List<Question> findAllByQuizId(int quizId);
     // Add custom query methods if needed
 }

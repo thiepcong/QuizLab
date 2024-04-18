@@ -7,9 +7,7 @@ import com.example.questionservice.entity.Question;
 import com.example.questionservice.service.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -40,8 +38,10 @@ public class QuestionController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("userId", String.valueOf(userId));
         ResponseEntity<String> responseEntity = restTemplate
-                .getForEntity("http://localhost:8081/api/user/role",
-                        String.class, headers);
+                .exchange("http://localhost:8081/api/user/role",
+                        HttpMethod.GET,new HttpEntity<>(headers), String.class);
+
+
         String userRole = responseEntity.getBody();
 
         if (!"admin".equals(userRole)) {
@@ -60,6 +60,12 @@ public class QuestionController {
         return ResponseEntity.ok(questions);
     }
 
+    @GetMapping("/quiz")
+    public ResponseEntity<List<QuestionDTO>> getAllQuestionsByQuizId(@RequestHeader("userId") int quizId) {
+        List<QuestionDTO> questions = questionService.getAllQuestionsByQuizId(quizId);
+        return ResponseEntity.ok(questions);
+    }
+
     @GetMapping("/{questionId}")
     public ResponseEntity<QuestionDTO> getQuestionById(@PathVariable("questionId") int questionId) {
         QuestionDTO questionDTO = questionService.getQuestionById(questionId);
@@ -68,6 +74,8 @@ public class QuestionController {
         }
         return ResponseEntity.ok(questionDTO);
     }
+
+
 
     @PostMapping("/add")
     public ResponseEntity<QuestionDTO> createQuestion(@RequestHeader("userId") int userId,
@@ -91,7 +99,7 @@ public class QuestionController {
         }
 
         questionDTO.setUserId(userId);
-        questionDTO.setQuestionId(questionId);
+        questionDTO.setId(questionId);
         QuestionDTO updatedQuestion = questionService.updateQuestion(questionDTO);
         return ResponseEntity.ok(updatedQuestion);
     }

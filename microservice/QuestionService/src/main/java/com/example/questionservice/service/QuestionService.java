@@ -17,4 +17,5 @@ public interface QuestionService {
     Optional<Answer> getAnswerById(int id);
     Answer updateAnswer(Answer answer);
     List<QuestionDTO> getAllQuestionsByUserId(int userId);
+    List<QuestionDTO> getAllQuestionsByQuizId(int quizId);
 }

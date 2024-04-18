@@ -17,21 +17,31 @@ public class Question {
     private String content;
 
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", length = 10)
     private int userId;
+    @Column(name = "quiz_id", length = 10)
+    private int quizId;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "question_id")
+    private List<Answer> answers;
 
     public Question() {
     }
 
-    public Question(String content, int userId) {
+    public Question(String content, int userId, int quizId, List<Answer> answers) {
         this.content = content;
         this.userId = userId;
+        this.quizId = quizId;
+        this.answers = answers;
     }
 
-    public Question(int id, String content, int userId) {
+    public Question(int id, String content, int userId, int quizId, List<Answer> answers) {
         this.id = id;
         this.content = content;
         this.userId = userId;
+        this.quizId = quizId;
+        this.answers = answers;
     }
 
     public int getId() {
@@ -58,12 +68,30 @@ public class Question {
         this.userId = userId;
     }
 
+    public int getQuizId() {
+        return quizId;
+    }
+
+    public void setQuizId(int quizId) {
+        this.quizId = quizId;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
     @Override
     public String toString() {
         return "Question{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", userId=" + userId +
+                ", quizId=" + quizId +
+                ", answers=" + answers +
                 '}';
     }
 }
