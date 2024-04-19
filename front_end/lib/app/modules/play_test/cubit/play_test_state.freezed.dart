@@ -21,11 +21,17 @@ mixin _$PlayTestState {
   bool get isChooseB => throw _privateConstructorUsedError;
   bool get isChooseC => throw _privateConstructorUsedError;
   bool get isChooseD => throw _privateConstructorUsedError;
-  bool get isTrue => throw _privateConstructorUsedError;
+  bool get isTrueA => throw _privateConstructorUsedError;
+  bool get isTrueB => throw _privateConstructorUsedError;
+  bool get isTrueC => throw _privateConstructorUsedError;
+  bool get isTrueD => throw _privateConstructorUsedError;
   bool get isFalse => throw _privateConstructorUsedError;
+  bool get isMultipleChoice => throw _privateConstructorUsedError;
+  bool get isPLayDone => throw _privateConstructorUsedError;
   String? get chooseCandidate => throw _privateConstructorUsedError;
   int get secondCountdown => throw _privateConstructorUsedError;
   Question? get currentQuestion => throw _privateConstructorUsedError;
+  int get currentIndexQuestion => throw _privateConstructorUsedError;
   List<Question> get questions => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   Error? get error => throw _privateConstructorUsedError;
@@ -47,11 +53,17 @@ abstract class $PlayTestStateCopyWith<$Res> {
       bool isChooseB,
       bool isChooseC,
       bool isChooseD,
-      bool isTrue,
+      bool isTrueA,
+      bool isTrueB,
+      bool isTrueC,
+      bool isTrueD,
       bool isFalse,
+      bool isMultipleChoice,
+      bool isPLayDone,
       String? chooseCandidate,
       int secondCountdown,
       Question? currentQuestion,
+      int currentIndexQuestion,
       List<Question> questions,
       String? message,
       Error? error});
@@ -75,11 +87,17 @@ class _$PlayTestStateCopyWithImpl<$Res, $Val extends PlayTestState>
     Object? isChooseB = null,
     Object? isChooseC = null,
     Object? isChooseD = null,
-    Object? isTrue = null,
+    Object? isTrueA = null,
+    Object? isTrueB = null,
+    Object? isTrueC = null,
+    Object? isTrueD = null,
     Object? isFalse = null,
+    Object? isMultipleChoice = null,
+    Object? isPLayDone = null,
     Object? chooseCandidate = freezed,
     Object? secondCountdown = null,
     Object? currentQuestion = freezed,
+    Object? currentIndexQuestion = null,
     Object? questions = null,
     Object? message = freezed,
     Object? error = freezed,
@@ -105,13 +123,33 @@ class _$PlayTestStateCopyWithImpl<$Res, $Val extends PlayTestState>
           ? _value.isChooseD
           : isChooseD // ignore: cast_nullable_to_non_nullable
               as bool,
-      isTrue: null == isTrue
-          ? _value.isTrue
-          : isTrue // ignore: cast_nullable_to_non_nullable
+      isTrueA: null == isTrueA
+          ? _value.isTrueA
+          : isTrueA // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTrueB: null == isTrueB
+          ? _value.isTrueB
+          : isTrueB // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTrueC: null == isTrueC
+          ? _value.isTrueC
+          : isTrueC // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTrueD: null == isTrueD
+          ? _value.isTrueD
+          : isTrueD // ignore: cast_nullable_to_non_nullable
               as bool,
       isFalse: null == isFalse
           ? _value.isFalse
           : isFalse // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isMultipleChoice: null == isMultipleChoice
+          ? _value.isMultipleChoice
+          : isMultipleChoice // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPLayDone: null == isPLayDone
+          ? _value.isPLayDone
+          : isPLayDone // ignore: cast_nullable_to_non_nullable
               as bool,
       chooseCandidate: freezed == chooseCandidate
           ? _value.chooseCandidate
@@ -125,6 +163,10 @@ class _$PlayTestStateCopyWithImpl<$Res, $Val extends PlayTestState>
           ? _value.currentQuestion
           : currentQuestion // ignore: cast_nullable_to_non_nullable
               as Question?,
+      currentIndexQuestion: null == currentIndexQuestion
+          ? _value.currentIndexQuestion
+          : currentIndexQuestion // ignore: cast_nullable_to_non_nullable
+              as int,
       questions: null == questions
           ? _value.questions
           : questions // ignore: cast_nullable_to_non_nullable
@@ -155,11 +197,17 @@ abstract class _$$PlayTestStateImplCopyWith<$Res>
       bool isChooseB,
       bool isChooseC,
       bool isChooseD,
-      bool isTrue,
+      bool isTrueA,
+      bool isTrueB,
+      bool isTrueC,
+      bool isTrueD,
       bool isFalse,
+      bool isMultipleChoice,
+      bool isPLayDone,
       String? chooseCandidate,
       int secondCountdown,
       Question? currentQuestion,
+      int currentIndexQuestion,
       List<Question> questions,
       String? message,
       Error? error});
@@ -181,11 +229,17 @@ class __$$PlayTestStateImplCopyWithImpl<$Res>
     Object? isChooseB = null,
     Object? isChooseC = null,
     Object? isChooseD = null,
-    Object? isTrue = null,
+    Object? isTrueA = null,
+    Object? isTrueB = null,
+    Object? isTrueC = null,
+    Object? isTrueD = null,
     Object? isFalse = null,
+    Object? isMultipleChoice = null,
+    Object? isPLayDone = null,
     Object? chooseCandidate = freezed,
     Object? secondCountdown = null,
     Object? currentQuestion = freezed,
+    Object? currentIndexQuestion = null,
     Object? questions = null,
     Object? message = freezed,
     Object? error = freezed,
@@ -211,13 +265,33 @@ class __$$PlayTestStateImplCopyWithImpl<$Res>
           ? _value.isChooseD
           : isChooseD // ignore: cast_nullable_to_non_nullable
               as bool,
-      isTrue: null == isTrue
-          ? _value.isTrue
-          : isTrue // ignore: cast_nullable_to_non_nullable
+      isTrueA: null == isTrueA
+          ? _value.isTrueA
+          : isTrueA // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTrueB: null == isTrueB
+          ? _value.isTrueB
+          : isTrueB // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTrueC: null == isTrueC
+          ? _value.isTrueC
+          : isTrueC // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTrueD: null == isTrueD
+          ? _value.isTrueD
+          : isTrueD // ignore: cast_nullable_to_non_nullable
               as bool,
       isFalse: null == isFalse
           ? _value.isFalse
           : isFalse // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isMultipleChoice: null == isMultipleChoice
+          ? _value.isMultipleChoice
+          : isMultipleChoice // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPLayDone: null == isPLayDone
+          ? _value.isPLayDone
+          : isPLayDone // ignore: cast_nullable_to_non_nullable
               as bool,
       chooseCandidate: freezed == chooseCandidate
           ? _value.chooseCandidate
@@ -231,6 +305,10 @@ class __$$PlayTestStateImplCopyWithImpl<$Res>
           ? _value.currentQuestion
           : currentQuestion // ignore: cast_nullable_to_non_nullable
               as Question?,
+      currentIndexQuestion: null == currentIndexQuestion
+          ? _value.currentIndexQuestion
+          : currentIndexQuestion // ignore: cast_nullable_to_non_nullable
+              as int,
       questions: null == questions
           ? _value._questions
           : questions // ignore: cast_nullable_to_non_nullable
@@ -256,11 +334,17 @@ class _$PlayTestStateImpl extends _PlayTestState {
       this.isChooseB = false,
       this.isChooseC = false,
       this.isChooseD = false,
-      this.isTrue = false,
+      this.isTrueA = false,
+      this.isTrueB = false,
+      this.isTrueC = false,
+      this.isTrueD = false,
       this.isFalse = false,
+      this.isMultipleChoice = false,
+      this.isPLayDone = false,
       this.chooseCandidate,
       this.secondCountdown = 0,
       this.currentQuestion,
+      this.currentIndexQuestion = 0,
       final List<Question> questions = const [],
       this.message,
       this.error})
@@ -284,10 +368,25 @@ class _$PlayTestStateImpl extends _PlayTestState {
   final bool isChooseD;
   @override
   @JsonKey()
-  final bool isTrue;
+  final bool isTrueA;
+  @override
+  @JsonKey()
+  final bool isTrueB;
+  @override
+  @JsonKey()
+  final bool isTrueC;
+  @override
+  @JsonKey()
+  final bool isTrueD;
   @override
   @JsonKey()
   final bool isFalse;
+  @override
+  @JsonKey()
+  final bool isMultipleChoice;
+  @override
+  @JsonKey()
+  final bool isPLayDone;
   @override
   final String? chooseCandidate;
   @override
@@ -295,6 +394,9 @@ class _$PlayTestStateImpl extends _PlayTestState {
   final int secondCountdown;
   @override
   final Question? currentQuestion;
+  @override
+  @JsonKey()
+  final int currentIndexQuestion;
   final List<Question> _questions;
   @override
   @JsonKey()
@@ -311,7 +413,7 @@ class _$PlayTestStateImpl extends _PlayTestState {
 
   @override
   String toString() {
-    return 'PlayTestState(isLoading: $isLoading, isChooseA: $isChooseA, isChooseB: $isChooseB, isChooseC: $isChooseC, isChooseD: $isChooseD, isTrue: $isTrue, isFalse: $isFalse, chooseCandidate: $chooseCandidate, secondCountdown: $secondCountdown, currentQuestion: $currentQuestion, questions: $questions, message: $message, error: $error)';
+    return 'PlayTestState(isLoading: $isLoading, isChooseA: $isChooseA, isChooseB: $isChooseB, isChooseC: $isChooseC, isChooseD: $isChooseD, isTrueA: $isTrueA, isTrueB: $isTrueB, isTrueC: $isTrueC, isTrueD: $isTrueD, isFalse: $isFalse, isMultipleChoice: $isMultipleChoice, isPLayDone: $isPLayDone, chooseCandidate: $chooseCandidate, secondCountdown: $secondCountdown, currentQuestion: $currentQuestion, currentIndexQuestion: $currentIndexQuestion, questions: $questions, message: $message, error: $error)';
   }
 
   @override
@@ -329,14 +431,23 @@ class _$PlayTestStateImpl extends _PlayTestState {
                 other.isChooseC == isChooseC) &&
             (identical(other.isChooseD, isChooseD) ||
                 other.isChooseD == isChooseD) &&
-            (identical(other.isTrue, isTrue) || other.isTrue == isTrue) &&
+            (identical(other.isTrueA, isTrueA) || other.isTrueA == isTrueA) &&
+            (identical(other.isTrueB, isTrueB) || other.isTrueB == isTrueB) &&
+            (identical(other.isTrueC, isTrueC) || other.isTrueC == isTrueC) &&
+            (identical(other.isTrueD, isTrueD) || other.isTrueD == isTrueD) &&
             (identical(other.isFalse, isFalse) || other.isFalse == isFalse) &&
+            (identical(other.isMultipleChoice, isMultipleChoice) ||
+                other.isMultipleChoice == isMultipleChoice) &&
+            (identical(other.isPLayDone, isPLayDone) ||
+                other.isPLayDone == isPLayDone) &&
             (identical(other.chooseCandidate, chooseCandidate) ||
                 other.chooseCandidate == chooseCandidate) &&
             (identical(other.secondCountdown, secondCountdown) ||
                 other.secondCountdown == secondCountdown) &&
             (identical(other.currentQuestion, currentQuestion) ||
                 other.currentQuestion == currentQuestion) &&
+            (identical(other.currentIndexQuestion, currentIndexQuestion) ||
+                other.currentIndexQuestion == currentIndexQuestion) &&
             const DeepCollectionEquality()
                 .equals(other._questions, _questions) &&
             (identical(other.message, message) || other.message == message) &&
@@ -344,21 +455,28 @@ class _$PlayTestStateImpl extends _PlayTestState {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      isLoading,
-      isChooseA,
-      isChooseB,
-      isChooseC,
-      isChooseD,
-      isTrue,
-      isFalse,
-      chooseCandidate,
-      secondCountdown,
-      currentQuestion,
-      const DeepCollectionEquality().hash(_questions),
-      message,
-      error);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        isLoading,
+        isChooseA,
+        isChooseB,
+        isChooseC,
+        isChooseD,
+        isTrueA,
+        isTrueB,
+        isTrueC,
+        isTrueD,
+        isFalse,
+        isMultipleChoice,
+        isPLayDone,
+        chooseCandidate,
+        secondCountdown,
+        currentQuestion,
+        currentIndexQuestion,
+        const DeepCollectionEquality().hash(_questions),
+        message,
+        error
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -374,11 +492,17 @@ abstract class _PlayTestState extends PlayTestState {
       final bool isChooseB,
       final bool isChooseC,
       final bool isChooseD,
-      final bool isTrue,
+      final bool isTrueA,
+      final bool isTrueB,
+      final bool isTrueC,
+      final bool isTrueD,
       final bool isFalse,
+      final bool isMultipleChoice,
+      final bool isPLayDone,
       final String? chooseCandidate,
       final int secondCountdown,
       final Question? currentQuestion,
+      final int currentIndexQuestion,
       final List<Question> questions,
       final String? message,
       final Error? error}) = _$PlayTestStateImpl;
@@ -395,15 +519,27 @@ abstract class _PlayTestState extends PlayTestState {
   @override
   bool get isChooseD;
   @override
-  bool get isTrue;
+  bool get isTrueA;
+  @override
+  bool get isTrueB;
+  @override
+  bool get isTrueC;
+  @override
+  bool get isTrueD;
   @override
   bool get isFalse;
+  @override
+  bool get isMultipleChoice;
+  @override
+  bool get isPLayDone;
   @override
   String? get chooseCandidate;
   @override
   int get secondCountdown;
   @override
   Question? get currentQuestion;
+  @override
+  int get currentIndexQuestion;
   @override
   List<Question> get questions;
   @override

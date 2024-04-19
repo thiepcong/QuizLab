@@ -13,9 +13,9 @@ import '../cubit/play_test_state.dart';
 import '../widgets/candidate_choose_item.dart';
 
 class PlayTestView extends StatefulWidget {
-  const PlayTestView({super.key, this.test});
+  const PlayTestView({super.key, required this.test});
 
-  final Test? test;
+  final Test test;
 
   @override
   State<PlayTestView> createState() => _PlayTestViewState();
@@ -24,9 +24,13 @@ class PlayTestView extends StatefulWidget {
 class _PlayTestViewState extends State<PlayTestView> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => PlayTestCubit(),
-      child: _buildPage(context),
+    return Title(
+      color: AppColors.colorFFFFFFFF,
+      title: "Chuẩn bị",
+      child: BlocProvider(
+        create: (_) => PlayTestCubit(),
+        child: _buildPage(context),
+      ),
     );
   }
 
@@ -46,7 +50,11 @@ class _PlayTestViewState extends State<PlayTestView> {
                         context, "Vui lòng chọn một người để tham gia");
                     return;
                   }
-                  context.router.replace(PlayTestPageRoute(test: widget.test));
+                  context.router.push(PlayTestPageRoute(
+                    test: widget.test,
+                    name: state.chooseCandidate!,
+                    cubit: cubit,
+                  ));
                 },
                 child: const Row(
                   children: [

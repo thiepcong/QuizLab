@@ -53,7 +53,7 @@ class _HomeViewState extends State<HomeView> {
               previous.testFromCode != current.testFromCode,
           listener: (context, state) {
             if (state.testFromCode != null) {
-              context.pushRoute(PlayTestViewRoute(test: state.testFromCode));
+              context.pushRoute(PlayTestViewRoute(test: state.testFromCode!));
             }
           },
         ),

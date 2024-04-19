@@ -107,8 +107,7 @@ class _$MainRouter extends RootStackRouter {
       );
     },
     PlayTestViewRoute.name: (routeData) {
-      final args = routeData.argsAs<PlayTestViewRouteArgs>(
-          orElse: () => const PlayTestViewRouteArgs());
+      final args = routeData.argsAs<PlayTestViewRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: PlayTestView(
@@ -118,13 +117,25 @@ class _$MainRouter extends RootStackRouter {
       );
     },
     PlayTestPageRoute.name: (routeData) {
-      final args = routeData.argsAs<PlayTestPageRouteArgs>(
-          orElse: () => const PlayTestPageRouteArgs());
+      final args = routeData.argsAs<PlayTestPageRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: PlayTestPage(
           key: args.key,
           test: args.test,
+          name: args.name,
+          cubit: args.cubit,
+        ),
+      );
+    },
+    ResultTestViewRoute.name: (routeData) {
+      final args = routeData.argsAs<ResultTestViewRouteArgs>();
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: ResultTestView(
+          key: args.key,
+          item: args.item,
+          right: args.right,
         ),
       );
     },
@@ -185,6 +196,10 @@ class _$MainRouter extends RootStackRouter {
         RouteConfig(
           PlayTestPageRoute.name,
           path: 'play_test_page',
+        ),
+        RouteConfig(
+          ResultTestViewRoute.name,
+          path: 'result_test',
         ),
       ];
 }
@@ -469,7 +484,7 @@ class CreateTestViewRouteArgs {
 class PlayTestViewRoute extends PageRouteInfo<PlayTestViewRouteArgs> {
   PlayTestViewRoute({
     Key? key,
-    Test? test,
+    required Test test,
   }) : super(
           PlayTestViewRoute.name,
           path: 'play_test',
@@ -485,12 +500,12 @@ class PlayTestViewRoute extends PageRouteInfo<PlayTestViewRouteArgs> {
 class PlayTestViewRouteArgs {
   const PlayTestViewRouteArgs({
     this.key,
-    this.test,
+    required this.test,
   });
 
   final Key? key;
 
-  final Test? test;
+  final Test test;
 
   @override
   String toString() {
@@ -503,13 +518,17 @@ class PlayTestViewRouteArgs {
 class PlayTestPageRoute extends PageRouteInfo<PlayTestPageRouteArgs> {
   PlayTestPageRoute({
     Key? key,
-    Test? test,
+    required Test test,
+    required String name,
+    required PlayTestCubit cubit,
   }) : super(
           PlayTestPageRoute.name,
           path: 'play_test_page',
           args: PlayTestPageRouteArgs(
             key: key,
             test: test,
+            name: name,
+            cubit: cubit,
           ),
         );
 
@@ -519,15 +538,60 @@ class PlayTestPageRoute extends PageRouteInfo<PlayTestPageRouteArgs> {
 class PlayTestPageRouteArgs {
   const PlayTestPageRouteArgs({
     this.key,
-    this.test,
+    required this.test,
+    required this.name,
+    required this.cubit,
   });
 
   final Key? key;
 
-  final Test? test;
+  final Test test;
+
+  final String name;
+
+  final PlayTestCubit cubit;
 
   @override
   String toString() {
-    return 'PlayTestPageRouteArgs{key: $key, test: $test}';
+    return 'PlayTestPageRouteArgs{key: $key, test: $test, name: $name, cubit: $cubit}';
+  }
+}
+
+/// generated route for
+/// [ResultTestView]
+class ResultTestViewRoute extends PageRouteInfo<ResultTestViewRouteArgs> {
+  ResultTestViewRoute({
+    Key? key,
+    required Test item,
+    required int right,
+  }) : super(
+          ResultTestViewRoute.name,
+          path: 'result_test',
+          args: ResultTestViewRouteArgs(
+            key: key,
+            item: item,
+            right: right,
+          ),
+        );
+
+  static const String name = 'ResultTestViewRoute';
+}
+
+class ResultTestViewRouteArgs {
+  const ResultTestViewRouteArgs({
+    this.key,
+    required this.item,
+    required this.right,
+  });
+
+  final Key? key;
+
+  final Test item;
+
+  final int right;
+
+  @override
+  String toString() {
+    return 'ResultTestViewRouteArgs{key: $key, item: $item, right: $right}';
   }
 }
