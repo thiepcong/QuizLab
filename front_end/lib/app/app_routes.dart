@@ -23,6 +23,8 @@ abstract class Routes {
   static const playTest = _Paths.playTest;
 
   static const playTestPage = _Paths.playTestPage;
+
+  static const resultTest = _Paths.resultTest;
 }
 
 abstract class _Paths {
@@ -49,4 +51,6 @@ abstract class _Paths {
   static const playTest = 'play_test';
 
   static const playTestPage = 'play_test_page';
+
+  static const resultTest = 'result_test';
 }
