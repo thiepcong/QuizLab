@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,6 +38,10 @@ public class QuizServiceImpl implements QuizService {
             questionDTO.setUserId(quizDTO.getUserId());
         }
         Quiz quiz = modelMapper.map(quizDTO, Quiz.class);
+
+        // get now time
+
+
         Quiz createdQuiz = quizRepo.save(quiz);
         return modelMapper.map(createdQuiz, QuizDTO.class);
     }
@@ -45,8 +50,25 @@ public class QuizServiceImpl implements QuizService {
     public QuizDTO getQuizById(int quizId) {
         Optional<Quiz> quizOptional = quizRepo.findById(quizId);
         if (quizOptional.isPresent()) {
+
             Quiz quiz = quizOptional.get();
-            return modelMapper.map(quiz, QuizDTO.class);
+            QuizDTO quizDTO = modelMapper.map(quiz, QuizDTO.class);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("userId", String.valueOf(quizId));
+            HttpEntity<?> requestEntity = new HttpEntity<>(headers);
+            String url = "http://localhost:8082/api/questions/quiz";
+
+            ResponseEntity<List> responseEntity = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    requestEntity,
+                    List.class
+            );
+
+            List<QuestionDTO> questionDTOList = responseEntity.getBody();
+            quizDTO.setQuestions(questionDTOList);
+            return quizDTO;
         }
         return null;
     }
