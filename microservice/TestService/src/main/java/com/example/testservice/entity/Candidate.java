@@ -1,4 +1,4 @@
-package com.example.backend.entity;
+package com.example.testservice.entity;
 
 import jakarta.persistence.*;
 
@@ -13,27 +13,28 @@ public class Candidate {
     private int id;
 
     // Other attributes
+    @Column(name = "name", length = 255)
     private String name;
+    @Column(name = "score", length = 10)
     private int score;
-    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Result> results;
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch= FetchType.LAZY)
-    @JoinColumn(name = "test_id")
-    private Test test;
+
+    @Column(name = "test_id", length = 10)
+    private int testId;
+
 
 
     // Constructors, getters, and setters
     // ...
 
-    public Candidate() {
-    }
 
-    public Candidate(int id, String name, int score, List<Result> results, Test test) {
+    public Candidate() {
+}
+
+    public Candidate(int id, String name, int score, int testId) {
         this.id = id;
         this.name = name;
         this.score = score;
-        this.results = results;
-        this.test = test;
+        this.testId = testId;
     }
 
     public int getId() {
@@ -60,19 +61,29 @@ public class Candidate {
         this.score = score;
     }
 
-    public List<Result> getResults() {
-        return results;
+    public int getTest() {
+        return testId;
     }
 
-    public void setResults(List<Result> results) {
-        this.results = results;
+    public void setTest(int testId) {
+        this.testId = testId;
     }
 
-    public Test getTest() {
-        return test;
+    public int getTestId() {
+        return testId;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setTestId(int testId) {
+        this.testId = testId;
+    }
+
+    @Override
+    public String toString() {
+        return "Candidate{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", score=" + score +
+                ", testId=" + testId +
+                '}';
     }
 }

@@ -1,9 +1,10 @@
-package com.example.backend.service.impl;
+package com.example.testservice.service.impl;
 
-import com.example.backend.dto.CandidateDTO;
-import com.example.backend.entity.Candidate;
-import com.example.backend.repo.CandidateRepo;
-import com.example.backend.service.CandidateService;
+
+import com.example.testservice.dto.CandidateDTO;
+import com.example.testservice.entity.Candidate;
+import com.example.testservice.repo.CandidateRepo;
+import com.example.testservice.service.CandidateService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

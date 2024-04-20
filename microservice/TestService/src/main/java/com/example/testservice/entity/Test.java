@@ -1,8 +1,9 @@
-package com.example.backend.entity;
+package com.example.testservice.entity;
 
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -14,17 +15,20 @@ public class Test {
     private int id;
 
     // Other attributes
+    @Column(name = "title", length = 255)
     private String title;
-    private Date timeCreated;
+    @Column(name = "time_created")
+    private Timestamp timeCreated;
+
+    @Column(name = "quiz_code", length = 255)
     private String quizCode;
+    @Column(name = "note", length = 255)
     private String note;
+    @Column(name = "time_start", nullable = true)
+    private Timestamp timeStart;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
-    @JoinColumn(name = "quiz_id")
-    private Quiz quiz;
-
-    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Candidate> candidates;
+    @Column(name = "quiz_id", length = 10)
+    private int quizId;
 
 
     // Constructors, getters, and setters
@@ -33,14 +37,14 @@ public class Test {
     public Test() {
     }
 
-    public Test(int id, String title, Date timeCreaed, String quizCode, String note, Quiz quiz, List<Candidate> candidates) {
+    public Test(int id, String title, Timestamp timeCreated, String quizCode, String note, Timestamp timeStart, int quizId) {
         this.id = id;
         this.title = title;
-        this.timeCreated = timeCreaed;
+        this.timeCreated = timeCreated;
         this.quizCode = quizCode;
         this.note = note;
-        this.quiz = quiz;
-        this.candidates = candidates;
+        this.timeStart = timeStart;
+        this.quizId = quizId;
     }
 
     public int getId() {
@@ -59,12 +63,12 @@ public class Test {
         this.title = title;
     }
 
-    public Date getTimeCreaed() {
+    public Timestamp getTimeCreated() {
         return timeCreated;
     }
 
-    public void setTimeCreaed(Date timeCreaed) {
-        this.timeCreated = timeCreaed;
+    public void setTimeCreated(Timestamp timeCreated) {
+        this.timeCreated = timeCreated;
     }
 
     public String getQuizCode() {
@@ -83,19 +87,22 @@ public class Test {
         this.note = note;
     }
 
-    public Quiz getQuiz() {
-        return quiz;
+    public Timestamp getTimeStart() {
+        return timeStart;
     }
 
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
+    public void setTimeStart(Timestamp timeStart) {
+        this.timeStart = timeStart;
     }
 
-    public List<Candidate> getCandidates() {
-        return candidates;
+    public int getQuizId() {
+        return quizId;
     }
 
-    public void setCandidates(List<Candidate> candidates) {
-        this.candidates = candidates;
+    public void setQuizId(int quizId) {
+        this.quizId = quizId;
     }
 }
+
+
+

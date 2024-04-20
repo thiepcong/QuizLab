@@ -1,6 +1,8 @@
-package com.example.backend.service;
+package com.example.testservice.service;
 
-import com.example.backend.dto.CandidateDTO;
+
+
+import com.example.testservice.dto.CandidateDTO;
 
 import java.util.List;
 

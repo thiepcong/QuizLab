@@ -1,4 +1,4 @@
-package com.example.quizservice.dto;
+package com.example.testservice.dto;
 
 
 

@@ -1,4 +1,4 @@
-package com.example.quizservice.config;
+package com.example.testservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

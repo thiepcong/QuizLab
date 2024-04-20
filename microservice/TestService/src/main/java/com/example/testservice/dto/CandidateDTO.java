@@ -1,4 +1,4 @@
-package com.example.backend.dto;
+package com.example.testservice.dto;
 
 import java.util.List;
 

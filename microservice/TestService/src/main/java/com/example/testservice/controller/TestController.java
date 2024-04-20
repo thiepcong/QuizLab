@@ -1,11 +1,14 @@
 package com.example.testservice.controller;
 
 import com.example.testservice.dto.TestDTO;
+import com.example.testservice.response.TestResponse;
+import com.example.testservice.service.TestService;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -21,8 +24,9 @@ public class TestController {
     @PostMapping
     public ResponseEntity<TestDTO> createTest(@RequestHeader int quizId,
                                               @RequestBody TestDTO testDTO,
-                                              @RequestHeader("userId") int userId) {
-        TestDTO createdTestDTO = testService.createTest(quizId,userId, testDTO);
+                                              @RequestHeader("userId") int userId,
+                                              @RequestHeader String timeStart) throws ParseException {
+        TestDTO createdTestDTO = testService.createTest(quizId,userId, testDTO, timeStart);
         return new ResponseEntity<>(createdTestDTO, HttpStatus.CREATED);
     }
 
@@ -31,10 +35,11 @@ public class TestController {
             @RequestHeader("userId") int userId,
             @RequestHeader("filePath") String filePath,
             @RequestHeader int quizId,
+            @RequestHeader String timeStart,
             @RequestBody TestDTO testDTO) {
 
         try {
-            TestDTO createdTest = testService.createTestFromExcel(quizId, userId, testDTO, filePath);
+            TestDTO createdTest = testService.createTestFromExcel(quizId, userId, testDTO, filePath, timeStart);
             return ResponseEntity.ok(createdTest);
         } catch (Exception e) {
             System.out.println(e);
@@ -54,10 +59,12 @@ public class TestController {
         return ResponseEntity.ok(testDTO);
     }
     @GetMapping("/code/{quizCode}")
-    public ResponseEntity<TestDTO> getTestByQuizCode(@PathVariable String quizCode) {
-        TestDTO testDTO = testService.getTestByQuizCode(quizCode);
-        if (testDTO != null) {
-            return ResponseEntity.ok(testDTO);
+    public ResponseEntity<TestResponse> getTestByQuizCode(@PathVariable String quizCode ,
+                                                          @RequestHeader("userId") int userId) {
+        TestResponse testResponse = testService.getTestByQuizCode(quizCode, userId);
+
+        if (testResponse != null) {
+            return ResponseEntity.ok(testResponse);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

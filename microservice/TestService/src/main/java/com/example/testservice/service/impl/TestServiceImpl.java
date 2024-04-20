@@ -1,10 +1,15 @@
 package com.example.testservice.service.impl;
 
 
+import com.example.testservice.dto.CandidateDTO;
 import com.example.testservice.dto.QuizDTO;
 import com.example.testservice.dto.TestDTO;
+import com.example.testservice.entity.Candidate;
 import com.example.testservice.entity.Test;
+import com.example.testservice.repo.CandidateRepo;
 import com.example.testservice.repo.TestRepo;
+import com.example.testservice.response.TestResponse;
+import com.example.testservice.service.TestService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,63 +19,143 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
-import java.util.List;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class TestServiceImpl implements TestService {
     private final TestRepo testRepository;
 
+    private final CandidateRepo candidateRepo;
+
     private final RestTemplate restTemplate;
     private final ModelMapper modelMapper;
 
-    public TestServiceImpl(TestRepo testRepository, RestTemplate restTemplate, ModelMapper modelMapper) {
+    public TestServiceImpl(TestRepo testRepository, CandidateRepo candidateRepo, RestTemplate restTemplate, ModelMapper modelMapper) {
         this.testRepository = testRepository;
+        this.candidateRepo = candidateRepo;
         this.restTemplate = restTemplate;
         this.modelMapper = modelMapper;
     }
 
     @Override
-    public TestDTO createTest(int quizId, int userId,  TestDTO testDTO) {
+    public TestDTO createTest(int quizId, int userId, TestDTO testDTO, String timeStart) throws ParseException {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("userId", String.valueOf(userId));
         String url = "http://localhost:8083/api/quizzes/" + quizId;
         ResponseEntity<QuizDTO> responseEntity = restTemplate
                 .exchange(url, HttpMethod.GET,new HttpEntity<>(headers), QuizDTO.class);
-
-
         QuizDTO quizDTO = responseEntity.getBody();
 
-        testDTO.setQuiz(modelMapper.map(quizDTO, QuizDTO.class));
+
         Test test = modelMapper.map(testDTO, Test.class);
-        Test createdTest = testRepository.save(test);
-        return modelMapper.map(createdTest, TestDTO.class);
-    }
+        test.setQuizId(quizId);
 
-    @Override
-    public TestDTO createTestFromExcel(int quizId,int userId, TestDTO testDTO, String filePath) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("userId", String.valueOf(userId));
-        String url = "http://localhost:8083/api/quizzes/" + quizId;
-        ResponseEntity<QuizDTO> responseEntity = restTemplate
-                .exchange(url, HttpMethod.GET,new HttpEntity<>(headers), QuizDTO.class);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        Date parsedDate = dateFormat.parse(timeStart);
+        Timestamp timestamp = new Timestamp(parsedDate.getTime());
+        test.setTimeStart(timestamp);
 
 
-        QuizDTO quizDTO = responseEntity.getBody();
-        testDTO.setCandidates(testDTO.addCandidatsFromExcel(filePath));
-        Test test = modelMapper.map(testDTO, Test.class);
         Test createdTest = testRepository.save(test);
         TestDTO createdTestDTO = modelMapper.map(createdTest, TestDTO.class);
         createdTestDTO.setQuiz(quizDTO);
+
+        List<CandidateDTO> candidateList = testDTO.getCandidates();
+
+        for(CandidateDTO x:candidateList) {
+            Candidate candidate = modelMapper.map(x, Candidate.class);
+            candidate.setTestId(createdTest.getId());
+            candidateRepo.save(candidate);
+        }
+        createdTestDTO.setCandidates(candidateList);
+
+
         return createdTestDTO;
     }
 
     @Override
-    public TestDTO getTestByQuizCode(String quizCode) {
+    public TestDTO createTestFromExcel(int quizId,int userId, TestDTO testDTO, String filePath, String timeStart) throws ParseException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("userId", String.valueOf(userId));
+        String url = "http://localhost:8083/api/quizzes/" + quizId;
+        ResponseEntity<QuizDTO> responseEntity = restTemplate
+                .exchange(url, HttpMethod.GET,new HttpEntity<>(headers), QuizDTO.class);
+
+
+        QuizDTO quizDTO = responseEntity.getBody();
+
+        Test test = modelMapper.map(testDTO, Test.class);
+        test.setQuizId(quizId);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        Date parsedDate = dateFormat.parse(timeStart);
+        Timestamp timestamp = new Timestamp(parsedDate.getTime());
+        test.setTimeStart(timestamp);
+
+        Test createdTest = testRepository.save(test);
+        TestDTO createdTestDTO = modelMapper.map(createdTest, TestDTO.class);
+        createdTestDTO.setQuiz(quizDTO);
+        List<CandidateDTO> candidateList = createdTestDTO.addCandidatsFromExcel(filePath);
+
+        for(CandidateDTO x:candidateList) {
+            Candidate candidate = modelMapper.map(x, Candidate.class);
+            candidate.setTestId(createdTest.getId());
+            candidateRepo.save(candidate);
+        }
+        createdTestDTO.setCandidates(candidateList);
+
+
+
+
+        return createdTestDTO;
+    }
+
+    @Override
+    public TestResponse getTestByQuizCode(String quizCode, int userId) {
         Test test = testRepository.findByQuizCode(quizCode);
-        return modelMapper.map(test, TestDTO.class);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("userId", String.valueOf(userId));
+        String url = "http://localhost:8083/api/quizzes/" + test.getQuizId();
+        ResponseEntity<QuizDTO> responseEntity = restTemplate
+                .exchange(url, HttpMethod.GET,new HttpEntity<>(headers), QuizDTO.class);
+
+
+        QuizDTO quizDTO = responseEntity.getBody();
+        TestDTO testDTO = modelMapper.map(test, TestDTO.class);
+        testDTO.setQuiz(quizDTO);
+
+        List<Candidate> candidateList = candidateRepo.findAllByTestId(test.getId());
+
+        List<CandidateDTO> candidateDTOList = new ArrayList<>();
+        for (Candidate candidate : candidateList) {
+            CandidateDTO candidateDTO = modelMapper.map(candidate, CandidateDTO.class);
+            candidateDTOList.add(candidateDTO);
+        }
+        testDTO.setCandidates(candidateDTOList);
+
+        TestResponse testResponse = modelMapper.map(testDTO, TestResponse.class);
+
+        Date date1 = new Date(testDTO.getTimeCreated().getTime());
+        Calendar calendar1 = Calendar.getInstance();
+        calendar1.setTime(date1);
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        String timeCreated = sdf.format(calendar1.getTime());
+        testResponse.setTimeCreated(timeCreated);
+
+        Date date2 = new Date(testDTO.getTimeStart().getTime());
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.setTime(date2);
+        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        String timeStart = sdf2.format(calendar2.getTime());
+        testResponse.setTimeStart(timeStart);
+
+        return testResponse;
     }
 
     @Override
