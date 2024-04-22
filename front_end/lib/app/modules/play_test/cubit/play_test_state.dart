@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../core/models/candidate.dart';
 import '../../../core/models/question.dart';
 
 part 'play_test_state.freezed.dart';
@@ -21,7 +22,7 @@ class PlayTestState with _$PlayTestState {
     @Default(false) bool isFalse,
     @Default(false) bool isMultipleChoice,
     @Default(false) bool isPLayDone,
-    String? chooseCandidate,
+    Candidate? chooseCandidate,
     @Default(0) int secondCountdown,
     Question? currentQuestion,
     @Default(0) int currentIndexQuestion,

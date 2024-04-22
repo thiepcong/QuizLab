@@ -123,7 +123,6 @@ class _$MainRouter extends RootStackRouter {
         child: PlayTestPage(
           key: args.key,
           test: args.test,
-          name: args.name,
           cubit: args.cubit,
         ),
       );
@@ -519,7 +518,6 @@ class PlayTestPageRoute extends PageRouteInfo<PlayTestPageRouteArgs> {
   PlayTestPageRoute({
     Key? key,
     required Test test,
-    required String name,
     required PlayTestCubit cubit,
   }) : super(
           PlayTestPageRoute.name,
@@ -527,7 +525,6 @@ class PlayTestPageRoute extends PageRouteInfo<PlayTestPageRouteArgs> {
           args: PlayTestPageRouteArgs(
             key: key,
             test: test,
-            name: name,
             cubit: cubit,
           ),
         );
@@ -539,7 +536,6 @@ class PlayTestPageRouteArgs {
   const PlayTestPageRouteArgs({
     this.key,
     required this.test,
-    required this.name,
     required this.cubit,
   });
 
@@ -547,13 +543,11 @@ class PlayTestPageRouteArgs {
 
   final Test test;
 
-  final String name;
-
   final PlayTestCubit cubit;
 
   @override
   String toString() {
-    return 'PlayTestPageRouteArgs{key: $key, test: $test, name: $name, cubit: $cubit}';
+    return 'PlayTestPageRouteArgs{key: $key, test: $test, cubit: $cubit}';
   }
 }
 

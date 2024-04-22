@@ -35,11 +35,13 @@ class Quiz {
       subject: map['subject'] as String,
       title: map['title'] as String,
       time: map['time'] as int,
-      questions: List<Question>.from(
-        (map['questions'] as List).map<Question>(
-          (x) => Question.fromJson(x as Map<String, dynamic>),
-        ),
-      ),
+      questions: map['questions'] != null
+          ? List<Question>.from(
+              (map['questions'] as List).map<Question>(
+                (x) => Question.fromJson(x as Map<String, dynamic>),
+              ),
+            )
+          : [],
       tests: map['tests'] != null
           ? List<Test>.from(
               (map['tests'] as List).map<Test>(

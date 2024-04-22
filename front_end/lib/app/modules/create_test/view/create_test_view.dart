@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/models/quiz.dart';
 import '../../../core/values/app_colors.dart';
@@ -25,13 +26,82 @@ class CreateTestView extends StatefulWidget {
 class _CreateTestViewState extends State<CreateTestView> {
   final _titleController = TextEditingController();
   final _noteController = TextEditingController();
+  final _timeStartController = TextEditingController();
+  final _timeEndController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     _titleController.dispose();
     _noteController.dispose();
+    _timeEndController.dispose();
+    _timeStartController.dispose();
     super.dispose();
+  }
+
+  Future<void> _selectDateTime(BuildContext context) async {
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null) {
+      if (!mounted) return;
+      final pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(pickedDate),
+      );
+
+      if (pickedTime != null) {
+        _timeStartController.text = _formatDateTime(DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        ));
+      }
+    }
+  }
+
+  Future<void> _selectDateTimeEnd(BuildContext context) async {
+    if (_timeStartController.text.isEmpty) {
+      ShowMessageInternal.showOverlay(
+          context, "Vui lòng chọn thời gian bắt đầu trước");
+      return;
+    }
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate:
+          DateFormat('HH:mm dd-MM-yyyy').parse(_timeStartController.text),
+      firstDate:
+          DateFormat('HH:mm dd-MM-yyyy').parse(_timeStartController.text),
+      lastDate: DateTime(2101),
+    );
+
+    if (pickedDate != null) {
+      if (!mounted) return;
+      final pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(pickedDate),
+      );
+
+      if (pickedTime != null) {
+        _timeEndController.text = _formatDateTime(DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        ));
+      }
+    }
+  }
+
+  String _formatDateTime(DateTime dateTime) {
+    return DateFormat('HH:mm dd-MM-yyyy').format(dateTime);
   }
 
   @override
@@ -155,6 +225,92 @@ class _CreateTestViewState extends State<CreateTestView> {
                                     controller: _noteController,
                                     labelText: "Ghi chú",
                                   ),
+                                  Container(
+                                    margin: const EdgeInsets.only(bottom: 8),
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: AppColors.colorFFFFFFFF),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8)),
+                                    ),
+                                    child: TextFormField(
+                                      controller: _timeStartController,
+                                      validator: (val) => val!.trim().isEmpty
+                                          ? "Trường bắt buộc"
+                                          : null,
+                                      keyboardType: TextInputType.multiline,
+                                      maxLines: null,
+                                      minLines: 1,
+                                      readOnly: true,
+                                      style: TextStyles.mediumWhiteS16,
+                                      cursorColor: AppColors.colorFFFFFFFF,
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 8),
+                                          suffixIcon: IconButton(
+                                            onPressed: () =>
+                                                _selectDateTime(context),
+                                            icon: const Icon(
+                                              Icons.calendar_month,
+                                              color: AppColors.colorFFFFFFFF,
+                                            ),
+                                          ),
+                                          border: InputBorder.none,
+                                          labelText: "Thời gian bắt đầu",
+                                          labelStyle: TextStyles.mediumWhiteS16
+                                              .copyWith(
+                                            color: AppColors.colorFFFFFFFF
+                                                .withOpacity(0.3),
+                                          )),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(bottom: 8),
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.4,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: AppColors.colorFFFFFFFF),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8)),
+                                    ),
+                                    child: TextFormField(
+                                      controller: _timeEndController,
+                                      validator: (val) => val!.trim().isEmpty
+                                          ? "Trường bắt buộc"
+                                          : null,
+                                      keyboardType: TextInputType.multiline,
+                                      maxLines: null,
+                                      minLines: 1,
+                                      readOnly: true,
+                                      style: TextStyles.mediumWhiteS16,
+                                      cursorColor: AppColors.colorFFFFFFFF,
+                                      textAlign: TextAlign.center,
+                                      decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 8),
+                                          suffixIcon: IconButton(
+                                            onPressed: () =>
+                                                _selectDateTimeEnd(context),
+                                            icon: const Icon(
+                                              Icons.calendar_month,
+                                              color: AppColors.colorFFFFFFFF,
+                                            ),
+                                          ),
+                                          border: InputBorder.none,
+                                          labelText: "Thời gian kết thúc",
+                                          labelStyle: TextStyles.mediumWhiteS16
+                                              .copyWith(
+                                            color: AppColors.colorFFFFFFFF
+                                                .withOpacity(0.3),
+                                          )),
+                                    ),
+                                  ),
                                   PrimaryButton(
                                     width:
                                         MediaQuery.of(context).size.width * 0.3,
@@ -170,6 +326,8 @@ class _CreateTestViewState extends State<CreateTestView> {
                                           widget.item?.id ?? 1,
                                           _titleController.text,
                                           _noteController.text,
+                                          _timeStartController.text,
+                                          _timeEndController.text,
                                         );
                                       }
                                     },

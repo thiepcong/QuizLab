@@ -13,14 +13,22 @@ class CreateTestCubit extends Cubit<CreateTestState> {
 
   final CreateTestRepository _repo;
 
-  void createTest(int quizId, String title, String? note) async {
+  void createTest(
+    int quizId,
+    String title,
+    String? note,
+    String timeStart,
+    String timeEnd,
+  ) async {
     try {
       if (state.filePath != null) {
-        createTestFromExcel(quizId, title, note);
+        createTestFromExcel(quizId, title, note, timeStart, timeEnd);
         return;
       }
       final pre = await SharedPreferences.getInstance();
       await pre.setInt("quizId", quizId);
+      await pre.setString("timeStart", timeStart);
+      await pre.setString("timeEnd", timeEnd);
       emit(state.copyWith(message: null, isLoading: true, createDone: false));
       final res = await _repo.createTest(
         title: title,
@@ -28,22 +36,34 @@ class CreateTestCubit extends Cubit<CreateTestState> {
         candidates: state.candidates,
       );
       await pre.remove("quizId");
+      await pre.remove("timeStart");
+      await pre.remove("timeEnd");
       emit(state.copyWith(
           isLoading: false, codeQuiz: res.quizCode, createDone: true));
     } catch (e) {
       final pre = await SharedPreferences.getInstance();
       await pre.remove("quizId");
+      await pre.remove("timeStart");
+      await pre.remove("timeEnd");
       emit(state.copyWith(message: "Đã có lỗi xảy ra", isLoading: false));
       rethrow;
     }
   }
 
-  void createTestFromExcel(int quizId, String title, String? note) async {
+  void createTestFromExcel(
+    int quizId,
+    String title,
+    String? note,
+    String timeStart,
+    String timeEnd,
+  ) async {
     try {
       if (state.filePath == null) return;
       final pre = await SharedPreferences.getInstance();
       await pre.setInt("quizId", quizId);
       await pre.setString('filePath', state.filePath!);
+      await pre.setString("timeStart", timeStart);
+      await pre.setString("timeEnd", timeEnd);
       emit(state.copyWith(message: null, isLoading: true, createDone: false));
       final res = await _repo.createTestFromExcel(
         title: title,
@@ -51,12 +71,16 @@ class CreateTestCubit extends Cubit<CreateTestState> {
       );
       await pre.remove("quizId");
       await pre.remove('filePath');
+      await pre.remove("timeStart");
+      await pre.remove("timeEnd");
       emit(state.copyWith(
           isLoading: false, codeQuiz: res.quizCode, createDone: true));
     } catch (e) {
       final pre = await SharedPreferences.getInstance();
       await pre.remove("quizId");
       await pre.remove('filePath');
+      await pre.remove("timeStart");
+      await pre.remove("timeEnd");
       emit(state.copyWith(message: "Đã có lỗi xảy ra", isLoading: false));
       rethrow;
     }

@@ -17,12 +17,10 @@ class PlayTestPage extends StatefulWidget {
   const PlayTestPage({
     super.key,
     required this.test,
-    required this.name,
     required this.cubit,
   });
 
   final Test test;
-  final String name;
   final PlayTestCubit cubit;
 
   @override

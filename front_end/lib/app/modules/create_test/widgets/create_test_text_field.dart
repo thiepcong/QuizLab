@@ -39,7 +39,7 @@ class CreateTestTextField extends StatelessWidget {
         cursorColor: AppColors.colorFFFFFFFF,
         textAlign: TextAlign.center,
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.zero,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
             border: InputBorder.none,
             labelText: labelText,
             labelStyle: TextStyles.mediumWhiteS16.copyWith(
