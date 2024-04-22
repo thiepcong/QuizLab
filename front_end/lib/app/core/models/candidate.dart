@@ -5,12 +5,14 @@ class Candidate {
   final String name;
   final int score;
   final List<Result> results;
+  final int testId;
 
   Candidate({
     this.id = -1,
     required this.name,
     this.score = 0,
     this.results = const [],
+    this.testId = -1,
   });
 
   Map<String, dynamic> toJson() {
@@ -18,6 +20,7 @@ class Candidate {
       'name': name,
       'score': score,
       'results': results.map((x) => x.toJson()).toList(),
+      'testId': testId,
     };
   }
 
@@ -33,6 +36,7 @@ class Candidate {
               ),
             )
           : [],
+      testId: map['testId'] as int,
     );
   }
 }

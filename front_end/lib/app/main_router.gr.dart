@@ -134,7 +134,7 @@ class _$MainRouter extends RootStackRouter {
         child: ResultTestView(
           key: args.key,
           item: args.item,
-          right: args.right,
+          candidateId: args.candidateId,
         ),
       );
     },
@@ -557,14 +557,14 @@ class ResultTestViewRoute extends PageRouteInfo<ResultTestViewRouteArgs> {
   ResultTestViewRoute({
     Key? key,
     required Test item,
-    required int right,
+    required int candidateId,
   }) : super(
           ResultTestViewRoute.name,
           path: 'result_test',
           args: ResultTestViewRouteArgs(
             key: key,
             item: item,
-            right: right,
+            candidateId: candidateId,
           ),
         );
 
@@ -575,17 +575,17 @@ class ResultTestViewRouteArgs {
   const ResultTestViewRouteArgs({
     this.key,
     required this.item,
-    required this.right,
+    required this.candidateId,
   });
 
   final Key? key;
 
   final Test item;
 
-  final int right;
+  final int candidateId;
 
   @override
   String toString() {
-    return 'ResultTestViewRouteArgs{key: $key, item: $item, right: $right}';
+    return 'ResultTestViewRouteArgs{key: $key, item: $item, candidateId: $candidateId}';
   }
 }

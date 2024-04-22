@@ -5,10 +5,18 @@ import '../../../core/values/app_colors.dart';
 import '../../../core/values/text_styles.dart';
 
 class QuestionItem extends StatelessWidget {
-  const QuestionItem({super.key, required this.item, required this.index});
+  const QuestionItem({
+    super.key,
+    required this.item,
+    required this.index,
+    required this.isCorrect,
+    required this.choosen,
+  });
 
   final Question item;
+  final List<String> choosen;
   final int index;
+  final bool isCorrect;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +24,16 @@ class QuestionItem extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.3,
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       margin: const EdgeInsets.only(top: 12),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.colorFFFFFFFF,
-        borderRadius: BorderRadius.all(Radius.circular(18)),
+        borderRadius: const BorderRadius.all(Radius.circular(18)),
+        border: Border(
+          left: BorderSide(
+            width: 8,
+            color:
+                isCorrect ? AppColors.colorFF3CC03C : AppColors.colorFFB20000,
+          ),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +65,8 @@ class QuestionItem extends StatelessWidget {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        e.content,
+                        e.content +
+                            (choosen.contains(e.content) ? "(Bạn chọn)" : ""),
                         style: TextStyles.regularBlackS16,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 10,

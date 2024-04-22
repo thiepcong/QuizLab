@@ -1,20 +1,34 @@
 class Result {
   final int id;
-  final bool selected;
+  final int candidateId;
+  final int questionId;
+  final List<String> chosenAnswers;
+  final bool correct;
 
-  Result({required this.id, required this.selected});
+  Result({
+    this.id = -1,
+    this.candidateId = -1,
+    required this.questionId,
+    required this.chosenAnswers,
+    required this.correct,
+  });
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'id': id,
-      'selected': selected,
+      'questionId': questionId,
+      'chosenAnswers': chosenAnswers,
+      'correct': correct,
     };
   }
 
   factory Result.fromJson(Map<String, dynamic> map) {
     return Result(
       id: map['id'] as int,
-      selected: map['selected'] as bool,
+      candidateId: map['candidateId'] as int,
+      questionId: map['questionId'] as int,
+      chosenAnswers:
+          (map['chosenAnswers'] as List).map((e) => e.toString()).toList(),
+      correct: map['correct'] as bool,
     );
   }
 }

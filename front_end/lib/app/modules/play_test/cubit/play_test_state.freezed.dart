@@ -28,6 +28,7 @@ mixin _$PlayTestState {
   bool get isFalse => throw _privateConstructorUsedError;
   bool get isMultipleChoice => throw _privateConstructorUsedError;
   bool get isPLayDone => throw _privateConstructorUsedError;
+  Candidate? get candidate => throw _privateConstructorUsedError;
   Candidate? get chooseCandidate => throw _privateConstructorUsedError;
   int get secondCountdown => throw _privateConstructorUsedError;
   Question? get currentQuestion => throw _privateConstructorUsedError;
@@ -60,6 +61,7 @@ abstract class $PlayTestStateCopyWith<$Res> {
       bool isFalse,
       bool isMultipleChoice,
       bool isPLayDone,
+      Candidate? candidate,
       Candidate? chooseCandidate,
       int secondCountdown,
       Question? currentQuestion,
@@ -94,6 +96,7 @@ class _$PlayTestStateCopyWithImpl<$Res, $Val extends PlayTestState>
     Object? isFalse = null,
     Object? isMultipleChoice = null,
     Object? isPLayDone = null,
+    Object? candidate = freezed,
     Object? chooseCandidate = freezed,
     Object? secondCountdown = null,
     Object? currentQuestion = freezed,
@@ -151,6 +154,10 @@ class _$PlayTestStateCopyWithImpl<$Res, $Val extends PlayTestState>
           ? _value.isPLayDone
           : isPLayDone // ignore: cast_nullable_to_non_nullable
               as bool,
+      candidate: freezed == candidate
+          ? _value.candidate
+          : candidate // ignore: cast_nullable_to_non_nullable
+              as Candidate?,
       chooseCandidate: freezed == chooseCandidate
           ? _value.chooseCandidate
           : chooseCandidate // ignore: cast_nullable_to_non_nullable
@@ -204,6 +211,7 @@ abstract class _$$PlayTestStateImplCopyWith<$Res>
       bool isFalse,
       bool isMultipleChoice,
       bool isPLayDone,
+      Candidate? candidate,
       Candidate? chooseCandidate,
       int secondCountdown,
       Question? currentQuestion,
@@ -236,6 +244,7 @@ class __$$PlayTestStateImplCopyWithImpl<$Res>
     Object? isFalse = null,
     Object? isMultipleChoice = null,
     Object? isPLayDone = null,
+    Object? candidate = freezed,
     Object? chooseCandidate = freezed,
     Object? secondCountdown = null,
     Object? currentQuestion = freezed,
@@ -293,6 +302,10 @@ class __$$PlayTestStateImplCopyWithImpl<$Res>
           ? _value.isPLayDone
           : isPLayDone // ignore: cast_nullable_to_non_nullable
               as bool,
+      candidate: freezed == candidate
+          ? _value.candidate
+          : candidate // ignore: cast_nullable_to_non_nullable
+              as Candidate?,
       chooseCandidate: freezed == chooseCandidate
           ? _value.chooseCandidate
           : chooseCandidate // ignore: cast_nullable_to_non_nullable
@@ -341,6 +354,7 @@ class _$PlayTestStateImpl extends _PlayTestState {
       this.isFalse = false,
       this.isMultipleChoice = false,
       this.isPLayDone = false,
+      this.candidate,
       this.chooseCandidate,
       this.secondCountdown = 0,
       this.currentQuestion,
@@ -388,6 +402,8 @@ class _$PlayTestStateImpl extends _PlayTestState {
   @JsonKey()
   final bool isPLayDone;
   @override
+  final Candidate? candidate;
+  @override
   final Candidate? chooseCandidate;
   @override
   @JsonKey()
@@ -413,7 +429,7 @@ class _$PlayTestStateImpl extends _PlayTestState {
 
   @override
   String toString() {
-    return 'PlayTestState(isLoading: $isLoading, isChooseA: $isChooseA, isChooseB: $isChooseB, isChooseC: $isChooseC, isChooseD: $isChooseD, isTrueA: $isTrueA, isTrueB: $isTrueB, isTrueC: $isTrueC, isTrueD: $isTrueD, isFalse: $isFalse, isMultipleChoice: $isMultipleChoice, isPLayDone: $isPLayDone, chooseCandidate: $chooseCandidate, secondCountdown: $secondCountdown, currentQuestion: $currentQuestion, currentIndexQuestion: $currentIndexQuestion, questions: $questions, message: $message, error: $error)';
+    return 'PlayTestState(isLoading: $isLoading, isChooseA: $isChooseA, isChooseB: $isChooseB, isChooseC: $isChooseC, isChooseD: $isChooseD, isTrueA: $isTrueA, isTrueB: $isTrueB, isTrueC: $isTrueC, isTrueD: $isTrueD, isFalse: $isFalse, isMultipleChoice: $isMultipleChoice, isPLayDone: $isPLayDone, candidate: $candidate, chooseCandidate: $chooseCandidate, secondCountdown: $secondCountdown, currentQuestion: $currentQuestion, currentIndexQuestion: $currentIndexQuestion, questions: $questions, message: $message, error: $error)';
   }
 
   @override
@@ -440,6 +456,8 @@ class _$PlayTestStateImpl extends _PlayTestState {
                 other.isMultipleChoice == isMultipleChoice) &&
             (identical(other.isPLayDone, isPLayDone) ||
                 other.isPLayDone == isPLayDone) &&
+            (identical(other.candidate, candidate) ||
+                other.candidate == candidate) &&
             (identical(other.chooseCandidate, chooseCandidate) ||
                 other.chooseCandidate == chooseCandidate) &&
             (identical(other.secondCountdown, secondCountdown) ||
@@ -469,6 +487,7 @@ class _$PlayTestStateImpl extends _PlayTestState {
         isFalse,
         isMultipleChoice,
         isPLayDone,
+        candidate,
         chooseCandidate,
         secondCountdown,
         currentQuestion,
@@ -499,6 +518,7 @@ abstract class _PlayTestState extends PlayTestState {
       final bool isFalse,
       final bool isMultipleChoice,
       final bool isPLayDone,
+      final Candidate? candidate,
       final Candidate? chooseCandidate,
       final int secondCountdown,
       final Question? currentQuestion,
@@ -532,6 +552,8 @@ abstract class _PlayTestState extends PlayTestState {
   bool get isMultipleChoice;
   @override
   bool get isPLayDone;
+  @override
+  Candidate? get candidate;
   @override
   Candidate? get chooseCandidate;
   @override

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:front_end/app/core/values/show_message_internal.dart';
 import 'package:front_end/app/main_router.dart';
 
 import '../../../core/models/test.dart';
@@ -48,9 +49,18 @@ class _PlayTestPageState extends State<PlayTestPage> {
               previous.isPLayDone != current.isPLayDone,
           listener: (context, state) {
             if (state.isPLayDone) {
+              context.read<PlayTestCubit>().createCandidate();
+            }
+          },
+        ),
+        BlocListener<PlayTestCubit, PlayTestState>(
+          listenWhen: (previous, current) =>
+              previous.candidate != current.candidate,
+          listener: (context, state) {
+            if (state.candidate != null) {
               context.pushRoute(ResultTestViewRoute(
                 item: widget.test,
-                right: context.read<PlayTestCubit>().right,
+                candidateId: state.candidate?.id ?? -1,
               ));
             }
           },
@@ -61,6 +71,15 @@ class _PlayTestPageState extends State<PlayTestPage> {
           listener: (context, state) {
             if (state.secondCountdown == 0) {
               context.read<PlayTestCubit>().endTime();
+            }
+          },
+        ),
+        BlocListener<PlayTestCubit, PlayTestState>(
+          listenWhen: (previous, current) =>
+              previous.message != current.message,
+          listener: (context, state) {
+            if (state.message != null) {
+              ShowMessageInternal.showOverlay(context, state.message ?? '');
             }
           },
         ),
@@ -266,6 +285,13 @@ class _PlayTestPageState extends State<PlayTestPage> {
                       ],
                     ),
                   ),
+                  state.isLoading
+                      ? Container(
+                          color: AppColors.colorFF000000.withOpacity(0.5),
+                          alignment: Alignment.center,
+                          child: const CircularProgressIndicator(),
+                        )
+                      : const SizedBox.shrink()
                 ],
               ),
             ),

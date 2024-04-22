@@ -12,6 +12,7 @@ import '../../../core/widgets/appBar/custom_app_bar.dart';
 import '../../../main_router.dart';
 import '../cubit/play_test_cubit.dart';
 import '../cubit/play_test_state.dart';
+import '../repository/play_test_repository.dart';
 import '../widgets/candidate_choose_item.dart';
 
 class PlayTestView extends StatefulWidget {
@@ -72,7 +73,7 @@ class _PlayTestViewState extends State<PlayTestView> {
       color: AppColors.colorFFFFFFFF,
       title: "Chuẩn bị",
       child: BlocProvider(
-        create: (_) => PlayTestCubit(),
+        create: (_) => PlayTestCubit(context.read<PlayTestRepository>()),
         child: _buildPage(context),
       ),
     );
