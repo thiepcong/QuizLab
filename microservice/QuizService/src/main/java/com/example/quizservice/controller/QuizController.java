@@ -6,6 +6,7 @@ import com.example.quizservice.service.QuizService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -77,7 +78,7 @@ public class QuizController {
                         HttpMethod.GET,new HttpEntity<>(headers), String.class);
 
 
-        String userRole = responseEntity.getBody();
+       String userRole = responseEntity.getBody();
 
 
 
@@ -118,6 +119,7 @@ public class QuizController {
     }
 
     @DeleteMapping("/{quizId}")
+    @Transactional
     public ResponseEntity<Void> deleteQuiz(@PathVariable int quizId,
                                            @RequestHeader("userId") int userId) {
         QuizDTO existingQuizDTO = quizService.getQuizById(quizId);
@@ -131,6 +133,13 @@ public class QuizController {
         }
 
         quizService.deleteQuiz(quizId);
+
+        ResponseEntity<Void> responseEntity = restTemplate
+                .exchange("http://localhost:8082/api/questions/delete/quiz/{quizId}",
+                        HttpMethod.DELETE,
+                        null,
+                        Void.class,
+                        quizId);
 
         return ResponseEntity.noContent().build();
     }

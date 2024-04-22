@@ -8,6 +8,7 @@ import com.example.questionservice.service.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -117,6 +118,14 @@ public class QuestionController {
         }
 
         questionService.deleteQuestion(questionId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/delete/quiz/{quizId}")
+    @Transactional
+    public ResponseEntity<Void> deleteQuestionByQuizId(@PathVariable("quizId") int quizId) {
+
+        questionService.deleteQuestionByQuizId(quizId);
         return ResponseEntity.noContent().build();
     }
 

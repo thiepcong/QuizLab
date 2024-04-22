@@ -14,6 +14,7 @@ public interface QuestionService {
     QuestionDTO createQuestion(QuestionDTO questionDTO);
     QuestionDTO updateQuestion(QuestionDTO questionDTO);
     void deleteQuestion(int id);
+    void deleteQuestionByQuizId(int quizId);
     Optional<Answer> getAnswerById(int id);
     Answer updateAnswer(Answer answer);
     List<QuestionDTO> getAllQuestionsByUserId(int userId);
