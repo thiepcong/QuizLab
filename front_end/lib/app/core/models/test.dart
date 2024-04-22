@@ -9,6 +9,8 @@ class Test {
   final String? note;
   final Quiz quiz;
   final List<Candidate> candidates;
+  final DateTime timeStart;
+  final DateTime timeEnd;
 
   Test({
     required this.id,
@@ -18,6 +20,8 @@ class Test {
     this.note,
     required this.quiz,
     required this.candidates,
+    required this.timeStart,
+    required this.timeEnd,
   });
 
   Map<String, dynamic> toJson() {
@@ -43,6 +47,8 @@ class Test {
               .map((e) => Candidate.fromJson(e))
               .toList()
           : [],
+      timeStart: DateTime.parse(map['timeStart']),
+      timeEnd: DateTime.parse(map['timeEnd']),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,20 +15,66 @@ import '../cubit/play_test_state.dart';
 import '../widgets/candidate_choose_item.dart';
 
 class PlayTestView extends StatefulWidget {
-  const PlayTestView({super.key, this.test});
+  const PlayTestView({super.key, required this.test});
 
-  final Test? test;
+  final Test test;
 
   @override
   State<PlayTestView> createState() => _PlayTestViewState();
 }
 
 class _PlayTestViewState extends State<PlayTestView> {
+  String? _handleDuration(DateTime start, DateTime end) {
+    if (start.isAfter(DateTime.now())) {
+      Duration duration = start.difference(DateTime.now());
+      String days = duration.inDays.toString();
+      String hours = (duration.inHours % 24).toString();
+      String minutes = (duration.inMinutes % 60).toString();
+      String seconds = (duration.inSeconds % 60).toString();
+
+      return 'Vui lòng chờ \n Còn $days ngày $hours giờ $minutes phút $seconds giây';
+    } else if (DateTime.now().isAfter(end)) {
+      return "Bài kiểm tra đã hết hạn";
+    }
+    return null;
+  }
+
+  String? res;
+  Timer? timer;
+
+  void init() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        res = _handleDuration(widget.test.timeStart, widget.test.timeEnd);
+      });
+      if (res == null || res == "Bài kiểm tra đã hết hạn") {
+        timer.cancel();
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    res = null;
+    timer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => PlayTestCubit(),
-      child: _buildPage(context),
+    return Title(
+      color: AppColors.colorFFFFFFFF,
+      title: "Chuẩn bị",
+      child: BlocProvider(
+        create: (_) => PlayTestCubit(),
+        child: _buildPage(context),
+      ),
     );
   }
 
@@ -46,7 +94,10 @@ class _PlayTestViewState extends State<PlayTestView> {
                         context, "Vui lòng chọn một người để tham gia");
                     return;
                   }
-                  context.router.replace(PlayTestPageRoute(test: widget.test));
+                  context.router.push(PlayTestPageRoute(
+                    test: widget.test,
+                    cubit: cubit,
+                  ));
                 },
                 child: const Row(
                   children: [
@@ -77,38 +128,48 @@ class _PlayTestViewState extends State<PlayTestView> {
                 color: AppColors.colorFFFFFFFF.withOpacity(0.6),
                 borderRadius: const BorderRadius.all(Radius.circular(24)),
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Sắp xong rồi!",
-                      style: TextStyles.boldBlackS20,
+              child: res != null
+                  ? Text(
+                      res ?? '',
+                      style: TextStyles.boldWhiteS28
+                          .copyWith(color: AppColors.colorFF000000),
+                      textAlign: TextAlign.center,
+                    )
+                  : SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Sắp xong rồi!",
+                            style: TextStyles.boldBlackS20,
+                          ),
+                          const SizedBox(height: 24),
+                          const Text(
+                            "Vui lòng chọn để tham gia",
+                            style: TextStyles.mediumBlackS20,
+                          ),
+                          const SizedBox(height: 24),
+                          ...widget.test.candidates
+                              .map((e) => CandidateChooseItem(
+                                    groupValue: state.chooseCandidate?.name,
+                                    value: e.name,
+                                    onChanged: (e) => cubit.setChooseCandidate(
+                                        e, widget.test.candidates),
+                                  ))
+                              .toList(),
+                          // CandidateChooseItem(
+                          //   groupValue: state.chooseCandidate,
+                          //   value: 'name2',
+                          //   onChanged: (e) => cubit.setChooseCandidate(e),
+                          // ),
+                          // CandidateChooseItem(
+                          //   groupValue: state.chooseCandidate,
+                          //   value: 'name3',
+                          //   onChanged: (e) => cubit.setChooseCandidate(e),
+                          // ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 24),
-                    const Text(
-                      "Vui lòng chọn để tham gia",
-                      style: TextStyles.mediumBlackS20,
-                    ),
-                    const SizedBox(height: 24),
-                    CandidateChooseItem(
-                      groupValue: state.chooseCandidate,
-                      value: 'name1',
-                      onChanged: (e) => cubit.setChooseCandidate(e),
-                    ),
-                    CandidateChooseItem(
-                      groupValue: state.chooseCandidate,
-                      value: 'name2',
-                      onChanged: (e) => cubit.setChooseCandidate(e),
-                    ),
-                    CandidateChooseItem(
-                      groupValue: state.chooseCandidate,
-                      value: 'name3',
-                      onChanged: (e) => cubit.setChooseCandidate(e),
-                    ),
-                  ],
-                ),
-              ),
             ),
           ),
         );

@@ -15,6 +15,8 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
     final userId = pre.getInt("userId");
     final filePath = pre.getString("filePath");
     final quizId = pre.getInt("quizId");
+    final timeStart = pre.getString("timeStart");
+    final timeEnd = pre.getString("timeEnd");
     var customHeaders = {
       'content-type': 'application/json',
       'Accept': "application/json"
@@ -32,6 +34,16 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
     if (quizId != null) {
       customHeaders.addAll({
         'quizId': quizId.toString(),
+      });
+    }
+    if (timeStart != null) {
+      customHeaders.addAll({
+        'timeStart': timeStart,
+      });
+    }
+    if (timeEnd != null) {
+      customHeaders.addAll({
+        'timeEnd': timeEnd,
       });
     }
 
