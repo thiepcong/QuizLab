@@ -61,6 +61,9 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public void deleteQuestionByQuizId(int quizId){questionRepository.deleteQuestionByQuizId(quizId);}
+
+    @Override
     public Optional<Answer> getAnswerById(int id) {
         return answerRepository.findById(id);
     }
