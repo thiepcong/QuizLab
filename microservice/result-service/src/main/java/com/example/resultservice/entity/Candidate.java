@@ -17,13 +17,11 @@ public class Candidate {
     // Other attributes
     private String name;
     private int score;
-    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "candidate", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Result> results;
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch= FetchType.LAZY)
-    @JoinColumn(name = "test_id")
-    @JsonBackReference
-    private Test test;
+    @Column(name = "test_id")
+    private int testId;
 
 
     // Constructors, getters, and setters
@@ -32,13 +30,6 @@ public class Candidate {
     public Candidate() {
     }
 
-    public Candidate(int id, String name, int score, List<Result> results, Test test) {
-        this.id = id;
-        this.name = name;
-        this.score = score;
-        this.results = results;
-        this.test = test;
-    }
 
     public int getId() {
         return id;
@@ -72,11 +63,11 @@ public class Candidate {
         this.results = results;
     }
 
-    public Test getTest() {
-        return test;
+    public int getTestId() {
+        return testId;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setTestId(int testId) {
+        this.testId = testId;
     }
 }

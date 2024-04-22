@@ -41,7 +41,8 @@ public class ResultServiceImpl implements ResultService {
     @Override
     public ResultDTO getResultById(int resultId) {
         Optional<Result> result = resultRepo.findById(resultId);
-        return modelMapper.map(result, ResultDTO.class);
+        result.get().setChosenAnswers(resultRepo.findChosenAnswersByResultId(resultId));
+        return modelMapper.map(result.get(), ResultDTO.class);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class ResultServiceImpl implements ResultService {
         // Update the result entity with the new values from resultDTO
         result.get().setCorrect(resultDTO.isCorrect());
         result.get().setCandidate(candidateRepo.findById(resultDTO.getCandidateId()).get());
-        result.get().setQuestion(questionRepo.findById(resultDTO.getQuestionId()).get());
+        result.get().setQuestionId(resultDTO.getQuestionId());
         result.get().setChosenAnswers(resultDTO.getChosenAnswers());
 
         Result updatedResult = resultRepo.save(result.get());

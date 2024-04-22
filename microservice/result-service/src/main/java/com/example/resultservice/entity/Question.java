@@ -23,14 +23,6 @@ public class Question {
 
     @Column(name = "user_id")
     private int userId;
-    @ManyToMany(mappedBy = "questions",  cascade = { CascadeType.PERSIST,CascadeType.MERGE })
-    @JsonBackReference
-    private List<Quiz> quizzes;
-
-    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<Result> results;
-
 
     public Question() {
     }
@@ -65,13 +57,6 @@ public class Question {
         return answers;
     }
 
-    public List<Quiz> getQuizzes() {
-        return quizzes;
-    }
-
-    public void setQuizzes(List<Quiz> quizzes) {
-        this.quizzes = quizzes;
-    }
 
     @Override
     public String toString() {

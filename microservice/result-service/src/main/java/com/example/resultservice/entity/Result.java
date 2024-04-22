@@ -20,10 +20,8 @@ public class Result {
     @JsonBackReference
     private Candidate candidate;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
-    @JoinColumn(name = "question_id")
-    @JsonManagedReference
-    private Question question;
+    @Column(name = "question_id")
+    private int questionId;
 
     @ElementCollection
     @CollectionTable(name = "chosen_answers", joinColumns = @JoinColumn(name = "result_id"))
@@ -32,14 +30,6 @@ public class Result {
 
 
     public Result() {
-    }
-
-    public Result(int id, boolean isCorrect, Candidate candidate, Question question, List<String> chosenAnswers) {
-        this.id = id;
-        this.isCorrect = isCorrect;
-        this.candidate = candidate;
-        this.question = question;
-        this.chosenAnswers = chosenAnswers;
     }
 
     public int getId() {
@@ -66,9 +56,6 @@ public class Result {
         this.candidate = candidate;
     }
 
-    public Question getQuestion() {
-        return question;
-    }
 
     public List<String> getChosenAnswers() {
         return chosenAnswers;
@@ -78,8 +65,12 @@ public class Result {
         this.chosenAnswers = chosenAnswers;
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 }
 
