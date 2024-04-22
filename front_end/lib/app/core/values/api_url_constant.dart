@@ -25,4 +25,9 @@ class ApiUrlConstants {
 
   static String getTestFromQuizCode(String quizCode) =>
       '$baseUrl:8084/api/tests/code/$quizCode';
+
+  static String createCandidate = '$baseUrl:9000/candidates';
+
+  static String getAllResult(int candidateID) =>
+      '$baseUrl:9000/api/results/candidate/$candidateID';
 }

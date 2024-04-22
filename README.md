@@ -36,9 +36,9 @@ o	Cung cấp thống kê kết quả theo người dùng, gói câu hỏi, môn 
 - https://docs.google.com/document/d/1Rd8Xwu1GBpeSgoV-l9D2IcvZFbY0FsqsdBiyZ5aYII8/edit?usp=sharing
 --------------------------
 ## 5) Công nghệ/Framework sử dụng
-- Frontend: HTML/Flutter (updating...)
+- Frontend: Flutter
 - Backend: Java Spring boot
-- Database: Mysql, Mongodb (updating...)
+- Database: Mysql
 - Kiến trúc: Microservice
 - Triển khai: ...
 

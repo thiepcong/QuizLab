@@ -13,6 +13,10 @@ import 'modules/home/api/home_api.dart';
 import 'modules/home/repository/home_repository.dart';
 import 'modules/login/api/login_api.dart';
 import 'modules/login/repository/login_repository.dart';
+import 'modules/play_test/api/play_test_api.dart';
+import 'modules/play_test/repository/play_test_repository.dart';
+import 'modules/result_test/api/result_test_api.dart';
+import 'modules/result_test/repository/result_test_repository.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -51,6 +55,12 @@ class _RouteAppState extends State<RouteApp> {
         ),
         RepositoryProvider<CreateTestRepository>(
           create: (context) => CreateTestRepository(CreateTestApi()),
+        ),
+        RepositoryProvider<PlayTestRepository>(
+          create: (context) => PlayTestRepository(PlayTestApi()),
+        ),
+        RepositoryProvider<ResultTestRepository>(
+          create: (context) => ResultTestRepository(ResultTestApi()),
         ),
       ],
       child: MaterialApp.router(

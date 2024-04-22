@@ -19,7 +19,7 @@ import 'modules/login/view/register_view.dart';
 import 'modules/play_test/cubit/play_test_cubit.dart';
 import 'modules/play_test/view/play_test_page.dart';
 import 'modules/play_test/view/play_test_view.dart';
-import 'modules/play_test/view/result_test_page.dart';
+import 'modules/result_test/view/result_test_page.dart';
 part 'main_router.gr.dart';
 
 @MaterialAutoRouter(

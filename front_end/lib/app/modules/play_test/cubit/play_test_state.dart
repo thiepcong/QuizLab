@@ -22,6 +22,7 @@ class PlayTestState with _$PlayTestState {
     @Default(false) bool isFalse,
     @Default(false) bool isMultipleChoice,
     @Default(false) bool isPLayDone,
+    Candidate? candidate,
     Candidate? chooseCandidate,
     @Default(0) int secondCountdown,
     Question? currentQuestion,
