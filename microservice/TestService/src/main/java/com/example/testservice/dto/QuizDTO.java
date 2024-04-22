@@ -18,7 +18,7 @@ public class QuizDTO {
     private int id;
     private String subject;
     private String title;
-    private Timestamp time;
+    private int time;
     private int userId;
     private List<QuestionDTO> questions;
     // Constructors, getters, and setters
@@ -92,11 +92,11 @@ public class QuizDTO {
         this.title = title;
     }
 
-    public Timestamp getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(int time) {
         this.time = time;
     }
 

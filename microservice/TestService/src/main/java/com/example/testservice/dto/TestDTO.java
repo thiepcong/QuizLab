@@ -8,17 +8,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.*;
 
 public class TestDTO {
     private int id;
     private String title;
-    private Timestamp timeCreated;
-
-    private Timestamp timeStart;
+    private Date timeCreated;
+    private Date timeStart;
+    private Date timeEnd;
     private String quizCode;
     private String note;
     private QuizDTO quiz;
@@ -29,12 +26,11 @@ public class TestDTO {
 
     public TestDTO() {
         this.quizCode = generateRandomString(6);
-        Instant instant = Instant.now();
-        Timestamp timestamp = Timestamp.from(instant);
-        this.timeCreated = timestamp;
+        this.timeCreated = new Date();
     }
 
-    public TestDTO(int id, String title, Timestamp timeCreated, String quizCode, String note, QuizDTO quiz, List<CandidateDTO> candidates, Timestamp timeStart) {
+    public TestDTO(int id, String title, Date timeCreated, String quizCode, String note,
+                   QuizDTO quiz, List<CandidateDTO> candidates, Date timeStart, Date timeEnd) {
         this.id = id;
         this.title = title;
         this.timeCreated = timeCreated;
@@ -43,6 +39,7 @@ public class TestDTO {
         this.quiz = quiz;
         this.candidates = candidates;
         this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
     }
 
     public List<CandidateDTO> addCandidatsFromExcel(String filePath) {
@@ -96,11 +93,11 @@ public class TestDTO {
         this.title = title;
     }
 
-    public Timestamp getTimeCreated() {
+    public Date getTimeCreated() {
         return timeCreated;
     }
 
-    public void setTimeCreated(Timestamp timeCreated) {
+    public void setTimeCreated(Date timeCreated) {
         this.timeCreated = timeCreated;
     }
 
@@ -136,11 +133,19 @@ public class TestDTO {
         this.candidates = candidates;
     }
 
-    public Timestamp getTimeStart() {
+    public Date getTimeStart() {
         return timeStart;
     }
 
-    public void setTimeStart(Timestamp timeStart) {
+    public void setTimeStart(Date timeStart) {
         this.timeStart = timeStart;
+    }
+
+    public Date getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(Date timeEnd) {
+        this.timeEnd = timeEnd;
     }
 }

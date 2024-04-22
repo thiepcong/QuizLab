@@ -8,7 +8,6 @@ import com.example.testservice.entity.Candidate;
 import com.example.testservice.entity.Test;
 import com.example.testservice.repo.CandidateRepo;
 import com.example.testservice.repo.TestRepo;
-import com.example.testservice.response.TestResponse;
 import com.example.testservice.service.TestService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpEntity;
@@ -42,7 +41,7 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public TestDTO createTest(int quizId, int userId, TestDTO testDTO, String timeStart) throws ParseException {
+    public TestDTO createTest(int quizId, int userId, TestDTO testDTO, String timeStart, String timeEnd) throws ParseException {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("userId", String.valueOf(userId));
@@ -79,7 +78,7 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public TestDTO createTestFromExcel(int quizId,int userId, TestDTO testDTO, String filePath, String timeStart) throws ParseException {
+    public TestDTO createTestFromExcel(int quizId,int userId, TestDTO testDTO, String filePath, String timeStart, String timeEnd) throws ParseException {
         HttpHeaders headers = new HttpHeaders();
         headers.set("userId", String.valueOf(userId));
         String url = "http://localhost:8083/api/quizzes/" + quizId;
@@ -93,9 +92,14 @@ public class TestServiceImpl implements TestService {
         test.setQuizId(quizId);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd-MM-yyyy");
-        Date parsedDate = dateFormat.parse(timeStart);
-        Timestamp timestamp = new Timestamp(parsedDate.getTime());
-        test.setTimeStart(timestamp);
+        Date parsedTimeStart = dateFormat.parse(timeStart);
+        Timestamp timeStart1 = new Timestamp(parsedTimeStart.getTime());
+        test.setTimeStart(timeStart1);
+
+
+        Date parsedTimeEnd = dateFormat.parse(timeEnd);
+        Timestamp timeEnd1 = new Timestamp(parsedTimeEnd.getTime());
+        test.setTimeEnd(timeEnd1);
 
         Test createdTest = testRepository.save(test);
         TestDTO createdTestDTO = modelMapper.map(createdTest, TestDTO.class);
@@ -116,7 +120,7 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public TestResponse getTestByQuizCode(String quizCode, int userId) {
+    public TestDTO getTestByQuizCode(String quizCode, int userId) {
         Test test = testRepository.findByQuizCode(quizCode);
 
         HttpHeaders headers = new HttpHeaders();
@@ -139,23 +143,8 @@ public class TestServiceImpl implements TestService {
         }
         testDTO.setCandidates(candidateDTOList);
 
-        TestResponse testResponse = modelMapper.map(testDTO, TestResponse.class);
 
-        Date date1 = new Date(testDTO.getTimeCreated().getTime());
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.setTime(date1);
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd-MM-yyyy");
-        String timeCreated = sdf.format(calendar1.getTime());
-        testResponse.setTimeCreated(timeCreated);
-
-        Date date2 = new Date(testDTO.getTimeStart().getTime());
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.setTime(date2);
-        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm dd-MM-yyyy");
-        String timeStart = sdf2.format(calendar2.getTime());
-        testResponse.setTimeStart(timeStart);
-
-        return testResponse;
+        return testDTO;
     }
 
     @Override
