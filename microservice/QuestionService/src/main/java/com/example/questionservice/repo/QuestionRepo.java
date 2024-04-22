@@ -12,5 +12,6 @@ import java.util.List;
 public interface QuestionRepo extends JpaRepository<Question, Integer> {
     List<Question> findAllByUserId(int userId);
     List<Question> findAllByQuizId(int quizId);
+    void deleteQuestionByQuizId(int quizId);
     // Add custom query methods if needed
 }
