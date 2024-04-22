@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
                     userDTO.getName(),
                     userDTO.getUsername(),
                     this.passwordEncoder.encode(userDTO.getPassword()),
-                    userDTO.getRole()
+                    "user"
             );
             userRepo.save(user1);
             return new RegisterResponse("Dang ki thanh cong", true, user1);

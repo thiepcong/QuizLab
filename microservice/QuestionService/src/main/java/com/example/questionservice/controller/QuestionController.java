@@ -61,7 +61,7 @@ public class QuestionController {
     }
 
     @GetMapping("/quiz")
-    public ResponseEntity<List<QuestionDTO>> getAllQuestionsByQuizId(@RequestHeader("userId") int quizId) {
+    public ResponseEntity<List<QuestionDTO>> getAllQuestionsByQuizId(@RequestHeader("quizId") int quizId) {
         List<QuestionDTO> questions = questionService.getAllQuestionsByQuizId(quizId);
         return ResponseEntity.ok(questions);
     }
