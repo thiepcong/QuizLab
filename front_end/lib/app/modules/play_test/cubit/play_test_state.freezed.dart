@@ -28,7 +28,7 @@ mixin _$PlayTestState {
   bool get isFalse => throw _privateConstructorUsedError;
   bool get isMultipleChoice => throw _privateConstructorUsedError;
   bool get isPLayDone => throw _privateConstructorUsedError;
-  String? get chooseCandidate => throw _privateConstructorUsedError;
+  Candidate? get chooseCandidate => throw _privateConstructorUsedError;
   int get secondCountdown => throw _privateConstructorUsedError;
   Question? get currentQuestion => throw _privateConstructorUsedError;
   int get currentIndexQuestion => throw _privateConstructorUsedError;
@@ -60,7 +60,7 @@ abstract class $PlayTestStateCopyWith<$Res> {
       bool isFalse,
       bool isMultipleChoice,
       bool isPLayDone,
-      String? chooseCandidate,
+      Candidate? chooseCandidate,
       int secondCountdown,
       Question? currentQuestion,
       int currentIndexQuestion,
@@ -154,7 +154,7 @@ class _$PlayTestStateCopyWithImpl<$Res, $Val extends PlayTestState>
       chooseCandidate: freezed == chooseCandidate
           ? _value.chooseCandidate
           : chooseCandidate // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Candidate?,
       secondCountdown: null == secondCountdown
           ? _value.secondCountdown
           : secondCountdown // ignore: cast_nullable_to_non_nullable
@@ -204,7 +204,7 @@ abstract class _$$PlayTestStateImplCopyWith<$Res>
       bool isFalse,
       bool isMultipleChoice,
       bool isPLayDone,
-      String? chooseCandidate,
+      Candidate? chooseCandidate,
       int secondCountdown,
       Question? currentQuestion,
       int currentIndexQuestion,
@@ -296,7 +296,7 @@ class __$$PlayTestStateImplCopyWithImpl<$Res>
       chooseCandidate: freezed == chooseCandidate
           ? _value.chooseCandidate
           : chooseCandidate // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Candidate?,
       secondCountdown: null == secondCountdown
           ? _value.secondCountdown
           : secondCountdown // ignore: cast_nullable_to_non_nullable
@@ -388,7 +388,7 @@ class _$PlayTestStateImpl extends _PlayTestState {
   @JsonKey()
   final bool isPLayDone;
   @override
-  final String? chooseCandidate;
+  final Candidate? chooseCandidate;
   @override
   @JsonKey()
   final int secondCountdown;
@@ -499,7 +499,7 @@ abstract class _PlayTestState extends PlayTestState {
       final bool isFalse,
       final bool isMultipleChoice,
       final bool isPLayDone,
-      final String? chooseCandidate,
+      final Candidate? chooseCandidate,
       final int secondCountdown,
       final Question? currentQuestion,
       final int currentIndexQuestion,
@@ -533,7 +533,7 @@ abstract class _PlayTestState extends PlayTestState {
   @override
   bool get isPLayDone;
   @override
-  String? get chooseCandidate;
+  Candidate? get chooseCandidate;
   @override
   int get secondCountdown;
   @override

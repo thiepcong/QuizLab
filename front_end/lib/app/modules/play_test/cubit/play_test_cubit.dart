@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/models/candidate.dart';
 import '../../../core/models/test.dart';
 import 'play_test_state.dart';
 
@@ -11,8 +12,15 @@ class PlayTestCubit extends Cubit<PlayTestState> {
   int right = 0;
   Timer? timer;
 
-  void setChooseCandidate(String? chooseCandidate) {
-    emit(state.copyWith(chooseCandidate: chooseCandidate));
+  void setChooseCandidate(String? chooseCandidate, List<Candidate> candidates) {
+    Candidate? item;
+    for (final i in candidates) {
+      if (i.name == chooseCandidate) {
+        item = i;
+        break;
+      }
+    }
+    emit(state.copyWith(chooseCandidate: item));
   }
 
   void initPlayTest(Test test) {
