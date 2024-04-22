@@ -14,7 +14,7 @@ public class Result {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private boolean isCorrect;
+    private boolean correct;
     @ManyToOne(cascade = CascadeType.MERGE, fetch= FetchType.LAZY)
     @JoinColumn(name = "candidate_id")
     @JsonBackReference
@@ -41,11 +41,11 @@ public class Result {
     }
 
     public boolean isCorrect() {
-        return isCorrect;
+        return this.correct;
     }
 
     public void setCorrect(boolean correct) {
-        isCorrect = correct;
+        this.correct = correct;
     }
 
     public Candidate getCandidate() {

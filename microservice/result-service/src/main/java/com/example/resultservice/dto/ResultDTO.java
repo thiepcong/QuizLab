@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ResultDTO {
     private int id;
-    private boolean isCorrect;
+    private boolean correct;
     private int candidateId;
     private int questionId;
     private List<String> chosenAnswers;
@@ -24,11 +24,11 @@ public class ResultDTO {
 
 
     public boolean isCorrect() {
-        return isCorrect;
+        return this.correct;
     }
 
     public void setCorrect(boolean correct) {
-        isCorrect = correct;
+        this.correct = correct;
     }
 
     public int getCandidateId() {
