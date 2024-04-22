@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,7 +56,7 @@ public class QuizServiceImpl implements QuizService {
             QuizDTO quizDTO = modelMapper.map(quiz, QuizDTO.class);
 
             HttpHeaders headers = new HttpHeaders();
-            headers.set("userId", String.valueOf(quizId));
+            headers.set("quizId", String.valueOf(quizId));
             HttpEntity<?> requestEntity = new HttpEntity<>(headers);
             String url = "http://localhost:8082/api/questions/quiz";
 
@@ -76,17 +77,54 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public List<QuizDTO> getAllQuizzes() {
         List<Quiz> quizzes = quizRepo.findAll();
-        return quizzes.stream()
-                .map(quiz -> modelMapper.map(quiz, QuizDTO.class))
-                .collect(Collectors.toList());
+        List<QuizDTO> quizDTOList = new ArrayList<>();
+        for(Quiz quiz: quizzes) {
+            System.out.println(quiz);
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("quizId", String.valueOf(quiz.getId()));
+            HttpEntity<?> requestEntity = new HttpEntity<>(headers);
+            String url = "http://localhost:8082/api/questions/quiz";
+
+            ResponseEntity<List> responseEntity = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    requestEntity,
+                    List.class
+            );
+
+            List<QuestionDTO> questionDTOList = responseEntity.getBody();
+            QuizDTO quizDTO = modelMapper.map(quiz, QuizDTO.class);
+            quizDTO.setQuestions(questionDTOList);
+            quizDTOList.add(quizDTO);
+        }
+        return quizDTOList;
     }
 
     @Override
     public List<QuizDTO> getAllQuizzesByUserId(int userId) {
         List<Quiz> quizzes = quizRepo.findAllByUserId(userId);
-        return quizzes.stream()
-                .map(quiz -> modelMapper.map(quiz, QuizDTO.class))
-                .collect(Collectors.toList());
+        List<QuizDTO> quizDTOList = new ArrayList<>();
+        for(Quiz quiz: quizzes) {
+            System.out.println(quiz);
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("quizId", String.valueOf(quiz.getId()));
+            HttpEntity<?> requestEntity = new HttpEntity<>(headers);
+            String url = "http://localhost:8082/api/questions/quiz";
+
+            ResponseEntity<List> responseEntity = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    requestEntity,
+                    List.class
+            );
+
+            List<QuestionDTO> questionDTOList = responseEntity.getBody();
+            QuizDTO quizDTO = modelMapper.map(quiz, QuizDTO.class);
+            quizDTO.setQuestions(questionDTOList);
+
+            quizDTOList.add(quizDTO);
+        }
+        return quizDTOList;
     }
 
     @Override
@@ -165,7 +203,7 @@ public class QuizServiceImpl implements QuizService {
 
     private List<QuestionDTO> getQuestion(int quizId) {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("userId", String.valueOf(quizId));
+        headers.set("quizId", String.valueOf(quizId));
         HttpEntity<List<QuestionDTO>> requestEntity = new HttpEntity<>(headers);
         ResponseEntity<List> responseEntity = restTemplate.exchange(
                 "http://localhost:8082/api/questions/quiz",

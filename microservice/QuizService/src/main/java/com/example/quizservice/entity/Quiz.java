@@ -20,7 +20,7 @@ public class Quiz {
     @Column(name = "subject", length = 255)
     private String subject;
     @Column(name = "time")
-    private Timestamp time;
+    private int time;
 
     @JoinColumn(name = "user_id")
     private int userId;
@@ -57,11 +57,11 @@ public class Quiz {
         this.subject = subject;
     }
 
-    public Timestamp getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(int time) {
         this.time = time;
     }
 

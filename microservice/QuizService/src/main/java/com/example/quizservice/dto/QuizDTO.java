@@ -10,7 +10,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class QuizDTO {
     private int id;
     private String subject;
     private String title;
-    private Timestamp time;
+    private int time;
     private int userId;
     private List<QuestionDTO> questions;
     // Constructors, getters, and setters
@@ -92,11 +91,11 @@ public class QuizDTO {
         this.title = title;
     }
 
-    public Timestamp getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
