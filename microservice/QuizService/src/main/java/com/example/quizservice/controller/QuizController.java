@@ -61,9 +61,9 @@ public class QuizController {
             return ResponseEntity.notFound().build();
         }
 
-        if (quizDTO.getUserId() != userId) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+//        if (quizDTO.getUserId() != userId) {
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//        }
 
         return ResponseEntity.ok(quizDTO);
     }
