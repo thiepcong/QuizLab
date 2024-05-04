@@ -128,22 +128,22 @@ class _CreateTestViewState extends State<CreateTestView> {
         builder: (context, state) {
           final cubit = context.read<CreateTestCubit>();
           return Scaffold(
-            appBar: CustomAppBar(
+            appBar: const CustomAppBar(
               isBack: true,
               label: 'Tạo một bài kiểm tra mới',
               actions: [
-                if (state.createDone)
-                  PrimaryButton(
-                    width: 100,
-                    onTap: () {
-                      //
-                    },
-                    title: "Kết thúc",
-                    backgroundColor: AppColors.colorFFB20000,
-                    textColor: AppColors.colorFFFFFFFF,
-                    borderColor: AppColors.colorFFB20000,
-                    textSize: 16,
-                  ),
+                // if (state.createDone)
+                //   PrimaryButton(
+                //     width: 100,
+                //     onTap: () {
+                //       //
+                //     },
+                //     title: "Kết thúc",
+                //     backgroundColor: AppColors.colorFFB20000,
+                //     textColor: AppColors.colorFFFFFFFF,
+                //     borderColor: AppColors.colorFFB20000,
+                //     textSize: 16,
+                //   ),
               ],
             ),
             backgroundColor: AppColors.colorFFC5C5C5,
@@ -196,18 +196,18 @@ class _CreateTestViewState extends State<CreateTestView> {
                                     ),
                                   ],
                                 ),
-                                PrimaryButton(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  onTap: () {
-                                    //
-                                  },
-                                  title: "Bắt đầu",
-                                  backgroundColor: AppColors.colorFF8854c0,
-                                  textColor: AppColors.colorFFFFFFFF,
-                                  borderColor: AppColors.colorFF8854c0,
-                                  textSize: 28,
-                                ),
+                                // PrimaryButton(
+                                //   width:
+                                //       MediaQuery.of(context).size.width * 0.3,
+                                //   onTap: () {
+                                //     //
+                                //   },
+                                //   title: "Bắt đầu",
+                                //   backgroundColor: AppColors.colorFF8854c0,
+                                //   textColor: AppColors.colorFFFFFFFF,
+                                //   borderColor: AppColors.colorFF8854c0,
+                                //   textSize: 28,
+                                // ),
                               ],
                             ),
                           )

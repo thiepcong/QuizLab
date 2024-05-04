@@ -13,6 +13,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.isLeading = true,
     this.isBack = false,
+    this.onBackTap,
   });
 
   final Color bgColor;
@@ -21,6 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final bool isLeading;
   final bool isBack;
+  final VoidCallback? onBackTap;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   if (isBack)
                     IconButton(
-                      onPressed: () => context.router.pop(),
+                      onPressed: () {
+                        onBackTap?.call();
+                        if (onBackTap == null) {
+                          context.router.pop();
+                        }
+                      },
                       icon: const Icon(
                         Icons.arrow_back_ios,
                         color: AppColors.colorFFFFFFFF,

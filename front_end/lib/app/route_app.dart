@@ -5,6 +5,8 @@ import 'core/values/app_theme.dart';
 import 'main_router.dart';
 import 'modules/create_quiz/api/create_quiz_api.dart';
 import 'modules/create_quiz/repository/create_quiz_repository.dart';
+import 'modules/create_quiz_test/api/create_quiz_test_api.dart';
+import 'modules/create_quiz_test/repository/create_quiz_test_repository.dart';
 import 'modules/create_test/api/create_test_api.dart';
 import 'modules/create_test/repository/create_test_repository.dart';
 import 'modules/edit_quiz/api/edit_quiz_api.dart';
@@ -61,6 +63,9 @@ class _RouteAppState extends State<RouteApp> {
         ),
         RepositoryProvider<ResultTestRepository>(
           create: (context) => ResultTestRepository(ResultTestApi()),
+        ),
+        RepositoryProvider<CreateQuizTestRepository>(
+          create: (context) => CreateQuizTestRepository(CreateQuizTestApi()),
         ),
       ],
       child: MaterialApp.router(
