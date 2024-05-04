@@ -25,6 +25,12 @@ abstract class Routes {
   static const playTestPage = _Paths.playTestPage;
 
   static const resultTest = _Paths.resultTest;
+
+  static const createQuizTest = _Paths.createQuizTest;
+
+  static const createQuizTestQuestion = _Paths.createQuizTestQuestion;
+
+  static const editQuizTestQuestion = _Paths.editQuizTestQuestion;
 }
 
 abstract class _Paths {
@@ -53,4 +59,10 @@ abstract class _Paths {
   static const playTestPage = 'play_test_page';
 
   static const resultTest = 'result_test';
+
+  static const createQuizTest = 'create_quiz_test';
+
+  static const createQuizTestQuestion = 'create_quiz_test_question';
+
+  static const editQuizTestQuestion = 'edit_quiz_test_question';
 }

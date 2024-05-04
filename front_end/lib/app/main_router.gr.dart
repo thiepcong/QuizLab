@@ -138,6 +138,34 @@ class _$MainRouter extends RootStackRouter {
         ),
       );
     },
+    CreateQuizTestViewRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const CreateQuizTestView(),
+      );
+    },
+    CreateQuizTestQuestionViewRoute.name: (routeData) {
+      final args = routeData.argsAs<CreateQuizTestQuestionViewRouteArgs>();
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: CreateQuizTestQuestionView(
+          key: args.key,
+          cubit: args.cubit,
+        ),
+      );
+    },
+    EditQuizTestQuestionViewRoute.name: (routeData) {
+      final args = routeData.argsAs<EditQuizTestQuestionViewRouteArgs>();
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: EditQuizTestQuestionView(
+          key: args.key,
+          cubit: args.cubit,
+          item: args.item,
+          index: args.index,
+        ),
+      );
+    },
   };
 
   @override
@@ -199,6 +227,18 @@ class _$MainRouter extends RootStackRouter {
         RouteConfig(
           ResultTestViewRoute.name,
           path: 'result_test',
+        ),
+        RouteConfig(
+          CreateQuizTestViewRoute.name,
+          path: 'create_quiz_test',
+        ),
+        RouteConfig(
+          CreateQuizTestQuestionViewRoute.name,
+          path: 'create_quiz_test_question',
+        ),
+        RouteConfig(
+          EditQuizTestQuestionViewRoute.name,
+          path: 'edit_quiz_test_question',
         ),
       ];
 }
@@ -587,5 +627,97 @@ class ResultTestViewRouteArgs {
   @override
   String toString() {
     return 'ResultTestViewRouteArgs{key: $key, item: $item, candidateId: $candidateId}';
+  }
+}
+
+/// generated route for
+/// [CreateQuizTestView]
+class CreateQuizTestViewRoute extends PageRouteInfo<void> {
+  const CreateQuizTestViewRoute()
+      : super(
+          CreateQuizTestViewRoute.name,
+          path: 'create_quiz_test',
+        );
+
+  static const String name = 'CreateQuizTestViewRoute';
+}
+
+/// generated route for
+/// [CreateQuizTestQuestionView]
+class CreateQuizTestQuestionViewRoute
+    extends PageRouteInfo<CreateQuizTestQuestionViewRouteArgs> {
+  CreateQuizTestQuestionViewRoute({
+    Key? key,
+    required CreateQuizTestCubit cubit,
+  }) : super(
+          CreateQuizTestQuestionViewRoute.name,
+          path: 'create_quiz_test_question',
+          args: CreateQuizTestQuestionViewRouteArgs(
+            key: key,
+            cubit: cubit,
+          ),
+        );
+
+  static const String name = 'CreateQuizTestQuestionViewRoute';
+}
+
+class CreateQuizTestQuestionViewRouteArgs {
+  const CreateQuizTestQuestionViewRouteArgs({
+    this.key,
+    required this.cubit,
+  });
+
+  final Key? key;
+
+  final CreateQuizTestCubit cubit;
+
+  @override
+  String toString() {
+    return 'CreateQuizTestQuestionViewRouteArgs{key: $key, cubit: $cubit}';
+  }
+}
+
+/// generated route for
+/// [EditQuizTestQuestionView]
+class EditQuizTestQuestionViewRoute
+    extends PageRouteInfo<EditQuizTestQuestionViewRouteArgs> {
+  EditQuizTestQuestionViewRoute({
+    Key? key,
+    required CreateQuizTestCubit cubit,
+    required Question item,
+    required int index,
+  }) : super(
+          EditQuizTestQuestionViewRoute.name,
+          path: 'edit_quiz_test_question',
+          args: EditQuizTestQuestionViewRouteArgs(
+            key: key,
+            cubit: cubit,
+            item: item,
+            index: index,
+          ),
+        );
+
+  static const String name = 'EditQuizTestQuestionViewRoute';
+}
+
+class EditQuizTestQuestionViewRouteArgs {
+  const EditQuizTestQuestionViewRouteArgs({
+    this.key,
+    required this.cubit,
+    required this.item,
+    required this.index,
+  });
+
+  final Key? key;
+
+  final CreateQuizTestCubit cubit;
+
+  final Question item;
+
+  final int index;
+
+  @override
+  String toString() {
+    return 'EditQuizTestQuestionViewRouteArgs{key: $key, cubit: $cubit, item: $item, index: $index}';
   }
 }

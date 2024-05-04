@@ -8,6 +8,10 @@ import 'modules/create_quiz/cubit/create_quiz_cubit.dart';
 import 'modules/create_quiz/view/create_question_view.dart';
 import 'modules/create_quiz/view/create_quiz_view.dart';
 import 'modules/create_quiz/view/edit_question_view.dart';
+import 'modules/create_quiz_test/cubit/create_quiz_test_cubit.dart';
+import 'modules/create_quiz_test/view/create_quiz_test_question_view.dart';
+import 'modules/create_quiz_test/view/create_quiz_test_view.dart';
+import 'modules/create_quiz_test/view/edit_quiz_test_question_view.dart';
 import 'modules/create_test/view/create_test_view.dart';
 import 'modules/edit_quiz/cubit/edit_quiz_cubit.dart';
 import 'modules/edit_quiz/view/edit_create_question_view.dart';
@@ -38,6 +42,9 @@ part 'main_router.gr.dart';
     MaterialRoute(page: PlayTestView, path: Routes.playTest),
     MaterialRoute(page: PlayTestPage, path: Routes.playTestPage),
     MaterialRoute(page: ResultTestView, path: Routes.resultTest),
+    MaterialRoute(page: CreateQuizTestView, path: Routes.createQuizTest),
+    MaterialRoute(page: CreateQuizTestQuestionView, path: Routes.createQuizTestQuestion),
+    MaterialRoute(page: EditQuizTestQuestionView, path: Routes.editQuizTestQuestion),
   ],
 )
 class MainRouter extends _$MainRouter {

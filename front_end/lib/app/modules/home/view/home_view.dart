@@ -67,6 +67,19 @@ class _HomeViewState extends State<HomeView> {
               actions: [
                 TextButton(
                   onPressed: () =>
+                      context.pushRoute(const CreateQuizTestViewRoute()),
+                  child: const Row(
+                    children: [
+                      Icon(Icons.quiz),
+                      Text(
+                        "Tạo một bài quiz và test",
+                        style: TextStyles.mediumWhiteS14,
+                      ),
+                    ],
+                  ),
+                ),
+                TextButton(
+                  onPressed: () =>
                       context.pushRoute(const CreateQuizViewRoute()),
                   child: const Row(
                     children: [

@@ -40,11 +40,17 @@ public class QuizServiceImpl implements QuizService {
         }
         Quiz quiz = modelMapper.map(quizDTO, Quiz.class);
 
-        // get now time
-
 
         Quiz createdQuiz = quizRepo.save(quiz);
-        return modelMapper.map(createdQuiz, QuizDTO.class);
+
+        for(QuestionDTO questionDTO: quizDTO.getQuestions()) {
+            saveQuestion(questionDTO, createdQuiz.getId(), quizDTO.getUserId());
+        }
+        QuizDTO quizDTO1 = modelMapper.map(createdQuiz, QuizDTO.class);
+        List<QuestionDTO> questionDTOList = getQuestion(quizDTO1.getId());
+        quizDTO1.setQuestions(questionDTOList);
+
+        return quizDTO1;
     }
 
     @Override

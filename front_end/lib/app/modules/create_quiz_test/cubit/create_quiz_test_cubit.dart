@@ -5,26 +5,28 @@ import 'package:excel/excel.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/models/answer.dart';
+import '../../../core/models/candidate.dart';
 import '../../../core/models/question.dart';
-import '../repository/create_quiz_repository.dart';
-import 'create_quiz_state.dart';
+import '../../../core/models/quiz.dart';
+import '../repository/create_quiz_test_repository.dart';
+import 'create_quiz_test_state.dart';
 
-class CreateQuizCubit extends Cubit<CreateQuizState> {
-  CreateQuizCubit(this._repo) : super(const CreateQuizState());
+class CreateQuizTestCubit extends Cubit<CreateQuizTestState> {
+  CreateQuizTestCubit(this._repo) : super(const CreateQuizTestState());
 
-  final CreateQuizRepository _repo;
+  final CreateQuizTestRepository _repo;
 
-  void createQuiz(String subject, String title, int time) async {
+  void createQuizAndTest(
+    String subject,
+    String title,
+    int time,
+    String titleTest,
+    String? note,
+    String timeStart,
+    String timeEnd,
+  ) async {
     try {
-      if (state.isImportFile) {
-        createQuizFromExcel(subject, title, time);
-        return;
-      }
-      emit(state.copyWith(
-        message: null,
-        isLoading: true,
-        saveQuizDone: false,
-      ));
+      emit(state.copyWith(message: null, isLoading: true));
       if (state.questions.isEmpty) {
         emit(state.copyWith(
           message: "Vui lòng thêm ít nhất một câu hỏi",
@@ -32,41 +34,23 @@ class CreateQuizCubit extends Cubit<CreateQuizState> {
         ));
         return;
       }
-      await _repo.createQuiz(
-        subject: subject,
-        title: title,
-        time: time,
-        questions: state.questions,
-      );
-      emit(state.copyWith(saveQuizDone: true, isLoading: false));
+      final res = await createQuiz(subject, title, time);
+      createTest(res.id, titleTest, note, timeStart, timeEnd);
     } catch (e) {
       emit(state.copyWith(message: "Đã có lỗi xảy ra", isLoading: false));
     }
   }
 
-  void createQuizFromExcel(String subject, String title, int time) async {
+  Future<Quiz> createQuiz(String subject, String title, int time) async {
     try {
-      emit(state.copyWith(
-        message: null,
-        isLoading: true,
-        saveQuizDone: false,
-      ));
-      if (state.filePath == null) {
-        emit(state.copyWith(message: "Vui lòng thử lại"));
-        return;
-      }
-      final pre = await SharedPreferences.getInstance();
-      await pre.setString("filePath", state.filePath!);
-      await _repo.createQuizFromExcel(
+      final res = await _repo.createQuiz(
         subject: subject,
         title: title,
         time: time,
+        questions: state.questions,
       );
-      await pre.remove("filePath");
-      emit(state.copyWith(saveQuizDone: true, isLoading: false));
+      return res;
     } catch (e) {
-      final pre = await SharedPreferences.getInstance();
-      await pre.remove("filePath");
       emit(state.copyWith(message: "Đã có lỗi xảy ra", isLoading: false));
       rethrow;
     }
@@ -104,7 +88,6 @@ class CreateQuizCubit extends Cubit<CreateQuizState> {
         questions: li,
         isImportFile: true,
         isLoading: false,
-        filePath: "C:/Users/Admin/Downloads/$fileName",
       ));
     } catch (e) {
       emit(state.copyWith(message: "Vui lòng thử lại", isLoading: false));
@@ -192,5 +175,82 @@ class CreateQuizCubit extends Cubit<CreateQuizState> {
       saveQuestionDone: true,
       isImportFile: false,
     ));
+  }
+
+  void createTest(
+    int quizId,
+    String title,
+    String? note,
+    String timeStart,
+    String timeEnd,
+  ) async {
+    try {
+      final pre = await SharedPreferences.getInstance();
+      await pre.setInt("quizId", quizId);
+      await pre.setString("timeStart", timeStart);
+      await pre.setString("timeEnd", timeEnd);
+      emit(state.copyWith(message: null, isLoading: true, createDone: false));
+      if (state.candidates.isEmpty) {
+        emit(state.copyWith(
+          message: "vui lòng thêm ít nhất một người",
+          isLoading: false,
+        ));
+        return;
+      }
+      final res = await _repo.createTest(
+        title: title,
+        note: note,
+        candidates: state.candidates,
+      );
+      await pre.remove("quizId");
+      await pre.remove("timeStart");
+      await pre.remove("timeEnd");
+      emit(state.copyWith(
+        isLoading: false,
+        codeQuiz: res.quizCode,
+        createDone: true,
+      ));
+    } catch (e) {
+      final pre = await SharedPreferences.getInstance();
+      await pre.remove("quizId");
+      await pre.remove("timeStart");
+      await pre.remove("timeEnd");
+      emit(state.copyWith(message: "Đã có lỗi xảy ra", isLoading: false));
+      rethrow;
+    }
+  }
+
+  void chooseCandidateFromExcel(Uint8List? bytes, String fileName) {
+    if (bytes == null) return;
+    try {
+      emit(state.copyWith(message: null, isLoading: true));
+      var excel = Excel.decodeBytes(bytes);
+      List<Candidate> li = [];
+      for (final table in excel.tables.keys) {
+        log(table);
+        for (final row in excel.tables[table]!.rows) {
+          li.add(Candidate(name: row[0]!.value.toString()));
+        }
+      }
+      emit(state.copyWith(
+        candidates: li,
+        isLoading: false,
+      ));
+    } catch (e) {
+      emit(state.copyWith(message: "Vui lòng thử lại", isLoading: false));
+      rethrow;
+    }
+  }
+
+  void addCandidate(String e) {
+    List<Candidate> li = List.from(state.candidates);
+    li.add(Candidate(name: e));
+    emit(state.copyWith(candidates: li));
+  }
+
+  void deleteCandidate(Candidate e) {
+    List<Candidate> li = List.from(state.candidates);
+    li.remove(e);
+    emit(state.copyWith(candidates: li));
   }
 }

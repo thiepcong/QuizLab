@@ -59,6 +59,10 @@ public class TestServiceImpl implements TestService {
         Timestamp timestamp = new Timestamp(parsedDate.getTime());
         test.setTimeStart(timestamp);
 
+        Date parsedTimeEnd = dateFormat.parse(timeEnd);
+        Timestamp timeEnd1 = new Timestamp(parsedTimeEnd.getTime());
+        test.setTimeEnd(timeEnd1);
+
 
         Test createdTest = testRepository.save(test);
         TestDTO createdTestDTO = modelMapper.map(createdTest, TestDTO.class);
