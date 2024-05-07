@@ -4,7 +4,7 @@ import 'quiz.dart';
 class Test {
   final int id;
   final String title;
-  final DateTime timeCreated;
+  final DateTime? timeCreated;
   final String quizCode;
   final String? note;
   final Quiz quiz;
@@ -15,7 +15,7 @@ class Test {
   Test({
     required this.id,
     required this.title,
-    required this.timeCreated,
+    this.timeCreated,
     required this.quizCode,
     this.note,
     required this.quiz,
@@ -38,7 +38,9 @@ class Test {
     return Test(
       id: map['id'] as int,
       title: map['title'] as String,
-      timeCreated: DateTime.parse(map['timeCreated'] as String),
+      timeCreated: map['timeCreated'] != null
+          ? DateTime.parse(map['timeCreated'] as String)
+          : null,
       quizCode: map['quizCode'] as String,
       note: map['note'] != null ? map['note'] as String : null,
       quiz: Quiz.fromJson(map['quiz']),

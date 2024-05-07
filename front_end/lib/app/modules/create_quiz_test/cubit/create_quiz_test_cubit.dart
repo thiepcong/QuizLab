@@ -71,6 +71,7 @@ class CreateQuizTestCubit extends Cubit<CreateQuizTestState> {
       await pre.remove("timeStart");
       await pre.remove("timeEnd");
       emit(state.copyWith(message: "Đã có lỗi xảy ra", isLoading: false));
+      log(e.toString());
     }
   }
 
