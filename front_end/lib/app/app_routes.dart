@@ -31,6 +31,8 @@ abstract class Routes {
   static const createQuizTestQuestion = _Paths.createQuizTestQuestion;
 
   static const editQuizTestQuestion = _Paths.editQuizTestQuestion;
+
+  static const serviceTaskProgress = _Paths.serviceTaskProgress;
 }
 
 abstract class _Paths {
@@ -65,4 +67,6 @@ abstract class _Paths {
   static const createQuizTestQuestion = 'create_quiz_test_question';
 
   static const editQuizTestQuestion = 'edit_quiz_test_question';
+
+  static const serviceTaskProgress = 'service_task_progress';
 }
