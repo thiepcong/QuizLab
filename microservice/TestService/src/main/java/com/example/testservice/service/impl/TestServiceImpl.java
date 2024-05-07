@@ -65,11 +65,13 @@ public class TestServiceImpl implements TestService {
         Date parsedTimeEnd = dateFormat.parse(timeEnd);
         Timestamp timeEnd1 = new Timestamp(parsedTimeEnd.getTime());
         test.setTimeEnd(timeEnd1);
+        test.setQuizCode(TestDTO.generateRandomString(6));
 
 
         Test createdTest = testRepository.save(test);
         TestDTO createdTestDTO = modelMapper.map(createdTest, TestDTO.class);
         createdTestDTO.setQuiz(quizDTO);
+
 
         List<CandidateDTO> candidateList = testDTO.getCandidates();
 
