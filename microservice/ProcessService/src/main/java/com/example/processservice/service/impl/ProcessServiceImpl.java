@@ -88,7 +88,10 @@ public class ProcessServiceImpl implements ProcessService {
 
         HttpHeaders quizHeaders = new HttpHeaders();
         quizHeaders.set("userId", String.valueOf(userId));
-        QuizDTO quizDTO = new QuizDTO();
+        QuizDTO quizDTO = testDTO.getQuiz();
+        System.out.println(quizDTO.getSubject());
+        System.out.println(quizDTO.getQuestions().size());
+        System.out.println(quizDTO.getQuestions().get(0).getContent());
 
         HttpEntity<QuizDTO> quizRequestEntity = new HttpEntity<>(quizDTO, quizHeaders);
         ResponseEntity<QuizDTO> quizResponseEntity;

@@ -4,23 +4,14 @@ import java.util.List;
 
 public class ResultDTO {
     private int id;
-    private boolean selected;
-    private CandidateDTO candidate;
-    private QuestionDTO question;
+    private boolean correct;
+    private int candidateId;
+    private int questionId;
     private List<String> chosenAnswers;
 
-    // Constructors, getters, and setters
-    // ...
+    // Getters and setters
 
     public ResultDTO() {
-    }
-
-    public ResultDTO(int id, boolean selected, CandidateDTO candidate, QuestionDTO question, List<String> chosenAnswers) {
-        this.id = id;
-        this.selected = selected;
-        this.candidate = candidate;
-        this.question = question;
-        this.chosenAnswers = chosenAnswers;
     }
 
     public int getId() {
@@ -31,28 +22,29 @@ public class ResultDTO {
         this.id = id;
     }
 
-    public boolean isSelected() {
-        return selected;
+
+    public boolean isCorrect() {
+        return this.correct;
     }
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
     }
 
-    public CandidateDTO getCandidate() {
-        return candidate;
+    public int getCandidateId() {
+        return candidateId;
     }
 
-    public void setCandidate(CandidateDTO candidate) {
-        this.candidate = candidate;
+    public void setCandidateId(int candidateId) {
+        this.candidateId = candidateId;
     }
 
-    public QuestionDTO getQuestion() {
-        return question;
+    public int getQuestionId() {
+        return questionId;
     }
 
-    public void setQuestion(QuestionDTO question) {
-        this.question = question;
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 
     public List<String> getChosenAnswers() {
