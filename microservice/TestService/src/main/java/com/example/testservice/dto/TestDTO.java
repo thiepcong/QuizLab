@@ -26,7 +26,7 @@ public class TestDTO {
 
     public TestDTO() {
         this.quizCode = generateRandomString(6);
-        this.timeCreated = new Date();
+        this.timeCreated = Calendar.getInstance().getTime();
     }
 
     public TestDTO(int id, String title, Date timeCreated, String quizCode, String note,

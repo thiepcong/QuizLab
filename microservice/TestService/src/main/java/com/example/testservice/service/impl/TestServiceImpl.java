@@ -8,6 +8,7 @@ import com.example.testservice.entity.Candidate;
 import com.example.testservice.entity.Test;
 import com.example.testservice.repo.CandidateRepo;
 import com.example.testservice.repo.TestRepo;
+import com.example.testservice.service.CandidateService;
 import com.example.testservice.service.TestService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpEntity;
@@ -29,13 +30,15 @@ public class TestServiceImpl implements TestService {
     private final TestRepo testRepository;
 
     private final CandidateRepo candidateRepo;
+    private final CandidateService candidateService;
 
     private final RestTemplate restTemplate;
     private final ModelMapper modelMapper;
 
-    public TestServiceImpl(TestRepo testRepository, CandidateRepo candidateRepo, RestTemplate restTemplate, ModelMapper modelMapper) {
+    public TestServiceImpl(TestRepo testRepository, CandidateRepo candidateRepo, CandidateService candidateService, RestTemplate restTemplate, ModelMapper modelMapper) {
         this.testRepository = testRepository;
         this.candidateRepo = candidateRepo;
+        this.candidateService = candidateService;
         this.restTemplate = restTemplate;
         this.modelMapper = modelMapper;
     }
@@ -75,7 +78,7 @@ public class TestServiceImpl implements TestService {
             candidate.setTestId(createdTest.getId());
             candidateRepo.save(candidate);
         }
-        createdTestDTO.setCandidates(candidateList);
+        createdTestDTO.setCandidates(candidateService.getCandidatesByTestId(createdTestDTO.getId()));
 
 
         return createdTestDTO;
@@ -92,6 +95,8 @@ public class TestServiceImpl implements TestService {
 
         QuizDTO quizDTO = responseEntity.getBody();
 
+        testDTO.setQuizCode(TestDTO.generateRandomString(6));
+        testDTO.setTimeCreated(Calendar.getInstance().getTime());
         Test test = modelMapper.map(testDTO, Test.class);
         test.setQuizId(quizId);
 
@@ -115,7 +120,7 @@ public class TestServiceImpl implements TestService {
             candidate.setTestId(createdTest.getId());
             candidateRepo.save(candidate);
         }
-        createdTestDTO.setCandidates(candidateList);
+        createdTestDTO.setCandidates(candidateService.getCandidatesByTestId(createdTestDTO.getId()));
 
 
 

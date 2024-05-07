@@ -7,7 +7,7 @@ package com.example.quizservice.dto;
 import java.util.List;
 
 public class QuestionDTO {
-    private int questionId;
+    private int id;
     private int userId;
 
     private int quizId;
@@ -21,11 +21,11 @@ public class QuestionDTO {
     }
 
     public int getQuestionId() {
-        return questionId;
+        return id;
     }
 
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
+    public void setQuestionId(int id) {
+        this.id = id;
     }
 
     public int getUserId() {
