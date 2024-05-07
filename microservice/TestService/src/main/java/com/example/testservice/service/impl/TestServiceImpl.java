@@ -1,6 +1,7 @@
 package com.example.testservice.service.impl;
 
 
+import com.example.testservice.controller.WebSocketServer;
 import com.example.testservice.dto.CandidateDTO;
 import com.example.testservice.dto.QuizDTO;
 import com.example.testservice.dto.TestDTO;
@@ -19,9 +20,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 
+import javax.websocket.DeploymentException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -34,6 +37,7 @@ public class TestServiceImpl implements TestService {
 
     private final RestTemplate restTemplate;
     private final ModelMapper modelMapper;
+    private final WebSocketServer webSocketServer = new WebSocketServer();
 
     public TestServiceImpl(TestRepo testRepository, CandidateRepo candidateRepo, CandidateService candidateService, RestTemplate restTemplate, ModelMapper modelMapper) {
         this.testRepository = testRepository;
@@ -44,11 +48,12 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public TestDTO createTest(int quizId, int userId, TestDTO testDTO, String timeStart, String timeEnd) throws ParseException {
+    public TestDTO createTest(int quizId, int userId, TestDTO testDTO, String timeStart, String timeEnd) throws ParseException, DeploymentException {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("userId", String.valueOf(userId));
         String url = "http://localhost:8083/api/quizzes/" + quizId;
+        webSocketServer.sendMessageToAllSessions("TestService call QuizService " + LocalDateTime.now());
         ResponseEntity<QuizDTO> responseEntity = restTemplate
                 .exchange(url, HttpMethod.GET,new HttpEntity<>(headers), QuizDTO.class);
         QuizDTO quizDTO = responseEntity.getBody();
@@ -87,10 +92,11 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public TestDTO createTestFromExcel(int quizId,int userId, TestDTO testDTO, String filePath, String timeStart, String timeEnd) throws ParseException {
+    public TestDTO createTestFromExcel(int quizId,int userId, TestDTO testDTO, String filePath, String timeStart, String timeEnd) throws ParseException, DeploymentException {
         HttpHeaders headers = new HttpHeaders();
         headers.set("userId", String.valueOf(userId));
         String url = "http://localhost:8083/api/quizzes/" + quizId;
+        webSocketServer.sendMessageToAllSessions("TestService call QuizService " + LocalDateTime.now());
         ResponseEntity<QuizDTO> responseEntity = restTemplate
                 .exchange(url, HttpMethod.GET,new HttpEntity<>(headers), QuizDTO.class);
 
@@ -131,11 +137,12 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public TestDTO getTestByQuizCode(String quizCode, int userId) {
+    public TestDTO getTestByQuizCode(String quizCode, int userId) throws DeploymentException {
         Test test = testRepository.findByQuizCode(quizCode);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("userId", String.valueOf(userId));
+        webSocketServer.sendMessageToAllSessions("TestService call QuizService " + getCurrentTimeFormatted());
         String url = "http://localhost:8083/api/quizzes/" + test.getQuizId();
         ResponseEntity<QuizDTO> responseEntity = restTemplate
                 .exchange(url, HttpMethod.GET,new HttpEntity<>(headers), QuizDTO.class);
@@ -196,5 +203,12 @@ public class TestServiceImpl implements TestService {
     @Override
     public void deleteTest(int testId) {
         testRepository.deleteById(testId);
+    }
+
+    public static String getCurrentTimeFormatted() {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        String formattedTime = formatter.format(currentTime);
+        return formattedTime;
     }
 }

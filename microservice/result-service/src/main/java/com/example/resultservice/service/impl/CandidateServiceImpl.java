@@ -20,6 +20,8 @@ public class CandidateServiceImpl implements CandidateService {
     private final CandidateRepo candidateRepo;
     private final ModelMapper modelMapper;
 
+
+
     public CandidateServiceImpl(CandidateRepo candidateRepo, ModelMapper modelMapper) {
         this.candidateRepo = candidateRepo;
         this.modelMapper = modelMapper;

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.DeploymentException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class TestController {
                                               @RequestBody TestDTO testDTO,
                                               @RequestHeader("userId") int userId,
                                               @RequestHeader String timeStart,
-                                              @RequestHeader String timeEnd) throws ParseException {
+                                              @RequestHeader String timeEnd) throws ParseException, DeploymentException {
         TestDTO createdTestDTO = testService.createTest(quizId,userId, testDTO, timeStart, timeEnd);
         return new ResponseEntity<>(createdTestDTO, HttpStatus.CREATED);
     }
@@ -61,7 +62,7 @@ public class TestController {
     }
     @GetMapping("/code/{quizCode}")
     public ResponseEntity<TestDTO> getTestByQuizCode(@PathVariable String quizCode ,
-                                                          @RequestHeader("userId") int userId) {
+                                                          @RequestHeader("userId") int userId) throws DeploymentException {
         TestDTO testResponse = testService.getTestByQuizCode(quizCode, userId);
 
         if (testResponse != null) {

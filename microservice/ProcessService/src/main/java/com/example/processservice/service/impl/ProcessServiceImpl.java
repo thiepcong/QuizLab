@@ -1,5 +1,6 @@
 package com.example.processservice.service.impl;
 
+import com.example.processservice.controller.WebSocketServer;
 import com.example.processservice.dto.*;
 import com.example.processservice.response.LoginResponse;
 import com.example.processservice.response.RegisterResponse;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +19,14 @@ import java.util.List;
 public class ProcessServiceImpl implements ProcessService {
     private final RestTemplate restTemplate;
 
+    private final WebSocketServer webSocketServer;
+
+
+
     public ProcessServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+
+        this.webSocketServer = new WebSocketServer();
     }
 
     @Override
@@ -34,6 +42,7 @@ public class ProcessServiceImpl implements ProcessService {
         HttpEntity<QuizDTO> quizRequestEntity = new HttpEntity<>(quizDTO, quizHeaders);
         ResponseEntity<QuizDTO> quizResponseEntity;
 
+        webSocketServer.sendMessageToAllSessions("ProcessService call QuizService " + getCurrentTimeFormatted());
         try {
             quizResponseEntity = restTemplate.exchange(
                     "http://localhost:8083/api/quizzes/create-from-excel",
@@ -43,12 +52,17 @@ public class ProcessServiceImpl implements ProcessService {
             );
         } catch (Exception e) {
             e.printStackTrace();
+            webSocketServer.sendMessageToAllSessions("Failed to create quiz from Excel");
             throw new RuntimeException("Failed to create quiz from Excel");
+
         }
 
         if (quizResponseEntity.getStatusCode() != HttpStatus.OK) {
+            webSocketServer.sendMessageToAllSessions("Failed to create quiz from Excel");
             throw new RuntimeException("Failed to create quiz from Excel");
         }
+
+        webSocketServer.sendMessageToAllSessions("End quizz service");
 
         QuizDTO createdQuiz = quizResponseEntity.getBody();
         int quizId = createdQuiz.getId();
@@ -66,6 +80,8 @@ public class ProcessServiceImpl implements ProcessService {
         HttpEntity<TestDTO> testRequestEntity = new HttpEntity<>(testDTO, testHeaders);
         ResponseEntity<TestDTO> testResponseEntity;
 
+        webSocketServer.sendMessageToAllSessions("ProcessService call TestService " + getCurrentTimeFormatted());
+
         try {
             testResponseEntity = restTemplate.exchange(
                     "http://localhost:8084/api/tests/create-from-excel",
@@ -75,10 +91,12 @@ public class ProcessServiceImpl implements ProcessService {
             );
         } catch (Exception e) {
             e.printStackTrace();
+            webSocketServer.sendMessageToAllSessions("Failed to create test from Excel");
             throw new RuntimeException("Failed to create test from Excel");
         }
 
         if (testResponseEntity.getStatusCode() != HttpStatus.OK) {
+            webSocketServer.sendMessageToAllSessions("Failed to create test from Excel");
             throw new RuntimeException("Failed to create test from Excel");
         }
 
@@ -97,7 +115,7 @@ public class ProcessServiceImpl implements ProcessService {
 
         HttpEntity<QuizDTO> quizRequestEntity = new HttpEntity<>(quizDTO, quizHeaders);
         ResponseEntity<QuizDTO> quizResponseEntity;
-
+        webSocketServer.sendMessageToAllSessions("ProcessService call QuizService " + getCurrentTimeFormatted());
         try {
             quizResponseEntity = restTemplate.exchange(
                     "http://localhost:8083/api/quizzes/add",
@@ -124,7 +142,7 @@ public class ProcessServiceImpl implements ProcessService {
         testHeaders.set("timeEnd", convertDate(testDTO.getTimeEnd()));
         HttpEntity<TestDTO> testRequestEntity = new HttpEntity<>(testDTO, testHeaders);
         ResponseEntity<TestDTO> testResponseEntity;
-
+        webSocketServer.sendMessageToAllSessions("ProcessService call TestService " + getCurrentTimeFormatted());
         try {
             testResponseEntity = restTemplate.exchange(
                     "http://localhost:8084/api/tests",
@@ -151,6 +169,7 @@ public class ProcessServiceImpl implements ProcessService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<UserDTO> requestEntity = new HttpEntity<>(userDTO, headers);
+        webSocketServer.sendMessageToAllSessions("ProcessService call UserService " + getCurrentTimeFormatted());
         ResponseEntity<RegisterResponse> responseEntity = restTemplate.postForEntity(url, requestEntity, RegisterResponse.class);
 
         return responseEntity.getBody();
@@ -162,6 +181,7 @@ public class ProcessServiceImpl implements ProcessService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<LoginDTO> requestEntity = new HttpEntity<>(loginDTO, headers);
+        webSocketServer.sendMessageToAllSessions("ProcessService call UserService " + getCurrentTimeFormatted());
         ResponseEntity<LoginResponse> responseEntity = restTemplate.postForEntity(url, requestEntity, LoginResponse.class);
 
         return responseEntity.getBody();
@@ -174,6 +194,7 @@ public class ProcessServiceImpl implements ProcessService {
         headers.set("userId", String.valueOf(userId));
 
         HttpEntity<QuizDTO> requestEntity = new HttpEntity<>(quizDTO, headers);
+        webSocketServer.sendMessageToAllSessions("ProcessService call QuizService " + getCurrentTimeFormatted());
         ResponseEntity<QuizDTO> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, QuizDTO.class);
 
         return responseEntity;
@@ -185,6 +206,7 @@ public class ProcessServiceImpl implements ProcessService {
         headers.set("userId", String.valueOf(userId));
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        webSocketServer.sendMessageToAllSessions("ProcessService call QuizService " + getCurrentTimeFormatted());
         ResponseEntity<List<QuizDTO>> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, new ParameterizedTypeReference<List<QuizDTO>>() {});
 
         return responseEntity;
@@ -196,6 +218,7 @@ public class ProcessServiceImpl implements ProcessService {
         headers.set("userId", String.valueOf(userId));
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        webSocketServer.sendMessageToAllSessions("ProcessService call QuizService " + getCurrentTimeFormatted());
         restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Void.class);
 
         return ResponseEntity.noContent().build();
@@ -207,6 +230,7 @@ public class ProcessServiceImpl implements ProcessService {
         headers.set("userId", String.valueOf(userId));
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        webSocketServer.sendMessageToAllSessions("ProcessService call TestService " + getCurrentTimeFormatted());
         ResponseEntity<TestDTO> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, TestDTO.class);
 
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
@@ -222,6 +246,7 @@ public class ProcessServiceImpl implements ProcessService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CandidateDTO> requestEntity = new HttpEntity<>(candidateDTO, headers);
+        webSocketServer.sendMessageToAllSessions("ProcessService call ResultService " + LocalDateTime.now());
         ResponseEntity<CandidateDTO> responseEntity = restTemplate.postForEntity(url, requestEntity, CandidateDTO.class);
 
         return ResponseEntity.ok(responseEntity.getBody());
@@ -229,6 +254,7 @@ public class ProcessServiceImpl implements ProcessService {
 
     public ResponseEntity<List<ResultDTO>> getAllResultsByCandidateId(int candidateId) {
         String url = "http://localhost:9000/api/results/candidate/" + candidateId;
+        webSocketServer.sendMessageToAllSessions("ProcessService call ResultService " + getCurrentTimeFormatted());
         ResponseEntity<List<ResultDTO>> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<ResultDTO>>() {});
 
         return ResponseEntity.ok(responseEntity.getBody());
@@ -245,6 +271,13 @@ public class ProcessServiceImpl implements ProcessService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static String getCurrentTimeFormatted() {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        String formattedTime = formatter.format(currentTime);
+        return formattedTime;
     }
 
 
