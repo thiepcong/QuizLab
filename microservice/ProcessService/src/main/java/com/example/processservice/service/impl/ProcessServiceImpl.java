@@ -9,6 +9,8 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -108,7 +110,7 @@ public class ProcessServiceImpl implements ProcessService {
             throw new RuntimeException("Failed to create quiz");
         }
 
-        if (quizResponseEntity.getStatusCode() != HttpStatus.OK) {
+        if (quizResponseEntity.getStatusCode() != HttpStatus.CREATED) {
             throw new RuntimeException("Failed to create quiz");
         }
 
@@ -118,8 +120,8 @@ public class ProcessServiceImpl implements ProcessService {
         HttpHeaders testHeaders = new HttpHeaders();
         testHeaders.set("userId", String.valueOf(userId));
         testHeaders.set("quizId", String.valueOf(quizId));
-        testHeaders.set("timeStart", testDTO.getTimeStart().toString());
-        testHeaders.set("timeEnd", testDTO.getTimeEnd().toString());
+        testHeaders.set("timeStart", convertDate(testDTO.getTimeStart()));
+        testHeaders.set("timeEnd", convertDate(testDTO.getTimeEnd()));
         HttpEntity<TestDTO> testRequestEntity = new HttpEntity<>(testDTO, testHeaders);
         ResponseEntity<TestDTO> testResponseEntity;
 
@@ -135,7 +137,7 @@ public class ProcessServiceImpl implements ProcessService {
             throw new RuntimeException("Failed to create test");
         }
 
-        if (testResponseEntity.getStatusCode() != HttpStatus.OK) {
+        if (testResponseEntity.getStatusCode() != HttpStatus.CREATED) {
             throw new RuntimeException("Failed to create test");
         }
 
@@ -230,6 +232,19 @@ public class ProcessServiceImpl implements ProcessService {
         ResponseEntity<List<ResultDTO>> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<ResultDTO>>() {});
 
         return ResponseEntity.ok(responseEntity.getBody());
+    }
+
+    public static String convertDate(Date inputDate) {
+        SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+
+
+        try {
+            String outputDate = outputFormat.format(inputDate);
+            return outputDate;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

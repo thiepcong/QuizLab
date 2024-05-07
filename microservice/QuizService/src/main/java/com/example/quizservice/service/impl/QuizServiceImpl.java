@@ -35,6 +35,9 @@ public class QuizServiceImpl implements QuizService {
 
     @Override
     public QuizDTO createQuiz(QuizDTO quizDTO) {
+        System.out.println(quizDTO.getSubject());
+        System.out.println(quizDTO.getQuestions().size());
+        System.out.println(quizDTO.getQuestions().get(0).getContent());
         for(QuestionDTO questionDTO : quizDTO.getQuestions()){
             questionDTO.setUserId(quizDTO.getUserId());
         }
