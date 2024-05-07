@@ -14,6 +14,8 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
     final pre = await SharedPreferences.getInstance();
     final userId = pre.getInt("userId");
     final filePath = pre.getString("filePath");
+    final quizFilePath = pre.getString("quizFilePath");
+    final testFilePath = pre.getString("testFilePath");
     final quizId = pre.getInt("quizId");
     final timeStart = pre.getString("timeStart");
     final timeEnd = pre.getString("timeEnd");
@@ -29,6 +31,16 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
     if (filePath != null) {
       customHeaders.addAll({
         'filePath': filePath,
+      });
+    }
+    if (testFilePath != null) {
+      customHeaders.addAll({
+        'testFilePath': testFilePath,
+      });
+    }
+    if (quizFilePath != null) {
+      customHeaders.addAll({
+        'quizFilePath': quizFilePath,
       });
     }
     if (quizId != null) {

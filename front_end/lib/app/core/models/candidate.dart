@@ -24,6 +24,14 @@ class Candidate {
     };
   }
 
+  Map<String, dynamic> toJson2() {
+    return <String, dynamic>{
+      'name': name,
+      'score': score,
+      'results': results.map((x) => x.toJson()).toList(),
+    };
+  }
+
   factory Candidate.fromJson(Map<String, dynamic> map) {
     return Candidate(
       id: map['id'] as int,
