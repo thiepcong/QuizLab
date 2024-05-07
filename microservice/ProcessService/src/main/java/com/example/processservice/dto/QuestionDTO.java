@@ -7,7 +7,7 @@ package com.example.processservice.dto;
 import java.util.List;
 
 public class QuestionDTO {
-    private int questionId;
+    private int id;
     private int userId;
 
     private int quizId;
@@ -20,12 +20,12 @@ public class QuestionDTO {
     public QuestionDTO() {
     }
 
-    public int getQuestionId() {
-        return questionId;
+    public int getId() {
+        return id;
     }
 
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getUserId() {
