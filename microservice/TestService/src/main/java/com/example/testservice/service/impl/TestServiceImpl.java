@@ -61,7 +61,7 @@ public class TestServiceImpl implements TestService {
         Date parsedDate = dateFormat.parse(timeStart);
         Timestamp timestamp = new Timestamp(parsedDate.getTime());
         test.setTimeStart(timestamp);
-
+        testDTO.setTimeCreated(Calendar.getInstance().getTime());
         Date parsedTimeEnd = dateFormat.parse(timeEnd);
         Timestamp timeEnd1 = new Timestamp(parsedTimeEnd.getTime());
         test.setTimeEnd(timeEnd1);
