@@ -166,6 +166,12 @@ class _$MainRouter extends RootStackRouter {
         ),
       );
     },
+    ServiceTaskProgressViewRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const ServiceTaskProgressView(),
+      );
+    },
   };
 
   @override
@@ -239,6 +245,10 @@ class _$MainRouter extends RootStackRouter {
         RouteConfig(
           EditQuizTestQuestionViewRoute.name,
           path: 'edit_quiz_test_question',
+        ),
+        RouteConfig(
+          ServiceTaskProgressViewRoute.name,
+          path: 'service_task_progress',
         ),
       ];
 }
@@ -720,4 +730,16 @@ class EditQuizTestQuestionViewRouteArgs {
   String toString() {
     return 'EditQuizTestQuestionViewRouteArgs{key: $key, cubit: $cubit, item: $item, index: $index}';
   }
+}
+
+/// generated route for
+/// [ServiceTaskProgressView]
+class ServiceTaskProgressViewRoute extends PageRouteInfo<void> {
+  const ServiceTaskProgressViewRoute()
+      : super(
+          ServiceTaskProgressViewRoute.name,
+          path: 'service_task_progress',
+        );
+
+  static const String name = 'ServiceTaskProgressViewRoute';
 }

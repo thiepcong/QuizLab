@@ -24,6 +24,7 @@ import 'modules/play_test/cubit/play_test_cubit.dart';
 import 'modules/play_test/view/play_test_page.dart';
 import 'modules/play_test/view/play_test_view.dart';
 import 'modules/result_test/view/result_test_page.dart';
+import 'modules/service_task_progress/view/service_task_progress_view.dart';
 part 'main_router.gr.dart';
 
 @MaterialAutoRouter(
@@ -43,8 +44,12 @@ part 'main_router.gr.dart';
     MaterialRoute(page: PlayTestPage, path: Routes.playTestPage),
     MaterialRoute(page: ResultTestView, path: Routes.resultTest),
     MaterialRoute(page: CreateQuizTestView, path: Routes.createQuizTest),
-    MaterialRoute(page: CreateQuizTestQuestionView, path: Routes.createQuizTestQuestion),
-    MaterialRoute(page: EditQuizTestQuestionView, path: Routes.editQuizTestQuestion),
+    MaterialRoute(
+        page: CreateQuizTestQuestionView, path: Routes.createQuizTestQuestion),
+    MaterialRoute(
+        page: EditQuizTestQuestionView, path: Routes.editQuizTestQuestion),
+    MaterialRoute(
+        page: ServiceTaskProgressView, path: Routes.serviceTaskProgress),
   ],
 )
 class MainRouter extends _$MainRouter {

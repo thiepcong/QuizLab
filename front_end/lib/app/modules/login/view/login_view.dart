@@ -67,9 +67,16 @@ class _LoginViewState extends State<LoginView> {
         builder: (context, state) {
           final cubit = context.read<LoginCubit>();
           return Scaffold(
-            appBar: const CustomAppBar(
+            appBar: CustomAppBar(
               label: 'QUIZIZZ',
               isLeading: false,
+              actions: [
+                InkWell(
+                  onTap: () =>
+                      context.pushRoute(const ServiceTaskProgressViewRoute()),
+                  child: const SizedBox(width: 50, height: 50),
+                ),
+              ],
             ),
             body: Container(
               width: double.infinity,
