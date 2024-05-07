@@ -29,6 +29,7 @@ dependencies:
   excel: 4.0.3
   uuid: 4.4.0
   flutter_spinkit: 5.2.1
+  web_socket_channel: ^2.4.0
 
 dev_dependencies:
   flutter_test:
