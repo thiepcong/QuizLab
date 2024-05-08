@@ -53,7 +53,7 @@ public class TestServiceImpl implements TestService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("userId", String.valueOf(userId));
         String url = "http://localhost:8083/api/quizzes/" + quizId;
-        webSocketServer.sendMessageToAllSessions("TestService call QuizService " + LocalDateTime.now());
+        webSocketServer.sendMessageToAllSessions("TestService call QuizService " + getCurrentTimeFormatted());
         ResponseEntity<QuizDTO> responseEntity = restTemplate
                 .exchange(url, HttpMethod.GET,new HttpEntity<>(headers), QuizDTO.class);
         QuizDTO quizDTO = responseEntity.getBody();
@@ -96,7 +96,7 @@ public class TestServiceImpl implements TestService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("userId", String.valueOf(userId));
         String url = "http://localhost:8083/api/quizzes/" + quizId;
-        webSocketServer.sendMessageToAllSessions("TestService call QuizService " + LocalDateTime.now());
+        webSocketServer.sendMessageToAllSessions("TestService call QuizService " + getCurrentTimeFormatted());
         ResponseEntity<QuizDTO> responseEntity = restTemplate
                 .exchange(url, HttpMethod.GET,new HttpEntity<>(headers), QuizDTO.class);
 
