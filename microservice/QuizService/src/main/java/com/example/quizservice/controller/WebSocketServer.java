@@ -13,7 +13,7 @@ public class WebSocketServer {
     private static Set<Session> sessions = Collections.synchronizedSet(new HashSet<>());
 
     public WebSocketServer() {
-        org.glassfish.tyrus.server.Server server = new org.glassfish.tyrus.server.Server("localhost", 8887, "/ws", WebSocketServer.class);
+        org.glassfish.tyrus.server.Server server = new org.glassfish.tyrus.server.Server("localhost", 8888, "/ws", WebSocketServer.class);
         try {
             server.start();
         } catch (DeploymentException e) {
