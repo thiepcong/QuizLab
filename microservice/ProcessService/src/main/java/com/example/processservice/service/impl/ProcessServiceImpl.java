@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -246,7 +245,7 @@ public class ProcessServiceImpl implements ProcessService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CandidateDTO> requestEntity = new HttpEntity<>(candidateDTO, headers);
-        webSocketServer.sendMessageToAllSessions("ProcessService call ResultService to create candidate " + LocalDateTime.now());
+        webSocketServer.sendMessageToAllSessions("ProcessService call ResultService to create candidate " + getCurrentTimeFormatted());
         ResponseEntity<CandidateDTO> responseEntity = restTemplate.postForEntity(url, requestEntity, CandidateDTO.class);
 
         return ResponseEntity.ok(responseEntity.getBody());
