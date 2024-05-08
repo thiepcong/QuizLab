@@ -53,7 +53,7 @@ public class TestServiceImpl implements TestService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("userId", String.valueOf(userId));
         String url = "http://localhost:8083/api/quizzes/" + quizId;
-        webSocketServer.sendMessageToAllSessions("TestService call QuizService " + getCurrentTimeFormatted());
+        webSocketServer.sendMessageToAllSessions("TestService call QuizService to create quiz " + getCurrentTimeFormatted());
         ResponseEntity<QuizDTO> responseEntity = restTemplate
                 .exchange(url, HttpMethod.GET,new HttpEntity<>(headers), QuizDTO.class);
         QuizDTO quizDTO = responseEntity.getBody();
@@ -96,7 +96,7 @@ public class TestServiceImpl implements TestService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("userId", String.valueOf(userId));
         String url = "http://localhost:8083/api/quizzes/" + quizId;
-        webSocketServer.sendMessageToAllSessions("TestService call QuizService " + getCurrentTimeFormatted());
+        webSocketServer.sendMessageToAllSessions("TestService call QuizService to create quiz from excel " + getCurrentTimeFormatted());
         ResponseEntity<QuizDTO> responseEntity = restTemplate
                 .exchange(url, HttpMethod.GET,new HttpEntity<>(headers), QuizDTO.class);
 
@@ -142,7 +142,7 @@ public class TestServiceImpl implements TestService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("userId", String.valueOf(userId));
-        webSocketServer.sendMessageToAllSessions("TestService call QuizService " + getCurrentTimeFormatted());
+        webSocketServer.sendMessageToAllSessions("TestService call QuizService to get quiz by quizid " + getCurrentTimeFormatted());
         String url = "http://localhost:8083/api/quizzes/" + test.getQuizId();
         ResponseEntity<QuizDTO> responseEntity = restTemplate
                 .exchange(url, HttpMethod.GET,new HttpEntity<>(headers), QuizDTO.class);
@@ -207,7 +207,7 @@ public class TestServiceImpl implements TestService {
 
     public static String getCurrentTimeFormatted() {
         Date currentTime = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
         String formattedTime = formatter.format(currentTime);
         return formattedTime;
     }

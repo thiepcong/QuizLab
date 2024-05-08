@@ -72,7 +72,7 @@ public class QuizServiceImpl implements QuizService {
             HttpHeaders headers = new HttpHeaders();
             headers.set("quizId", String.valueOf(quizId));
             HttpEntity<?> requestEntity = new HttpEntity<>(headers);
-            webSocketServer.sendMessageToAllSessions("QuizService call QuestionService " + getCurrentTimeFormatted());
+            webSocketServer.sendMessageToAllSessions("QuizService call QuestionService to question by quiz id " + getCurrentTimeFormatted());
             String url = "http://localhost:8082/api/questions/quiz";
 
             ResponseEntity<List> responseEntity = restTemplate.exchange(
@@ -100,7 +100,7 @@ public class QuizServiceImpl implements QuizService {
             HttpEntity<?> requestEntity = new HttpEntity<>(headers);
             String url = "http://localhost:8082/api/questions/quiz";
 
-            webSocketServer.sendMessageToAllSessions("QuizService call QuestionService " + getCurrentTimeFormatted());
+            webSocketServer.sendMessageToAllSessions("QuizService call QuestionService to get question by quiz id " + getCurrentTimeFormatted());
             ResponseEntity<List> responseEntity = restTemplate.exchange(
                     url,
                     HttpMethod.GET,
@@ -126,7 +126,7 @@ public class QuizServiceImpl implements QuizService {
             headers.set("quizId", String.valueOf(quiz.getId()));
             HttpEntity<?> requestEntity = new HttpEntity<>(headers);
             String url = "http://localhost:8082/api/questions/quiz";
-            webSocketServer.sendMessageToAllSessions("QuizService call QuestionService " + getCurrentTimeFormatted());
+            webSocketServer.sendMessageToAllSessions("QuizService call QuestionService to get question by quiz id " + getCurrentTimeFormatted());
             ResponseEntity<List> responseEntity = restTemplate.exchange(
                     url,
                     HttpMethod.GET,
@@ -159,7 +159,7 @@ public class QuizServiceImpl implements QuizService {
                 headers.set("userId", String.valueOf(quizDTO.getUserId()));
 
                 HttpEntity<QuestionDTO> requestEntity = new HttpEntity<>(questionDTO, headers);
-                webSocketServer.sendMessageToAllSessions("QuizService call QuestionService " + getCurrentTimeFormatted());
+                webSocketServer.sendMessageToAllSessions("QuizService call QuestionService to update question " + getCurrentTimeFormatted());
                 ResponseEntity<QuestionDTO> responseEntity = restTemplate
                         .exchange("http://localhost:8082/api/questions/update/{questionId}",
                                 HttpMethod.PUT,
@@ -209,7 +209,7 @@ public class QuizServiceImpl implements QuizService {
         headers.set("userId", String.valueOf(userId));
 
         HttpEntity<QuestionDTO> requestEntity = new HttpEntity<>(questionDTO, headers);
-        webSocketServer.sendMessageToAllSessions("QuizService call QuestionService " + getCurrentTimeFormatted());
+        webSocketServer.sendMessageToAllSessions("QuizService call QuestionService to add question " + getCurrentTimeFormatted());
         ResponseEntity<QuestionDTO> responseEntity = restTemplate
                 .exchange("http://localhost:8082/api/questions/add",
                         HttpMethod.POST,
@@ -223,7 +223,7 @@ public class QuizServiceImpl implements QuizService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("quizId", String.valueOf(quizId));
         HttpEntity<List<QuestionDTO>> requestEntity = new HttpEntity<>(headers);
-        webSocketServer.sendMessageToAllSessions("QuizService call QuestionService " + getCurrentTimeFormatted());
+        webSocketServer.sendMessageToAllSessions("QuizService call QuestionService to get question by quizid " + getCurrentTimeFormatted());
         ResponseEntity<List> responseEntity = restTemplate.exchange(
                 "http://localhost:8082/api/questions/quiz",
                 HttpMethod.GET,
@@ -237,7 +237,7 @@ public class QuizServiceImpl implements QuizService {
 
     public static String getCurrentTimeFormatted() {
         Date currentTime = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
         String formattedTime = formatter.format(currentTime);
         return formattedTime;
     }
