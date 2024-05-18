@@ -9,40 +9,30 @@ QuizLab
 --------------------------
 ## 3) Chức năng chính của chủ đề QuizLab
 1.	Quản lý người dùng:
-o	Đăng ký và đăng nhập người dùng.
-o	Quản lý thông tin người dùng, bao gồm tên, địa chỉ email, mật khẩu, v.v.
-o	Phân quyền và quản lý vai trò của người dùng (quản trị viên, giáo viên, học viên).
-2.	Quản lý câu hỏi:
-o	Tạo, chỉnh sửa và xóa câu hỏi.
-o	Gắn thẻ và phân loại câu hỏi theo danh mục, môn học, độ khó, v.v.
-o	Hỗ trợ đa dạng hình thức câu hỏi như trắc nghiệm, điền khuyết, v.v.
-o	Lưu trữ câu hỏi và đáp án vào cơ sở dữ liệu.
-3.	Tạo và quản lý gói câu hỏi:
-o	Tạo gói câu hỏi bằng cách chọn các câu hỏi từ cơ sở dữ liệu.
-o	Xác định số lượng câu hỏi trong mỗi gói.
-o	Lưu trữ và quản lý gói câu hỏi đã tạo.
-4.	Thực hiện bài trắc nghiệm:
-o	Hiển thị gói câu hỏi cho người dùng.
-o	Hiển thị câu hỏi một cách ngẫu nhiên hoặc theo thứ tự đã định sẵn.
-o	Ghi nhận và tính điểm cho các câu trả lời của người dùng.
-o	Cung cấp phản hồi cho người dùng sau khi hoàn thành bài trắc nghiệm.
-5.	Thống kê và theo dõi kết quả:
-o	Lưu trữ và hiển thị kết quả bài trắc nghiệm của người dùng.
-o	Tính toán và hiển thị điểm số và phần trăm đạt được.
-o	Cung cấp thống kê kết quả theo người dùng, gói câu hỏi, môn học, v.v.
-
+-	Đăng ký và đăng nhập người dùng.
+2.  Tạo và quản lý gói câu hỏi Quiz:
+-	Tạo gói câu hỏi bằng file Excel hoặc thêm thủ công các câu hỏi.
+-	Lưu trữ và quản lý gói câu hỏi đã tạo: CRUD.
+3.	Thực hiện bài trắc nghiệm Test:
+- Tạo bài kiểm tra (đã gộp với chức năng tạo quiz) với danh sách thí sinh từ file Excel
+- Lấy thông tin bài kiểm tra từ code
+- Cho phép thí sinh trong danh sách thực hiện bài kiểm tra
+- Hiển thị thông tin kết quả cho thí sinh sau bài kiểm tra
 --------------------------
-## 4) Phân tích/thiết kế bài toán
-- https://docs.google.com/document/d/1Rd8Xwu1GBpeSgoV-l9D2IcvZFbY0FsqsdBiyZ5aYII8/edit?usp=sharing
+## 4) Báo cáo
+- Cấu trúc triển khai:
+  ![image](https://github.com/jnp2018/midproj-035669705/assets/112555576/ca6cf3a5-6721-4676-a192-8dc45c2607fb)
+
+- [Báo cáo](https://docs.google.com/document/d/1b_7UjXzaBXT1NgvDiSeeVB0hrzqmDzB5/edit)
 --------------------------
 ## 5) Công nghệ/Framework sử dụng
 - Frontend: Flutter
-- Backend: Java Spring boot
+- Backend: Java Spring boot, Websocket, RestTemplate
 - Database: Mysql
-- Kiến trúc: Microservice
-- Triển khai: ...
+- SOA: Microservice, Swagger
+- Deploy: Git Action, Github Page
 
 --------------------------
-## 6) Triển khai
-- Updating...
+## 6) Deploy
+- [Quizizz](https://thiepcong.github.io/Quizz-Lab-LTHDV/)
 --------------------------
