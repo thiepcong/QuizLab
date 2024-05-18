@@ -18,9 +18,12 @@ QuizLab
 - Lấy thông tin bài kiểm tra từ code
 - Cho phép thí sinh trong danh sách thực hiện bài kiểm tra
 - Hiển thị thông tin kết quả cho thí sinh sau bài kiểm tra
+4.   Log
+- Dùng Websocket để hiển thị log của Process Service lên phía client
 --------------------------
 ## 4) Báo cáo
 - Cấu trúc triển khai:
+  
   ![image](https://github.com/jnp2018/midproj-035669705/assets/112555576/ca6cf3a5-6721-4676-a192-8dc45c2607fb)
 
 - [Báo cáo](https://docs.google.com/document/d/1b_7UjXzaBXT1NgvDiSeeVB0hrzqmDzB5/edit)
